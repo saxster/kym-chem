@@ -68,7 +68,8 @@ The read-aloud voice must sound warm and friendly, never robotic, and it must re
 
 - **Default: "Isabella (natural voice)".** The open-weight Kokoro-82M model (Apache-2.0) runs inside the reader's browser through kokoro-js (Apache-2.0), loaded at runtime from jsDelivr, with the model from Hugging Face. Use voice `bf_isabella` (warm, British, female) at speed 0.95.
   - It is generated sentence by sentence, with one or two sentences prepared ahead, and keeps sentence highlighting.
-  - The model downloads once (about 90 MB) and is cached by the browser. The player shows progress and offers "read now with this device's voice instead".
+  - Engine: use WebGPU with the fp32 model when `navigator.gpu` exists (about 300 MB once; on a recent Mac it generated speech at about 0.23x realtime). Otherwise use WASM with the q8 model (about 90 MB; measured at 2.2x realtime on the same Mac, so too slow for comfortable listening). If WebGPU fails, retry once on WASM; if WASM is too slow, offer the device voice.
+  - The model downloads once and is cached by the browser. The player shows progress and offers "read now with this device's voice instead".
   - Respect Save-Data. If it fails or is too slow, fall back to the device voice and say so in one line.
 - **Fallback: the best built-in voice.** Prefer British female natural voices: Microsoft Sonia or Libby Natural (Edge), Apple Serena Premium or Kate Enhanced, Google UK English Female. Then other good en-GB voices, then Indian English natural voices.
   - Never offer novelty or robotic voices (Fred, Albert, Zarvox, Bells, Whisper, Grandpa, eSpeak and the like).

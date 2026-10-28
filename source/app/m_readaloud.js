@@ -152,13 +152,17 @@ function chosenVoice() {
 
 // ------------------------------------------------------------------ Isabella: a natural neural voice, run in the browser
 // Kokoro-82M (Apache-2.0) through kokoro-js (Apache-2.0), loaded from jsDelivr only when it is first needed, running in
-// a Web Worker so the page stays smooth. The model (about 90 MB, quantised) comes from Hugging Face and is kept in the
+// a Web Worker so the page stays smooth. The model comes from Hugging Face: on a graphics chip (WebGPU) the full-precision
+// model, about 300 MB, which reads faster than real time; elsewhere the quantised one, about 90 MB. Either is kept in the
 // browser's Cache Storage, so later visits start quickly. Text is read live, sentence by sentence: nothing is pre-recorded.
 const KOKORO_JS = 'https://cdn.jsdelivr.net/npm/' + 'kokoro-js@1.2.1/dist/kokoro.web.js';
 const KOKORO_MODEL = 'onnx-community/Kokoro-82M-v1.0-ONNX';
 const KOKORO_VOICE = 'bf_isabella';
 const ISABELLA = 'kokoro:' + KOKORO_VOICE;
 const kokoroPossible = !!(window.Worker && window.WebAssembly && (window.AudioContext || window.webkitAudioContext));
+const useGPU = !!navigator.gpu;
+let KOKORO_RUN = useGPU ? { dtype: 'fp32', device: 'webgpu' } : { dtype: 'q8', device: 'wasm' };
+let KOKORO_MB = useGPU ? 'about 300 MB' : 'about 90 MB';
 const saveData = !!(navigator.connection && navigator.connection.saveData);
 const K = { state: 'idle', worker: null, files: {}, pct: 0, lastProgress: 0, timer: 0, waiters: [], seq: 0, pending: new Map(),
   cache: new Map(), fallback: false, slow: 0, offered: false, ctx: null, src: null };
@@ -221,7 +225,14 @@ function loadKokoro() {
     } else if (m.type === 'ready') {
       K.state = 'ready'; clearInterval(K.timer); App.store.set('readaloud:kokoro-ok', true);
       K.waiters.splice(0).forEach(w => w.res());
-    } else if (m.type === 'error') kokoroFailed(m.error);
+    } else if (m.type === 'error') {
+      if (KOKORO_RUN.device === 'webgpu') {   // the graphics-chip path failed: try the ordinary path once
+        try { K.worker.terminate(); } catch (e) {}
+        KOKORO_RUN = { dtype: 'q8', device: 'wasm' }; KOKORO_MB = 'about 90 MB';
+        K.state = 'idle'; const w = K.waiters.splice(0); clearInterval(K.timer);
+        loadKokoro().then(() => w.forEach(x => x.res()), err => w.forEach(x => x.rej(err)));
+      } else kokoroFailed(m.error);
+    }
     else if (m.type === 'audio' || m.type === 'generr') {
       const w = K.pending.get(m.id); if (!w) return;
       K.pending.delete(m.id);
@@ -229,7 +240,7 @@ function loadKokoro() {
     }
   };
   K.worker.onerror = () => kokoroFailed('worker error');
-  K.worker.postMessage({ type: 'load', url: KOKORO_JS, model: KOKORO_MODEL, dtype: 'q8', device: 'wasm' });
+  K.worker.postMessage({ type: 'load', url: KOKORO_JS, model: KOKORO_MODEL, dtype: KOKORO_RUN.dtype, device: KOKORO_RUN.device });
   K.timer = setInterval(() => { if (K.state === 'loading' && Date.now() - K.lastProgress > 60000) kokoroFailed('timeout'); }, 5000);
   return p;
 }
@@ -438,7 +449,7 @@ function updateLoading() {
   const box = loadBox(); if (!box || box.hidden) return;
   const fresh = !App.store.get('readaloud:kokoro-ok', false);
   box.querySelector('.rl-load-t').textContent = (fresh
-    ? 'Getting Isabella’s voice ready: a one-time download of about 90 MB'
+    ? `Getting Isabella’s voice ready: a one-time download of ${KOKORO_MB}`
     : 'Getting Isabella’s voice ready') + (K.pct ? ` … ${K.pct}%` : ' …');
   box.querySelector('.rl-bar i').style.width = (K.pct || 2) + '%';
 }
@@ -446,7 +457,7 @@ function hideLoading() { const box = loadBox(); if (box) box.hidden = true; }
 function showAsk() {
   const box = loadBox(); if (!box) return;
   box.hidden = false;
-  box.querySelector('.rl-load-t').textContent = 'Isabella’s natural voice needs a one-time download of about 90 MB.';
+  box.querySelector('.rl-load-t').textContent = `Isabella’s natural voice needs a one-time download of ${KOKORO_MB}.`;
   box.querySelector('.rl-bar i').style.width = '0%';
   box.querySelector('.rl-load-b').replaceChildren(
     App.el('button', { type: 'button', class: 'rl-alt rl-go', onclick: () => { K.askedOk = true; audioCtx(); st.token++; speakCurrent(); } }, 'Download Isabella'),
