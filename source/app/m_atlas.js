@@ -4,6 +4,7 @@
 //   Build it    add electrons one at a time and watch the rows fill: 2, 8, 8, 18...
 //   Practise    retrieval practice with spaced repetition: flashcards, put it back, first twenty, which family
 import App from './core.js';
+import { notesBlock } from './element_notes.js';
 import ELEMENTS from './ptable_data.js';
 import { PROPS, ORIGIN, ORIGINS } from './atlas_data.js';
 
@@ -246,7 +247,8 @@ function explorePanel(stories) {
           row('Melting point', mpWords(e)),
           row('Where its atoms came from', originWords(e)),
           row('Discovered', e.ancient ? 'Known since ancient times.' : `${e.label === String(e.year) ? e.year : e.label}: ${e.who}.`)),
-        st ? el('p', { class: 'at-card-st' }, el('a', { class: 'sl', href: `#story-${st.id}`, 'data-story': st.id }, `Read the story: ${st.title}`)) : null),
+        st ? el('p', { class: 'at-card-st' }, el('a', { class: 'sl', href: `#story-${st.id}`, 'data-story': st.id }, `Read the story: ${st.title}`)) : null,
+        notesBlock(e.z, el)),
       el('button', { type: 'button', class: 'at-x', 'aria-label': 'Close', onclick: () => { card.hidden = true; tiles.get(e.z).classList.remove('sel'); const t = tiles.get(e.z); picked = null; t.focus(); } }, '×'));
     card.hidden = false;
     if (scroll) card.scrollIntoView({ block: 'nearest', behavior: App.reduceMotion() ? 'auto' : 'smooth' });
@@ -543,9 +545,10 @@ function mount(section) {
   const mountEl = section.querySelector('[data-mount="ptable"]');
   if (!mountEl || section.querySelector('.at-tabs')) return;
   const stories = Object.fromEntries((App.data.stories || []).map(s => [s.id, s]));
-  const lead = section.querySelector(':scope > p');
+  // the guided tour (m_ptguide) adds its own lead for the tabs; fall back to the page's first paragraph
+  const lead = section.querySelector('.at-lead') || section.querySelector(':scope > p');
   const TABS = [
-    { id: 'discovered', label: 'Discovered', lead: lead ? lead.textContent : '' },
+    { id: 'discovered', label: 'Discovered', lead: 'For most of history, people knew only a handful of elements. Slide through time and watch the table fill in, one discovery at a time. Tap any element to meet the people who found it.' },
     { id: 'explore', label: 'Explore', lead: 'The table is a map. Colour it by different properties and patterns jump out: that is why chemists can predict how an element behaves just from where it sits.' },
     { id: 'build', label: 'Build it', lead: 'Where does the table’s shape come from? From the order in which electrons fill their orbitals.' },
     { id: 'practise', label: 'Practise', lead: 'A few minutes a day, and the table becomes something you simply know.' },

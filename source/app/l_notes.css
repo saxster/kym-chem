@@ -1,0 +1,9 @@
+/* ------------------------------------------------------------------ element profiles inside element cards */
+.en { margin-top: .6rem; padding-top: .6rem; border-top: 1px solid var(--rule); font-family: var(--sans); font-size: .9rem; line-height: 1.5; }
+.en p { margin: 0 0 .45rem; }
+.en .en-row b { color: var(--ink); font-weight: 600; }
+.en .en-wow { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--ink); padding-left: .7rem; border-left: 3px solid var(--vol); }
+.en .en-links { margin-top: .6rem; color: var(--muted); font-size: .84rem; }
+.en .en-links a { font-weight: 600; color: var(--vol); }
+.cv-card .en { font-size: .86rem; }
+.cv-card { max-height: min(70vh, 34rem); overflow-y: auto; }

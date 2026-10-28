@@ -52,6 +52,7 @@ function animateWhileVisible(el, setup) {
     if (raf) return;
     last = performance.now();
     const tick = now => {
+      if (!state) { raf = 0; return; }   // a redraw cleared the state mid-frame
       const dt = Math.min(64, now - last); last = now;
       state.draw(now, dt);
       raf = visible ? requestAnimationFrame(tick) : 0;

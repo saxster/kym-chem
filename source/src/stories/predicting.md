@@ -21,6 +21,13 @@ There are three rules, and you already know them all.
 2. **Follow the trend down the column.** Going down, atoms get bigger, the outer electrons sit further out and are held less tightly, so metals get more reactive and non-metals less so. Melting points, colours and densities usually change step by step.
 3. **Expect surprises at the extremes.** Very heavy atoms have so many protons that their inner electrons move at a large fraction of the speed of light, and that changes things. (This is why gold is yellow instead of silvery, an effect of Einstein's relativity on its electrons.)
 
+:::figwide i_skyline() | Atom size across the table. Every row after the first starts with a peak and slopes down; almost every column grows as you go down.
+:::live skyline {"prop":"size","view":"columns"}
+
+**Predict first:** francium sits at the very bottom of column 1, below caesium. Before you tap its tower, decide: taller than caesium's, or shorter? Then tap it.
+
+It is slightly shorter: 223 picometres against caesium's 232. Rule 2 says it should be bigger, so this is rule 3 at work. Calculations suggest that in an atom this heavy, relativity pulls the outer electron in a little closer than the simple trend predicts. Nobody has ever had enough francium to measure its size, so this number comes from those calculations, not from a ruler.
+
 #### Round one: francium
 
 :::scene Paris, 1939

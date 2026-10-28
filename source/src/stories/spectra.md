@@ -15,6 +15,10 @@ Think of Diwali night. A rocket bursts into deep red, then a shower of green, th
 
 Robert Bunsen was a chemist who had helped design a new gas burner with a clean, almost invisible blue flame (you may meet a Bunsen burner in a school laboratory). Bunsen liked to hold a bit of a substance in the flame on a wire and watch its colour. Lithium gives crimson, potassium a soft lilac, sodium a strong yellow. This is called a **flame test**. But colours can be confusing to the eye: a little sodium drowns out almost anything else.
 
+:::fig i_spectrum() | Hydrogen's energy ladder and its four visible colours: each comes from an electron falling to the second rung.
+:::live spectrum {"atom":"hydrogen"}
+
+
 His friend Gustav Kirchhoff, a physicist, suggested a better way to look. Pass the coloured light through a prism, which spreads light out into its separate colours. Together they built an instrument for it, the **spectroscope**.
 
 #### Step 1: light in lines

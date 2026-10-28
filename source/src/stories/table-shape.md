@@ -26,6 +26,11 @@ Think of a shell as a floor of a hotel, and the sub-shells as the rooms on that 
 - a **d** room has 10 seats
 - an **f** room has 14 seats
 
+Here is what those rooms actually look like. Each "seat pair" is a cloud where an electron is likely to be found: s rooms are round, p rooms are dumbbells pointing three ways.
+
+:::fig i_orbitals() | Shells as usually drawn, and the clouds electrons really make. Each cloud holds at most two electrons.
+:::live orbitals {}
+
 The first floor has only an s room (2 seats). The second floor has an s room and a p room (2 + 6 = 8). The third floor has s, p and d (2 + 6 + 10 = 18). The fourth has all four kinds (2 + 6 + 10 + 14 = 32). Electrons fill the cheapest seats first, the ones with the lowest energy, just as water fills the bottom of a jug first.
 
 #### Step 2: the order of filling builds the rows

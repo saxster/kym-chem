@@ -198,6 +198,35 @@ class Builder:
             yr = f' <span class="yr">{yr.strip()}</span>' if yr.strip() else ''
             return (f'<div class="box evidence"><p class="bh">{ICONS["evidence"]}<span>How do we know? '
                     f'{md_inline(t.strip())}{yr}</span></p>{md(inner)}</div>')
+        if kind == 'five':
+            # Understand it (Feynman-style). Lines "? Question" are the core questions (always shown);
+            # "?? Question" are go-deeper questions (folded away). Each is followed by its answer.
+            # The card ends with a "Your turn" check: explain it in one sentence, compared with the first answer.
+            title, _, opts = arg.partition('|')
+            parts = re.split(r'^(\?\??)\s*(.+)$', inner.strip(), flags=re.M)
+            core, deep = [], []
+            for k in range(1, len(parts) - 2, 3):
+                lvl, q, a = parts[k], parts[k + 1].strip(), parts[k + 2].strip()
+                row = f'<div class="fq"><dt>{md_inline(q)}</dt><dd>{md(a)}</dd></div>'
+                (deep if lvl == '??' else core).append((row, q, a))
+            if not core:
+                raise SystemExit(f':::five {arg} has no "? question" lines (chapter {ch.n})')
+            plain_t = html.escape(re.sub(r'<[^>]+>', '', md_inline(title.strip())), quote=True)
+            slug = re.sub(r'[^a-z0-9]+', '-', re.sub(r'<[^>]+>', '', title).lower()).strip('-')
+            out = (f'<section class="box five" id="five-{slug}" aria-label="Understand it: {plain_t}">'
+                   f'<p class="bh"><span class="five-k">Understand it</span><span class="five-t">{md_inline(title.strip())}</span></p>'
+                   f'<dl class="fqs">{"".join(r for r, _, _ in core)}</dl>')
+            if deep:
+                names = ', '.join(html.unescape(re.sub(r'<[^>]+>', '', md_inline(q))).rstrip('?').lower() for _, q, _ in deep)
+                out += (f'<details class="five-more"><summary>Go deeper <span>{html.escape(names)}</span></summary>'
+                        f'<dl class="fqs">{"".join(r for r, _, _ in deep)}</dl></details>')
+            if 'noturn' not in opts:
+                anchor = f'chk-five-{slug}'
+                one = md(core[0][2])
+                out += (f'<div class="box check five-turn" id="{anchor}"><p class="bh">{ICONS["check"]}<span>Your turn</span></p>'
+                        f'<p>Explain <b>{md_inline(title.strip())}</b> to a friend in one sentence, in your own words. '
+                        f'Then compare it with the book’s.</p><template class="chk-a">{one}</template></div>')
+            return out + '</section>'
         if kind == 'careful':
             head = md_inline(arg) if arg else 'Careful'
             return f'<div class="box careful"><p class="bh">{ICONS["careful"]}<span>{head}</span></p>{md(inner)}</div>'
@@ -438,8 +467,8 @@ def bundle_live(out_path, body):
 
 EXPLORE_HTML = (
     '<section class="front flow explore" id="explore-table"><h2>The periodic table, inside out</h2>'
-    '<p>For most of history, people knew only a handful of elements. Slide through time and watch the table fill in, '
-    'one discovery at a time. Tap any element to meet the people who found it.</p>'
+    '<p>The periodic table is the most useful picture in chemistry, and hardly anyone is shown how to read it. '
+    'Start with five plain questions, then scroll slowly: the table builds itself beside the words.</p>'
     '<div class="explore-mount" data-mount="ptable"><p class="noscript">This part of the book needs JavaScript.</p></div></section>'
     '<section class="front flow explore" id="explore-map"><h2>The adventure map</h2>'
     '<p>Every scene in this book happened somewhere real. Here they all are, from Abdera to Mauna Loa. '

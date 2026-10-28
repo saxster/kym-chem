@@ -80,6 +80,25 @@ Moles = 4 ÷ 342 ≈ 0.0117 mol.
 Molecules = 0.0117 × 6.022 × 10²³ ≈ 7 × 10²¹: about seven thousand million million million molecules in one teaspoon.
 :::
 
+:::five Mole
+? What is it?
+A counting unit, like a dozen, but holding 6.022 140 76 × 10²³ things. One mole of any substance weighs its formula's mass in grams.
+? Why is it called this?
+From the German *Mol*, coined by Wilhelm Ostwald in the 1890s as a short form of *Molekül*, molecule. Nothing to do with the animal.
+? What problem did it solve?
+Chemists needed to count atoms to follow a recipe, but they could only weigh things. The mole turns weighing into counting.
+? Why does it work?
+Because atoms of different elements have masses in fixed ratios, equal numbers of atoms always have masses in those same ratios. So weighing out each element's relative mass in grams always gives the same number of atoms.
+? How does it help?
+It lets you go from a recipe in particles (2 H₂ + O₂) to a recipe in grams that you can weigh out on a scale.
+?? How do we know?
+Perrin and others measured the number in completely different ways, and all the answers agreed. Since 2019 the number is fixed by definition.
+?? What it isn't
+It is not a mass, like a kilogram. It is a number, like a dozen.
+?? Where does it stop working?
+It is a tool for enormous numbers of tiny things. For anything you can count by eye, just count.
+:::
+
 :::careful
 > "A mole is an amount of mass, like a kilogram."
 

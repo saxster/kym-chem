@@ -18,6 +18,63 @@ The series: free, non-commercial books for one reader (Kym, 12, Mumbai), shared 
 8. **Content first, then beauty.** The design pass comes after the content is right. Beauty matters, because a beautiful book gets read, but it never competes with reading.
 9. **Voice.** Warm, plain, vivid, precise. No exclamation-mark gush. Speak to her as "you". Tell one continuous adventure, with bridges between chapters ("Fifty years after Dalton…").
 
+## 1a. Feynman's principles and the "Understand it" template
+
+**Principles:**
+- **Knowing the name of something is not knowing the thing.**
+- **Plain words first.** If it can't be said simply, we don't understand it yet.
+- **The concrete example before the abstraction.**
+- **Experiment is the judge, not authority.**
+- **Honesty about where a model stops working.**
+- **The learner explains it back.**
+- **Curiosity leads.**
+
+("The Feynman technique" is a later popularisation, so don't attribute it to him as a named method, and don't quote him without a verified source.)
+
+**The template.** Every central concept gets an **Understand it** card (`:::five Term`), placed right after the text teaches it:
+
+- **Core, always shown** (`? Question` lines; 1–3 plain sentences each):
+  - *What is it?*
+  - *Why is it called this?* The verified etymology. Say when the name misleads.
+  - *What problem did it solve?*
+  - *Why does it work?* The mechanism, not shorthand.
+  - *How does it help?*
+- **Go deeper, folded** (`?? Question` lines):
+  - *How do we know?*
+  - *What it isn't* (the tempting wrong idea)
+  - *Where does it stop working?*
+- **Your turn:** explain it to a friend in one sentence, then compare with the book's "What is it?". Added automatically; suppress with `| noturn`.
+
+Adapt the wording to context ("What happens?" for a process, "What does it measure?" for a quantity), but keep the five recognisable.
+
+Explainer pages (such as the periodic table) use the same questions:
+- a five-questions opener;
+- step headings phrased as questions, each answered in its first sentence;
+- a closing "Now you can answer…" recap with retrieval checks.
+
+An explorer is never only a toy; it needs a guided explanation in front of it.
+
+## 1b. The honest note in every book's letter
+
+Every book's letter to Kym opens, right after "Dear Kym,", with this note. Adapt the subject and the sources so that every sentence is literally true for that book:
+
+> I should tell you something first: I am not a [chemist / physicist / …]. I don't know much [subject] at all. What I have tried to do is make the book I would have loved to read when I was your age: one that tells you who found each idea and how, that lets you try things in the kitchen, and that never just hands you [a fact / a formula] to learn by heart. Much of what is in here was new to me too. I also had help: I made this book with the help of AI, which searched out the research, wrote the chapters to my design, and then checked them. The explanations draw on the free courses and books that MIT and OpenStax share with the world, and on what researchers have learned about the ideas students most often get wrong. Every fact, date and number was checked against reliable sources, more than once, by checkers whose only job was to find mistakes, and every number was worked out again from scratch. Even so, a few mistakes may have slipped through. If something here doesn't match what you find somewhere else, don't simply trust the book: tell me, and we will find out together which is right. And where the people who really know [subject] still argue about something, the book says so.
+
+Never claim more than was done. If a book draws mainly on MIT and OpenStax, say so. If the checking was lighter for some part, say so.
+
+## 1c. The read-aloud voice
+
+The read-aloud voice must sound warm and friendly, never robotic, and it must read **live in the browser**. Never pre-record narration: the text keeps changing, so recordings would go stale.
+
+- **Default: "Isabella (natural voice)".** The open-weight Kokoro-82M model (Apache-2.0) runs inside the reader's browser through kokoro-js (Apache-2.0), loaded at runtime from jsDelivr, with the model from Hugging Face. Use voice `bf_isabella` (warm, British, female) at speed 0.95.
+  - It is generated sentence by sentence, with one or two sentences prepared ahead, and keeps sentence highlighting.
+  - The model downloads once (about 90 MB) and is cached by the browser. The player shows progress and offers "read now with this device's voice instead".
+  - Respect Save-Data. If it fails or is too slow, fall back to the device voice and say so in one line.
+- **Fallback: the best built-in voice.** Prefer British female natural voices: Microsoft Sonia or Libby Natural (Edge), Apple Serena Premium or Kate Enhanced, Google UK English Female. Then other good en-GB voices, then Indian English natural voices.
+  - Never offer novelty or robotic voices (Fred, Albert, Zarvox, Bells, Whisper, Grandpa, eSpeak and the like).
+- **Pacing:** rate 0.95 (choices 0.85, 0.95 and 1.1); about 140 ms between sentences and about 420 ms between paragraphs.
+- **If only basic built-in voices exist, the player shows a tip.** On an iPad or iPhone: Settings → Accessibility → Spoken Content → Voices → English → download a Premium or Enhanced voice. On a computer, Edge has natural voices.
+
 ## 2. Subject archetypes
 
 The weight of each layer changes with the subject:

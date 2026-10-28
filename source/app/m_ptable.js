@@ -1,5 +1,6 @@
 // "The periodic table, discovered": a periodic table that fills in as you slide through time.
 import App from './core.js';
+import { notesBlock } from './element_notes.js';
 import ELEMENTS from './ptable_data.js';
 
 const ERAS = [
@@ -126,7 +127,8 @@ function mount(root) {
         el('p', { class: 'pt-card-how' }, e.how),
         el('p', { class: 'pt-card-who' }, el('b', {}, 'Who: '), e.who),
         !knownBy(e, y) ? el('p', { class: 'pt-card-not' }, `In ${yearLabel(y).toLowerCase() === 'ancient times' ? 'ancient times' : yearLabel(y)}, nobody knew about it yet.`) : null,
-        st ? el('p', { class: 'pt-card-st' }, el('a', { class: 'sl', href: `#story-${st.id}`, 'data-story': st.id }, `Read the story: ${st.title}`)) : null),
+        st ? el('p', { class: 'pt-card-st' }, el('a', { class: 'sl', href: `#story-${st.id}`, 'data-story': st.id }, `Read the story: ${st.title}`)) : null,
+        notesBlock(e.z, el)),
       el('button', { type: 'button', class: 'pt-card-x', 'aria-label': 'Close', onclick: () => { card.hidden = true; t.classList.remove('sel'); selected = null; t.focus(); } }, '×'));
     card.hidden = false;
     if (scroll) card.scrollIntoView({ block: 'nearest', behavior: App.reduceMotion() ? 'auto' : 'smooth' });
