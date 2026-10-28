@@ -15,4 +15,6 @@ It works offline once it has been opened, and it can be installed on a phone or 
 
 Facts were checked against sources. Where a story is a legend or an anecdote, the book says so. If you find an error, please open an issue.
 
-See NOTICES.md for credits and licences.
+Licensed CC BY-NC-SA 4.0 (see LICENSE.md). See NOTICES.md for the typefaces, software and map data, which keep their own licences.
+
+The book's source, and the playbook used to make it, are in the `source/` folder.
