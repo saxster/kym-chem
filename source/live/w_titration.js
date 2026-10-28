@@ -106,5 +106,6 @@ Live.register('titration', (stage, params, api) => {
   api.loop(() => render());
   // the canvas is re-sized (and cleared) after opening; redraw whenever that happens
   const ro = new ResizeObserver(() => requestAnimationFrame(render)); ro.observe(k.cv); api.onCleanup(() => ro.disconnect());
+  api.account(() => ({vb,pH:solve(vb,weak).pH}));
   return {};
 }, { label: 'Try the titration', static: true });

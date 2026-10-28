@@ -104,5 +104,6 @@ Live.register('barrier', (stage, params, api) => {
     say(`Each dot's height shows its energy at this moment. Collisions keep handing out new energies; most are small, a few are large. Only a dot that gets at least ${fb} units (the forward barrier${useCat ? ' on the catalysed route' : ''}) can cross; going back needs ${rb}. ${kT >= 14 ? 'Hotter: high energies are far more common, so crossings speed up a lot.' : kT <= 8 ? 'Cool: high energies are rare, so crossings are rare.' : ''} ${cat ? (useCat ? 'With the catalyst both barriers are 40 lower, so crossings speed up in <b>both</b> directions; the start and finish levels have not moved.' : 'Switch on the catalyst to open the lower route.') : ''} (Made-up units; slowed down.)`);
   }
   api.loop((dt) => { if (dt) step(dt); render(); });
+  api.account(() => ({Rlev,Plev,peak:peak(),kT,useCat}));
   return {};
 }, { label: 'Watch particles cross' });

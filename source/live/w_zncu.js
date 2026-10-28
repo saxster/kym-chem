@@ -130,5 +130,6 @@ Live.register('zncu', (stage, params, api) => {
     }
     render();
   });
+  api.account(() => counts());
   return {};
 }, { label: 'Watch the electrons move' });

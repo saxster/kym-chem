@@ -214,5 +214,6 @@ Live.register('states', (stage, params, api) => {
     if (dt) step(dt, t, st);
     render(st);
   });
+  api.account(() => ({E}));
   return {};
 }, { label: 'Heat it and watch' });

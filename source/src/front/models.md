@@ -19,3 +19,11 @@ A few numbers are made up on purpose, to make a model easy to follow: the "12 u 
 **The rate picture of equilibrium.** Explaining equilibrium as forward and backward reactions running at equal speeds is true and useful. The simple rate rules in Chapter 5 hold for single-step reactions; most real reactions happen in several steps, and their rates are worked out by experiment.
 
 **Diagrams in general.** Every picture in this book has been chosen to show one thing clearly. Colours, sizes and distances are almost always for clarity rather than accuracy, and atoms themselves have no colour at all. When you meet a new diagram, the best question to ask is the one this whole book is about: what does this show truthfully, and how do we know?
+
+### Keep the accounts beside the drawing
+
+Opening a live figure now brings a small ruled account beside its controls. Think of atoms as an inventory: each element needs its own row, and every atom after a reaction must be accounted for in products or leftovers. Think of electron transfer as a matched entry: the number lost by one species equals the number gained by another. A charge balance is signed arithmetic, not a claim that an ion is stable.
+
+Different quantities need different accounts. Stock is an amount; concentration is amount per volume; a rate is change per time. For energy, keep input, release and net change distinct from the activation barrier. The accounts show computed model output, not experimental measurements.
+
+Each figure links to its matching [laboratory investigation](lab/), with a notebook, source entries, symbol and unit help, parent questions and course-reference filters. Those course connections are partial editorial mappings, not examination-board endorsement. The laboratory’s numeric register covers its own reference tables and calculations; the book’s historical reading and model notes remain separate.

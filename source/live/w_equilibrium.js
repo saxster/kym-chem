@@ -125,5 +125,6 @@ Live.register('equilibrium', (stage, params, api) => {
       : `At first far more A turns into B than back, because there is lots of A and little B. Watch the two rates under the box move towards each other.${doubled ? ' Both constants are doubled: the same end point, reached twice as fast.' : ''}`);
   }
   api.loop((dt) => { if (dt) step(dt); render(); });
+  api.account(() => ({counts:counts(),kf,kr,doubled}));
   return {};
 }, { label: 'Watch the particles flip' });

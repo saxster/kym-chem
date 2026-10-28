@@ -14,7 +14,7 @@ function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTi
 function reveal(node, show) {
   if (show) {
     node.hidden = false;
-    if (!App.reduceMotion() && node.animate) node.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: 'ease-out' });
+    if (!App.reduceMotion() && node.animate) node.animate([{ opacity: 0, transform: 'perspective(800px) rotateX(-8deg)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: 'ease-out' });
   } else node.hidden = true;
 }
 
@@ -24,15 +24,20 @@ function setupCheck(box) {
   if (!id || !tpl || box.querySelector('.chk-ui')) return;
   const key = 'chk:' + id;
   const saved = store.get(key, {});
+  const first = el('p', { class: 'lj-first' });
+  const paintFirst = () => { const cur = store.get(key, {}); first.textContent = typeof cur.first === 'string' ? 'First preserved response: ' + cur.first : ''; };
+  paintFirst();
+  const saveStatus = el('p', { class: 'lj-save-status', role: 'status' });
+  const write = value => { saveStatus.textContent = store.set(key,value) ? '' : 'Browser saving is unavailable. This response is kept for this visit; save a notebook backup before closing.'; };
   const back = box.querySelector('.ans');
 
   const ta = el('textarea', { class: 'lj-ta', rows: 2, id: id + '-mine', placeholder: 'Write it here, or just think it' });
   ta.value = saved.a || '';
   const label = el('label', { class: 'lj-lab', for: id + '-mine' }, 'Your answer');
-  const showBtn = el('button', { type: 'button', class: 'lj-btn primary', 'aria-expanded': 'false', 'aria-controls': id + '-reveal' }, 'Show the answer');
+  const showBtn = el('button', { type: 'button', class: 'lj-btn primary', 'aria-expanded': 'false', 'aria-controls': id + '-reveal' }, 'Lift the paper · reveal the explanation');
   const answer = el('div', { class: 'chk-reveal', id: id + '-reveal', hidden: true });
   answer.append(el('p', { class: 'lj-kick' }, 'The answer'));
-  answer.append(tpl.content.cloneNode(true));
+  answer.append(first, tpl.content.cloneNode(true));
 
   const rateRow = el('div', { class: 'lj-rate', role: 'group', 'aria-label': 'How did you do?' });
   const rateBtns = RATINGS.map(([v, l]) => el('button', { type: 'button', class: 'lj-chip', 'data-r': v, 'aria-pressed': 'false' }, l));
@@ -40,7 +45,7 @@ function setupCheck(box) {
   const again = el('button', { type: 'button', class: 'lj-link' }, 'Try again');
   answer.append(rateRow, again);
 
-  const save = () => { const s = store.get(key, {}); s.a = ta.value; s.t = Date.now(); store.set(key, s); App.emit('learn:change'); };
+  const save = () => { const s = store.get(key, {}); s.a = ta.value; s.t = Date.now(); write(s); App.emit('learn:change'); };
   ta.addEventListener('input', debounce(save, 400));
 
   function paintRating(r) {
@@ -52,21 +57,23 @@ function setupCheck(box) {
     if (animate) reveal(answer, true); else answer.hidden = false;
   }
   showBtn.addEventListener('click', () => {
-    const s = store.get(key, {}); s.a = ta.value; s.seen = true; s.t = Date.now(); store.set(key, s);
+    const s = store.get(key, {}); s.first ??= ta.value; s.a = ta.value; s.seen = true; s.t = Date.now(); write(s);
+    paintFirst(); window.KymaiaBookSound?.('paper');
     open(true); App.emit('learn:change');
     answer.querySelector('.lj-chip').focus({ preventScroll: true });
   });
   rateBtns.forEach(b => b.addEventListener('click', () => {
-    const s = store.get(key, {}); s.r = b.dataset.r; s.a = ta.value; s.seen = true; s.t = Date.now(); store.set(key, s);
+    const s = store.get(key, {}); s.r = b.dataset.r; s.a = ta.value; s.seen = true; s.t = Date.now(); write(s);
     paintRating(s.r); App.emit('learn:change');
   }));
   again.addEventListener('click', () => {
-    store.set(key, { a: '', t: Date.now() });
+    const prior = store.get(key, {});
+    write({ a: '', first: prior.first ?? prior.a ?? '', t: Date.now() });
     ta.value = ''; paintRating(''); answer.hidden = true; showBtn.hidden = false; showBtn.setAttribute('aria-expanded', 'false');
     ta.focus(); App.emit('learn:change');
   });
 
-  const ui = el('div', { class: 'chk-ui' }, label, ta, el('div', { class: 'lj-row' }, showBtn), answer);
+  const ui = el('div', { class: 'chk-ui' }, label, ta, saveStatus, el('div', { class: 'lj-row' }, showBtn), answer);
   if (back) box.insertBefore(ui, back); else box.append(ui);
   if (back) back.classList.add('lj-back');
   if (saved.seen) open(false);

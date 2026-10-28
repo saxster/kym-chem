@@ -1,7 +1,7 @@
 // Gas in a box: particles fly in straight lines and bounce off the walls.
 // mode 'temperature': slider for kelvin temperature at fixed volume (Figure 3.2).
 // mode 'volume': slider moves a piston at fixed temperature (Figure 3.4).
-// The pressure readout is counted from the particles' actual pushes on the piston,
+// The pressure readout is counted from the particles' computed pushes on the piston,
 // calibrated so that 1 mol at 300 K in 10 L reads 249 kPa, and compared with P = nRT/V.
 import { Live } from './core.js';
 
@@ -93,9 +93,10 @@ Live.register('gasbox', (stage, params, api) => {
     api.draw.text(ctx, `push on the ${mode === 'volume' ? 'piston' : 'right-hand wall'}, counted: ${Math.round(counted)} kPa`, gx, gy + 32, { size: 12.5, color: c.proton, weight: 600 });
     api.draw.text(ctx, `rule P = nRT/V: ${P.toFixed(0)} kPa`, gx + gw, gy + 32, { size: 12.5, color: c.ink, align: 'right' });
     say(mode === 'volume'
-      ? `${V} L at 300 K. The red bar counts the molecules\u2019 actual pushes on the piston; the black mark is the rule P = nRT/V (${P.toFixed(0)} kPa). The count wobbles because there are only ${N} molecules here; with 6 × 10²³ it would sit exactly on the mark.`
+      ? `${V} L at 300 K. The red bar counts the molecules\u2019 computed pushes on the piston; the black mark is the rule P = nRT/V (${P.toFixed(0)} kPa). The count wobbles because there are only ${N} molecules here; the displayed gauge is calibrated to the ideal-gas rule, not a measured real-gas pressure.`
       : `${T} K in 10 L. Hotter molecules move faster, so each hit is harder and hits come more often. The red bar counts their pushes; the black mark is the rule P = nRT/V (${P.toFixed(0)} kPa). It wobbles because there are only ${N} molecules here.`);
   }
   api.loop((dt) => { if (dt) step(dt); render(); });
+  api.account(() => ({T,V}));
   return {};
 }, { label: 'Watch the molecules' });

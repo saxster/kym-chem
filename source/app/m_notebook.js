@@ -248,7 +248,7 @@ function gather() {
     tried++; if (s.r === 'got') got++; if (s.r === 'partly') partly++;
     const place = placeOf(box);
     const q = strip([...box.children].filter(x => x.tagName === 'P' && !x.classList.contains('bh') && !x.classList.contains('ans')).map(x => x.textContent).join(' '));
-    add(place, { type: 'check', target: box.id, story: place.kind === 'story' ? place.id : null, where: place.label, q, a: s.a, r: s.r, t: s.t });
+    add(place, { type: 'check', target: box.id, story: place.kind === 'story' ? place.id : null, where: place.label, q, a: s.a, first: s.first, r: s.r, t: s.t });
   });
   const homes = [...document.querySelectorAll('.box.home[data-home]')];
   let doneN = 0;
@@ -316,6 +316,7 @@ function item(it) {
   if (it.type === 'check') {
     return el('article', { class: 'nb-item' }, el('p', { class: 'nb-kind' }, 'Check yourself', where),
       el('p', { class: 'nb-q' }, it.q),
+      typeof it.first === 'string' ? el('p', { class: 'nb-a' }, el('span', {}, 'First preserved response: '), it.first) : null,
       it.a ? el('p', { class: 'nb-a' }, el('span', {}, 'You wrote: '), it.a) : el('p', { class: 'nb-a muted' }, 'You answered in your head.'),
       it.r ? el('p', { class: 'nb-r', 'data-r': it.r }, RLABEL[it.r]) : null, go);
   }
@@ -335,7 +336,7 @@ function markdown() {
     g.items.forEach(it => {
       const w = it.where ? ` (${it.where})` : '';
       if (it.type === 'hl') { L.push(`> ${strip(it.quote)}${w}`, ''); if (it.note) L.push(`Note: ${it.note}`, ''); }
-      else if (it.type === 'check') { L.push(`**Check yourself${w}.** ${it.q}`, '', `My answer: ${it.a || '(in my head)'}${it.r ? ` · ${RLABEL[it.r]}` : ''}`, ''); }
+      else if (it.type === 'check') { if (typeof it.first === 'string') L.push(`First preserved response: ${it.first}`, ''); L.push(`**Check yourself${w}.** ${it.q}`, '', `My answer: ${it.a || '(in my head)'}${it.r ? ` · ${RLABEL[it.r]}` : ''}`, ''); }
       else { L.push(`**Try it at home${w}: ${it.title}**${it.done ? ` (done ${fmtDate(it.date)})` : ''}`, '');
         if (it.pred) L.push(`I predicted: ${it.pred}`, ''); if (it.res) L.push(`What happened: ${it.res}`, ''); }
     });
@@ -360,10 +361,16 @@ function restore(file) {
     let d; try { d = JSON.parse(r.result); } catch (e) { d = null; }
     const msg = nb.querySelector('.nb-msg');
     if (!d || d.kind !== 'notebook' || !d.keys) { msg.textContent = 'That file does not look like a notebook backup from this book.'; return; }
+    const invalidCheck = Object.entries(d.keys).some(([k,v]) => k.startsWith('chk:') && (!v || typeof v !== 'object' || (v.first !== undefined && typeof v.first !== 'string') || (v.a !== undefined && typeof v.a !== 'string')));
+    if (invalidCheck) { msg.textContent = 'This backup contains an invalid response. Nothing has been restored; your saved notebook is unchanged.'; return; }
     Object.entries(d.keys).forEach(([k, v]) => {
       if (!OWNED(k)) return;
       if (k === HL_KEY) { const cur = all(); const ids = new Set(cur.map(h => h.id)); (v || []).forEach(h => ids.has(h.id) || cur.push(h)); store.set(HL_KEY, cur); }
-      else store.set(k, v);
+      else if (k.startsWith('chk:')) {
+        if (!v || typeof v !== 'object' || (v.first !== undefined && typeof v.first !== 'string') || (v.a !== undefined && typeof v.a !== 'string')) return;
+        const current = store.get(k, {});
+        store.set(k, { ...v, ...(typeof current.first === 'string' ? { first: current.first } : {}) });
+      } else store.set(k, v);
     });
     msg.textContent = 'Restored. Reloading the book…';
     setTimeout(() => location.reload(), 700);

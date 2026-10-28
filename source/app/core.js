@@ -19,18 +19,19 @@ const store = {
   available: canStore,
   get(key, dflt) {
     try {
-      const raw = canStore ? localStorage.getItem(PREFIX + key) : mem[key];
+      const raw = Object.prototype.hasOwnProperty.call(mem, key) ? mem[key] : localStorage.getItem(PREFIX + key);
       return raw == null ? dflt : JSON.parse(raw);
     } catch (e) { return dflt; }
   },
   set(key, val) {
     const raw = JSON.stringify(val);
-    try { if (canStore) localStorage.setItem(PREFIX + key, raw); else mem[key] = raw; } catch (e) { mem[key] = raw; }
+    try { if (canStore) { localStorage.setItem(PREFIX + key, raw); delete mem[key]; return true; } mem[key] = raw; } catch (e) { mem[key] = raw; }
+    return false;
   },
   remove(key) { try { if (canStore) localStorage.removeItem(PREFIX + key); } catch (e) {} delete mem[key]; },
   keys() {
     const out = [];
-    try { if (canStore) for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith(PREFIX)) out.push(k.slice(PREFIX.length)); } } catch (e) {}
+    try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith(PREFIX)) out.push(k.slice(PREFIX.length)); } } catch (e) {}
     Object.keys(mem).forEach(k => out.includes(k) || out.push(k));
     return out;
   },
@@ -53,7 +54,7 @@ function el(tag, attrs, ...kids) {
   return n;
 }
 
-const reduceMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduceMotion = () => window.KymaiaBookStill?.() || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 function transition(fn) {
   if (document.startViewTransition && !reduceMotion()) { try { return document.startViewTransition(fn); } catch (e) {} }
   fn();

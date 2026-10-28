@@ -77,8 +77,12 @@ export function makeStage(stage, api, { height = 360, distance = 7, label = '' }
     clear() { while (root.children.length) { const o = root.children.pop(); o.traverse?.((m) => { m.geometry?.dispose?.(); }); } kit.dirty = true; },
   };
   const ro = new ResizeObserver(() => kit.resize()); ro.observe(wrap);
-  api.onCleanup(() => { ro.disconnect(); renderer.dispose(); });
+  api.onCleanup(() => { ro.disconnect(); renderer.dispose(); renderer.forceContextLoss(); });
   kit.resize();
+  api._tourPose = i => {
+    const poses = [[0,0,1],[0.2,0.45,.85],[0.1,-.6,1],[0,Math.PI/2,1],[0,0,1]];
+    const [x,y,z] = poses[i]; root.rotation.set(x,y,0); camera.position.z = distance*z; kit.render();
+  };
 
   // drag to rotate (pointer), arrows to rotate (keyboard)
   let drag = null, userTurned = 0;

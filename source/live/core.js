@@ -1,3 +1,5 @@
+import { accountPanel, demonstration } from './account-panel.js';
+import { initPreferences } from './preferences.js';
 // Live figures: the runtime that turns a still SVG figure into an animated or 3D one on request.
 // Every live figure keeps its still drawing: it is what prints, what shows without JavaScript,
 // and what a reader sees until they choose to play. Widgets register with Live.register().
@@ -105,13 +107,15 @@ function makeApi(fig, stage, controls) {
   const loops = new Set();
   const cleanups = [];
   const api = {
-    reduced: reducedQuery.matches,
+    get reduced() { return window.KymaiaBookStill?.() ?? reducedQuery.matches; },
+    _sliders: [], _tabs: [], _buttons: [], _actions: new Set(),
+    account(read) { api._account = read; },
     colors,
     draw, rng, gauss, EL,
     /** A canvas that fills the stage at a fixed logical size (W x H); drawing uses logical units. */
     canvas(W, H, label) {
       const cv = document.createElement('canvas');
-      cv.setAttribute('role', 'img');
+      cv.setAttribute('role', 'img'); cv.tabIndex = 0;
       cv.setAttribute('aria-label', label || fig.querySelector('svg')?.getAttribute('aria-label') || 'Animated figure');
       cv.style.width = '100%'; cv.style.height = 'auto'; cv.style.aspectRatio = `${W} / ${H}`; cv.style.display = 'block';
       stage.appendChild(cv);
@@ -134,7 +138,8 @@ function makeApi(fig, stage, controls) {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'live-ctl'; b.textContent = label;
       if (opts.pressed != null) b.setAttribute('aria-pressed', String(!!opts.pressed));
-      b.addEventListener('click', () => onClick(b));
+      b.addEventListener('click', () => { api._actions.add(label); onClick(b); api._refresh?.(); });
+      api._buttons.push(b);
       controls.appendChild(b); return b;
     },
     tabs(labels, onSelect, start = 0) {
@@ -142,10 +147,10 @@ function makeApi(fig, stage, controls) {
       const btns = labels.map((l, i) => {
         const b = document.createElement('button'); b.type = 'button'; b.className = 'live-ctl'; b.textContent = l;
         b.setAttribute('aria-pressed', String(i === start));
-        b.addEventListener('click', () => { btns.forEach((x, j) => x.setAttribute('aria-pressed', String(j === i))); onSelect(i); });
+        b.addEventListener('click', () => { btns.forEach((x, j) => x.setAttribute('aria-pressed', String(j === i))); onSelect(i); api._refresh?.(); });
         wrap.appendChild(b); return b;
       });
-      controls.appendChild(wrap); return btns;
+      controls.appendChild(wrap); api._tabs.push(btns); return btns;
     },
     slider(label, { min, max, step = 1, value, fmt = (v) => String(v), onInput }) {
       const id = 'ls' + Math.random().toString(36).slice(2, 8);
@@ -153,7 +158,9 @@ function makeApi(fig, stage, controls) {
       const lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = label;
       const inp = document.createElement('input'); inp.type = 'range'; inp.id = id; inp.min = min; inp.max = max; inp.step = step; inp.value = value;
       const out = document.createElement('output'); out.htmlFor = id; out.textContent = fmt(+value);
-      inp.addEventListener('input', () => { out.textContent = fmt(+inp.value); onInput(+inp.value); });
+      const apply = v => { inp.value = v; out.textContent = fmt(+inp.value); onInput(+inp.value); api._refresh?.(); };
+      inp.addEventListener('input', () => apply(+inp.value));
+      api._sliders.push({ label, input: inp, apply });
       wrap.append(lab, inp, out); controls.appendChild(wrap);
       return { input: inp, set(v) { inp.value = v; out.textContent = fmt(+v); } };
     },
@@ -187,7 +194,7 @@ function setup(fig) {
     + `<span>${w.meta.label || (is3d ? 'Turn it in 3D' : 'Watch it move')}</span>`;
   fig.insertBefore(open, fig.querySelector('figcaption'));
 
-  let inst = null, api = null, stage = null, controls = null, playing = false, raf = 0, last = 0, t = 0, visible = true;
+  let inst = null, api = null, stage = null, controls = null, playing = false, raf = 0, last = 0, t = 0, visible = true, watch = null;
   const playBtn = document.createElement('button');
   playBtn.type = 'button'; playBtn.className = 'live-ctl live-play';
 
@@ -195,15 +202,18 @@ function setup(fig) {
     const dt = Math.min(0.05, last ? (ts - last) / 1000 : 0.016);
     last = ts; t += dt;
     for (const fn of api._loops) fn(dt, t);
+    api._updateAccount?.();
     raf = requestAnimationFrame(frame);
   }
   function setPlaying(p) {
+    p = p && !api?.reduced;
     playing = p;
     playBtn.textContent = p ? 'Pause' : 'Play';
     playBtn.setAttribute('aria-pressed', String(p));
     cancelAnimationFrame(raf); last = 0;
     if (p && visible) raf = requestAnimationFrame(frame);
     else if (api) for (const fn of api._loops) fn(0, t); // draw one still frame
+    api?._updateAccount?.();
   }
   function openLive() {
     fig.classList.add('live-on');
@@ -211,27 +221,44 @@ function setup(fig) {
     controls = document.createElement('div'); controls.className = 'live-controls';
     fig.insertBefore(stage, open); fig.insertBefore(controls, open);
     api = makeApi(fig, stage, controls);
-    if (!w.meta.static) controls.appendChild(playBtn);
+    if (!w.meta.static) {
+      controls.appendChild(playBtn);
+      const advance = api.button('Advance one model step', () => {
+        setPlaying(false);
+        for(let i=0;i<10;i++){t+=.05;for(const fn of api._loops)fn(.05,t);}
+        api._updateAccount?.();
+      });
+      advance.title = 'Advance the computed model in one discrete step, including in Still mode.';
+    }
+    api._isPlaying = () => playing;
+    api._refresh = () => { for (const fn of api._loops) fn(0,t); api._updateAccount?.(); };
     inst = w.factory(stage, params, api) || {};
+    if(w.meta.three && !stage.querySelector('canvas')) fig.classList.add('live-fallback');
+    const account = accountPanel(fig,name,params,api); if(account) controls.append(account);
+    watch = demonstration(fig,name,params,w,makeApi,()=>setPlaying(false));
+    if(watch) fig.insertBefore(watch.el,open);
     const close = document.createElement('button');
     close.type = 'button'; close.className = 'live-ctl live-close'; close.textContent = 'Back to the drawing';
     close.addEventListener('click', closeLive);
     controls.appendChild(close);
     open.hidden = true;
+    playBtn.disabled = api.reduced;
     setPlaying(!api.reduced && !w.meta.static);
     if (w.meta.static) for (const fn of api._loops) fn(0, 0);
     (stage.querySelector('canvas,button,input') || playBtn).focus?.({ preventScroll: true });
   }
   function closeLive() {
     cancelAnimationFrame(raf);
+    watch?.destroy(); watch?.el.remove(); watch=null;
     inst?.destroy?.();
     api?._cleanups.forEach((f) => f());
     stage?.remove(); controls?.remove();
-    fig.classList.remove('live-on'); open.hidden = false; open.focus({ preventScroll: true });
+    fig.classList.remove('live-on', 'live-fallback'); open.hidden = false; open.focus({ preventScroll: true });
     inst = api = stage = controls = null; playing = false;
   }
   playBtn.addEventListener('click', () => setPlaying(!playing));
   open.addEventListener('click', openLive);
+  window.addEventListener('kymaia-motion-change',()=>{ if(api){playBtn.disabled=api.reduced;if(api.reduced)setPlaying(false);} });
   // pause while off screen, resume when back
   new IntersectionObserver((ents) => {
     for (const e of ents) {
@@ -243,5 +270,5 @@ function setup(fig) {
   }, { threshold: 0.05 }).observe(fig);
 }
 
-function init() { document.querySelectorAll('figure[data-live]').forEach(setup); }
+function init() { initPreferences(); document.querySelectorAll('figure[data-live]').forEach(setup); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else setTimeout(init, 0);

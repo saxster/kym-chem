@@ -127,5 +127,6 @@ Live.register('licell', (stage, params, api) => {
     }
     render();
   });
+  api.account(() => ({g:li.filter(l=>!l.moving&&l.side==='g').length,o:li.filter(l=>!l.moving&&l.side==='o').length,transit:li.filter(l=>l.moving).length}));
   return {};
 }, { label: 'Watch it discharge and charge' });

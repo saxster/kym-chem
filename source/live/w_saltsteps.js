@@ -74,5 +74,6 @@ Live.register('saltsteps', (stage, params, api) => {
     else if (step < 3 || f < 1) say(STEPS[step - 1].say + tail);
     else say(STEPS[2].say + ' Overall: +496 − 349 − 787 = <b>−640 kJ</b>. So sodium doesn\'t "want" to lose its electron: that step costs energy. The whole path runs downhill only because the crystal forms.' + tail);
   });
+  api.account(() => ({step}));
   return {};
 }, { label: 'Follow the energy' });

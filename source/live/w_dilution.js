@@ -68,6 +68,7 @@ Live.register('dilution', (stage, params, api) => {
       ? 'One litre of solution with 8 dissolved particles: 8 particles per litre. Each drawn particle stands for an enormous number of real ones. Press <b>Add a litre of water</b>.'
       : 'Two litres now. Nothing was taken away: the same 8 particles wander through twice the space, so each litre (and each sip) holds 4. The concentration has halved; the amount of solute has not changed.');
   }
-  api.loop((dt) => { if (dt) step(dt); render(); });
+  api.loop((dt) => { if (dt) step(dt); else if(api.reduced || !api._isPlaying?.()) { level = litres; pour = 0; } render(); });
+  api.account(() => ({N,litres}));
   return {};
 }, { label: 'Add water and watch' });

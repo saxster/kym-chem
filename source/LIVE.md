@@ -50,3 +50,11 @@ Molecule format: `{atoms: [['C', x, y, z], ...], bonds: [[i, j, order], ...]}` i
 * Test: `python3 build.py --only N --out build/x.html && python3 livetest.py build/x.html /home/claude/work/live-x`
   (opens every live figure, screenshots before and after using a slider or tab, lists console errors). Check at
   `--w 1280` and `--w 390`. No console errors; nothing overflows.
+
+## Figure accounts and directed previews
+
+`live/accounts.js` contains authored bookkeeping ideas, challenge conditions, explanations, matching investigation IDs and model limits for all 27 widget types (42 figure instances). Quantitative widgets expose explicit current state with `api.account(() => ({ ... }))`; the account renderer never infers scientific quantities from canvas pixels or parses a prose readout. Units and invented/model scales remain visible.
+
+`account-panel.js` presents the current calculation and a guided challenge. Its disposable worked preview creates a second widget instance, pauses the original and restores the untouched original at handover. Three-dimensional manual shots change camera pose without advancing expensive kinetic geometry. Time-dependent 2D shots use the model's usual small integration steps. Closing a figure destroys the preview, observers and timers.
+
+Still mode respects the remembered `kymaia.chemistry.still` choice and the device preference. `Advance one model step` permits explicit discrete progress with automatic motion frozen. Optional local sound starts off. Guided stamps are stored separately under `iw:account-v1:<figure-id>`; they are not independent mastery evidence or part of the laboratory notebook. The matching laboratory supports saved explanations and export/import.

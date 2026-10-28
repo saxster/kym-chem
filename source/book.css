@@ -530,3 +530,39 @@ html.sd-open { overflow: hidden; }
   .side { font-size: 7.6pt; }
   .sec > h3 .n { position: static; margin-right: .6em; font-size: .8em; }
 }
+
+/* Scientific accounts use the existing paper, ink and ruled editorial language. */
+.live-account { order: 5; width: 100%; font-family: var(--sans); font-size: .82rem; line-height: 1.65; border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: .8rem; color: var(--ink); }
+.live-account h4 { font-family: var(--serif); font-size: 1.12rem; margin: .5rem 0; }
+.live-account p { margin: .6rem 0; }
+.live-account table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.live-account caption { text-align: left; font-weight: 600; padding: .5rem 0; }
+.live-account th, .live-account td { border-bottom: 1px solid var(--rule); text-align: left; padding: .4rem; overflow-wrap: anywhere; }
+.live-account th { width: 55%; }
+.live-account th button { text-align: left; width: 100%; }
+.live-account button, .live-watch button, .live-account select { min-height: 44px; max-width: 100%; white-space: normal; }
+.live-account select { width: 100%; color: var(--ink); background: var(--sheet); font: inherit; border: 1px solid var(--rule); padding: .5rem; }
+.live-account fieldset { min-width: 0; border: 0; margin: 0; padding: .5rem 0; }
+.live-account legend { font-weight: 600; }
+.live-working { border-left: 3px solid var(--green); padding: .6rem .8rem; background: var(--mark-soft); overflow-wrap: anywhere; }
+.live-model-note, .live-inspector { color: var(--muted); }
+.live-challenge { border-block: 1px solid var(--rule); padding-block: .6rem; margin-block: 1rem; }
+.live-stamp { border: 2px solid var(--green); padding: .7rem; color: var(--green); }
+.live-watch { padding: 1rem 0; font: .82rem/1.65 var(--sans); }
+.live-watch summary, .book-symbols summary { cursor: pointer; min-height: 44px; padding-block: .5rem; }
+.live-tour-actions { display: flex; flex-wrap: wrap; gap: .4rem; margin-block: .6rem; }
+.live-previewing > .live-stage, .live-previewing > .live-controls { display: none; }
+.live-preview-label { color: var(--green); font-weight: 600; }
+.live-watch .live-controls { display: block; }
+.live-watch .live-controls > button, .live-watch .live-controls > .live-tabs, .live-watch .live-controls > .live-slider { display: none; }
+.book-symbols { font: .82rem/1.65 var(--sans); border-block-start: 1px solid var(--rule); margin: -.3rem 0 1.3rem; }
+.book-symbols dt { font-weight: 600; }
+.book-symbols dd { margin: .2rem 0 .8rem; }
+.chk-ui .primary { border: 1px dashed var(--rule); border-left: 4px solid var(--green); box-shadow: 0 2px 0 var(--rule-2); transform-origin: top; }
+.live-stage { transform-origin: bottom; animation: book-lift 240ms ease-out; }
+@keyframes book-lift { from { opacity: .2; transform: perspective(900px) rotateX(8deg) translateY(6px); } to { opacity: 1; transform: none; } }
+html.book-still *, html.book-still *::before, html.book-still *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+@media(prefers-reduced-motion:reduce) { .live-stage { animation: none; } }
+@media print { .live-account, .live-watch, .book-symbols { display: none !important; } }
+
+figure.live-on.live-fallback > svg.fig { display: block; }

@@ -170,5 +170,6 @@ Live.register('limiting', (stage, params, api) => {
   api.button('Replay', () => { t = 0; render(); });
   setup(MIXES[0]);
   api.loop((dt) => { if (dt) t = Math.min(T4 + 30, t + dt); render(); });
+  api.account(() => ({mix,nSets,leftH,leftO}));
   return {};
 }, { label: 'Watch the sets form' });

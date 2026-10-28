@@ -95,5 +95,6 @@ Live.register('goldfoil', (stage, params, api) => {
     say(`${total} alpha particles so far. The nuclei are drawn thousands of times too big: at this magnification a real gold nucleus would be far smaller than a pixel. Only an alpha that happens to pass extremely close is turned sharply. To show those rare events in a minute rather than hours, this model makes them far more common than in Geiger and Marsden's foil, where about one in several thousand turned through a large angle.`);
   }
   api.loop((dt) => { if (dt) step(dt); render(); });
+  api.account(() => ({n:{...n}}));
   return {};
 }, { label: 'Fire alpha particles' });

@@ -105,6 +105,7 @@ Live.register('bondwell', (stage, params, api) => {
     atoms(); graph();
     say(words());
   });
+  api.account(() => ({r,energy:V(r)}));
   return {};
 }, { label: 'Move the atoms' });
 

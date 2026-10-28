@@ -175,5 +175,6 @@ Live.register('daniell', (stage, params, api) => {
   }, { pressed: false });
   api.button('Replay', () => { setup(); render(); });
   api.loop((dt) => { if (dt) { t += dt; step(dt); } render(); });
+  api.account(() => ({passed}));
   return {};
 }, { label: 'Watch the current flow' });
