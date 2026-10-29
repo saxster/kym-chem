@@ -249,3 +249,25 @@
   margin: 0.35rem 0;
   color: #203d36;
 }
+
+/* A modal transfer hides every other answer-producing view and traps keyboard focus. */
+dialog.spatial-transfer {
+  position: fixed;
+  inset: 0;
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  box-sizing: border-box;
+  border: 2px solid #526760;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #f7f3e8;
+  color: #203d36;
+  font: 17px/1.55 system-ui, sans-serif;
+}
+dialog.spatial-transfer::backdrop { background: #f7f3e8; }
+dialog.spatial-transfer textarea { width: 100%; box-sizing: border-box; min-height: 7rem; font: inherit; }
+dialog.spatial-transfer button { min-height: 44px; max-width: 100%; white-space: normal; margin: .5rem .5rem .5rem 0; }
+dialog.spatial-transfer :focus-visible { outline: 3px solid #936022; outline-offset: 3px; }
+
+.spatial-investigation > summary h2 { display: inline; margin: 0; font: inherit; }
