@@ -45,17 +45,17 @@ Start: 100% of the carbon-14.
 After 5,730 years: 50%.
 After 2 × 5,730 = 11,460 years: half of 50% = 25%.
 After 3 × 5,730 = 17,190 years: 12.5%.
-It never quite reaches zero; it keeps halving.
+This smooth curve describes the expected fraction in a large sample. Individual nuclei decay at random; a finite sample can eventually have no carbon-14 nuclei left.
 :::
 
 #### Step 5: a clock in every living thing
 
-In 1949 the American chemist Willard Libby turned this into a clock. A little of the carbon in the air is radioactive **carbon-14**, made high in the atmosphere. Plants take it in, animals eat plants, and so every living thing has the same small share of carbon-14. When it dies, it stops taking in new carbon, and its carbon-14 starts to halve every 5,730 years. Measure how much is left, and you know how long ago it died. If a piece of ancient wood has a quarter of the carbon-14 of living wood, it died about 11,460 years ago. Libby won the Nobel Prize in Chemistry in 1960, and his method is used to date everything from Egyptian mummies to cave paintings.
+In 1949 the American chemist Willard Libby turned this into a clock. A little of the carbon in the air is radioactive **carbon-14**, made high in the atmosphere. Plants take it in, and animals obtain carbon through food. When a sample stops exchanging carbon with its surroundings, radioactive decay changes its carbon-14 fraction. In an ideal closed-sample example with a known starting fraction, one quarter remaining corresponds to two half-lives: about 11,460 years. Real starting fractions vary with time and carbon source, so a laboratory must calibrate a radiocarbon age and consider reservoir effects, contamination and uncertainty before estimating a calendar date. Not every living thing starts with the same fraction. Libby won the Nobel Prize in Chemistry in 1960, and his method is used to date everything from Egyptian mummies to cave paintings.
 
 :::careful
 > "After two half-lives, everything is gone."
 
-Half and half again is a quarter, not zero. After two half-lives, a quarter is left. Radioactive substances fade away more and more slowly, never quite vanishing.
+Half and half again is a quarter, not zero. After two half-lives, a quarter is left. For a large sample, the smooth expected fraction keeps halving. This does not promise that a finite number of radioactive nuclei can never reach zero.
 :::
 
 :::home The coin half-life

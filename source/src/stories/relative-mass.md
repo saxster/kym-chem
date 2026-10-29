@@ -48,10 +48,10 @@ Once Avogadro's constant was known, chemists could finally turn comparisons into
 
 :::work
 One mole of hydrogen atoms has a mass of about 1.008 g, and contains 6.022 × 10²³ atoms.
-Mass of one hydrogen atom = 1.008 ÷ (6.022 × 10²³) ≈ 1.67 × 10⁻²⁴ g.
+Average mass per hydrogen atom in that isotope mixture = 1.008 ÷ (6.022 × 10²³) ≈ 1.67 × 10⁻²⁴ g.
 :::
 
-That is 0.000 000 000 000 000 000 000 001 67 grams. A grain of sugar has more than a hundred million million million times that mass.
+That average is 0.000 000 000 000 000 000 000 001 67 grams. An individual hydrogen isotope has its own mass; the periodic-table average is not the exact mass of every atom. A grain of sugar has more than a hundred million million million times that average mass.
 
 #### Step 4: why the numbers are not whole
 
@@ -64,7 +64,7 @@ Look at a periodic table and you see numbers like chlorine 35.45 and copper 63.5
 :::careful
 > "The relative atomic mass of oxygen is 16 grams."
 
-Relative atomic mass has no units: it is a comparison, like "16 times as heavy as a hydrogen atom" (more precisely, 16 twelfths of a carbon-12 atom). The *grams* come in when you take a [mole](#story-mole) of atoms: a mole of oxygen atoms has a mass of 16 grams.
+Relative atomic mass has no units: it compares an average atomic mass with one-twelfth of the mass of a carbon-12 atom. Oxygen's value is about 16, so its average atomic mass is about 16 u. The *grams* come in when you take a [mole](#story-mole) of atoms: a mole of oxygen atoms has a mass of about 16 grams, depending on isotope composition.
 :::
 
 :::home A see-saw for comparing masses

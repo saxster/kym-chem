@@ -1,4 +1,4 @@
-// Titration explorer: drag the burette slider and follow the real calculated pH curve (exact charge balance,
+// Titration explorer: drag the burette slider and follow the local calculated pH curve (exact charge balance,
 // Ka = 1.8 × 10⁻⁵, 25 mL of 0.10 mol/L acid against 0.10 mol/L sodium hydroxide) while a beaker shows
 // the particles present at that point (1 drawn particle = 0.125 mmol; amounts too small to draw are said so).
 import { Live } from './core.js';
@@ -97,10 +97,11 @@ Live.register('titration', (stage, params, api) => {
     let what;
     if (vb === 0) what = weak ? 'Only acetic acid in water: almost every molecule is whole, so the pH starts at 2.87, not 1.' : 'Hydrochloric acid in water: every molecule has already given its proton to water, so the pH starts at 1.';
     else if (vb < 24.5) what = weak
-      ? `Each hydroxide ion added takes a proton from a whole acetic acid molecule, making acetate. With both acid and acetate present this is the <b>buffer region</b>: the pH creeps up slowly.${Math.abs(vb - 12.5) < 0.6 ? ' Halfway: acid and acetate are equal, and the pH is 4.74.' : ''}`
-      : 'Each hydroxide ion added meets a hydronium ion and they make water. Plenty of hydronium is left, so the pH barely moves.';
-    else if (vb <= 25.5) what = `<b>Equivalence.</b> All ${'2.5'} mmol of acid has been used up by ${added.toFixed(2)} mmol of hydroxide. Here a single drop makes the pH leap.${weak ? ' The acetate left behind makes this point slightly basic (pH about 8.7).' : ' For a strong acid the equivalence point is neutral, pH 7.'}`;
-    else what = 'There is no acid left to react, so each extra drop just adds hydroxide ions: <b>excess base</b>, and the pH is high.';
+      ? `Each hydroxide ion added takes a proton from a whole acetic acid molecule, making acetate. When both acid and acetate remain appreciable, they provide a <b>buffer region</b>. Resistance to further base diminishes as the acid reserve becomes small.${vb === 12.5 ? ' At formal halfway, acid and acetate amounts are approximately equal, and pH is about 4.74.' : ''}`
+      : 'Added hydroxide reacts with hydronium to form water. The remaining acid amount and total solution volume set the pH; the change becomes steep near equivalence.';
+    else if (vb < 25) what = `<b>Before equivalence.</b> ${added.toFixed(2)} mmol of hydroxide is less than the initial 2.50 mmol acid amount. A formal acid reserve remains; equilibrium determines the displayed pH.`;
+    else if (vb === 25) what = `<b>Formal equivalence.</b> 2.50 mmol added hydroxide matches the initial 2.50 mmol acid. ${weak ? 'Acetate hydrolysis gives pH about 8.7; a small equilibrium amount of HA remains.' : 'This strong acid–strong base case is neutral at 25 °C, pH about 7.'}`;
+    else what = `<b>After equivalence: excess base.</b> ${added.toFixed(2)} mmol added hydroxide exceeds the initial 2.50 mmol acid. Excess titrant dominates the pH; trace equilibrium species can still be present.`;
     say(`${vb.toFixed(1)} mL added (${added.toFixed(2)} mmol of hydroxide). pH ${s.pH.toFixed(2)}. ${what}${tooFew.length ? ` (There are some ${tooFew.join(' and ')}s too, but fewer than one dot's worth.)` : ''}`);
   }
   api.loop(() => render());

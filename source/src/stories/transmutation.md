@@ -23,7 +23,7 @@ To understand the rest of this story you need one fact. What decides which eleme
 
 :::work
 Gold: 79 protons. Mercury: 80 protons. Lead: 82 protons.
-To turn mercury into gold, you must take away exactly one proton from each nucleus.
+To turn mercury into gold, the proton number must decrease from 80 to 79. A nuclear process can remove a proton or convert one into a neutron; the later electron-capture example does the latter.
 :::
 
 Chemistry cannot do this, because chemistry only rearranges the electrons on the outside. To change the proton number you have to break into the nucleus, which is tiny, extremely tightly held together, and guarded by a powerful electric push against anything with a charge.

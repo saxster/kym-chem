@@ -49,15 +49,15 @@ A lithium-ion cell has two electrodes, and both are like bookshelves with gaps b
 
 #### Step 3: discharging, while you use your phone
 
-When the battery is charged, most of the lithium is tucked between the graphite layers. When you switch your phone on, lithium atoms in the graphite each give up an electron. The lithium ions, Li⁺, travel the short way, through the electrolyte, to the oxide. The electrons cannot go that way. They take the long way round, through the wires and chips of the phone, doing useful work as they go, and meet up with the lithium ions at the oxide.
+When the battery is charged, more lithium ions occupy sites in the graphite host. On discharge, Li⁺ travels through the electrolyte to the oxide host while compensating electrons leave the graphite through the outside circuit and do useful work in the phone. Electrons enter and reduce the oxide host. Lithium stays ionic; the electronic charge of the hosts changes to balance the ion movement. This is not ordinary deposition of lithium metal.
 
 #### Step 4: charging, when you plug it in
 
-The charger pushes everything back: it drives electrons back to the graphite through the wire, and lithium ions follow through the electrolyte, sliding back between the carbon layers. The reaction runs uphill, storing energy, ready for next time. Nothing is used up; the same lithium shuttles back and forth, hundreds or thousands of times.
+The charger pushes everything back: it drives electrons back to the graphite through the wire, and lithium ions follow through the electrolyte, sliding back between the carbon layers. The reaction runs uphill, storing energy, ready for next time. Within the working range, the same lithium ions can shuttle back and forth many times. Side reactions slowly trap some lithium and degrade the cell, so reversibility is not perfect.
 
 :::work
 **How much lithium moves when you use a full charge?**
-A phone battery labelled 4,000 mAh can deliver a current of 4 amps for 1 hour.
+For an ideal single-cell capacity account, 4,000 mAh is 4 ampere-hours of charge. Actual delivered capacity depends on the current and operating conditions.
 Charge = 4 A × 3,600 s = 14,400 coulombs.
 One mole of electrons carries about 96,485 coulombs, so that is 14,400 ÷ 96,485 ≈ 0.149 moles of electrons.
 That means 0.149 moles of lithium ions, about 0.149 × 6.94 ≈ 1.0 gram of lithium, crossing from one side to the other.
@@ -68,11 +68,11 @@ About one gram of lithium moving back and forth runs your phone for a day.
 :::careful
 > "Charging fills the battery up with electrons from the wall."
 
-The battery has the same number of electrons when it is full as when it is flat. Charging only moves them, together with the lithium ions, from one electrode to the other, into the arrangement with more stored energy. That is why a charged battery is no heavier than a flat one.
+The battery has the same number of electrons when it is full as when it is flat. Charging only moves them, together with the lithium ions, from one electrode to the other, into the arrangement with more stored energy. The stored energy comes from the changed arrangement, rather than from adding an extra inventory of electrons to the cell.
 :::
 
 :::home Be a battery detective
-Look at the labels on a power bank, a phone box or a laptop charger (do not open or damage any battery). Find the numbers marked mAh or Wh and V. Using the working above, estimate how many grams of lithium shuttle across the power bank when it is used from full to empty. Then remember the safety rule every battery engineer knows: never puncture, crush or heat a lithium-ion battery, and tell an adult if one ever looks swollen.
+Look at the labels on a power bank, a phone box or a laptop charger (do not open or damage any battery). Find the numbers marked mAh or Wh and V. Use the calculation above only for a stated single-cell capacity. A whole power bank may contain several cells, and its output mAh can be quoted at a different voltage; do not infer its total transported lithium from an unspecified mAh label alone. Then remember the safety rule every battery engineer knows: never puncture, crush or heat a lithium-ion battery, and tell an adult if one ever looks swollen.
 :::
 
 From an oil crisis in America to an oxide in Oxford to a carbon shelf in Japan: the battery in your pocket was built by people who never worked in the same room. Chapter 11 follows the lithium ions inside a real cell.

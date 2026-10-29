@@ -38,7 +38,7 @@ KALPHA = [('Ca', 20, 3.692), ('Sc', 21, 4.091), ('Ti', 22, 4.511), ('V', 23, 4.9
 @figure
 def s_moseley_staircase():
     import math
-    f = Fig(640, 320, 'Square root of the X-ray energy for calcium to zinc rises in equal steps, one per element.')
+    f = Fig(640, 320, 'Square root of modern reference K-alpha X-ray energies for calcium to zinc rises in nearly equal steps, one per element; this is not an exact linear law or the original dataset.')
     x0, y0, w, h = 70, 260, 530, 210
     f.axes(x0, y0, w, h)
     f.text(x0, 34, 'square root of the X-ray energy (each point one element)', 't m', 'start', 12)

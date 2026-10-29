@@ -53,7 +53,7 @@ Check the units: 36 g × 18 g/mol gives 648 g² per mol, which is nonsense. Gram
 
 #### Step 4: the habit
 
-Write every number with its unit. Write every conversion factor as a fraction. Cross out units that appear on top and bottom. If what is left is the unit you wanted, the method is right, even before you check the arithmetic.
+Write every number with its unit. Write every conversion factor as a fraction. Cross out units that appear on top and bottom. If what is left is the unit you wanted, the chain has passed a dimensional check. Still check the factors, specified entities, assumptions and arithmetic: compatible units alone cannot prove the answer is right.
 
 :::home A recipe in two languages
 Find a recipe that gives amounts in cups or spoons. Using a kitchen scale, find how many grams of flour (or sugar, or rice) are in one cup. Write it as a conversion factor, like "130 g / 1 cup". Now convert the whole recipe into grams, writing the units at every step. Then make the recipe (with an adult) using the scale instead of the cups. Do the units cancel properly all the way through?

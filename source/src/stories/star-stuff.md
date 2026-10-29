@@ -19,9 +19,9 @@ She was right. By mass, the ordinary matter of the universe is about three-quart
 
 #### Chapter one of the story: the Big Bang
 
-About 13.8 billion years ago the universe was unimaginably hot and dense, and it was expanding fast. In the first few minutes it was hot enough for protons and neutrons to fuse, but it cooled too quickly to get far. It made hydrogen, helium and a tiny trace of lithium, and then the window closed.
+About 13.8 billion years ago the universe was unimaginably hot and dense, and it was expanding fast. In the first few minutes it was hot enough for protons and neutrons to fuse, but it cooled too quickly to get far. It left mostly hydrogen nuclei, formed helium nuclei and a tiny trace of lithium, and then the nuclear-fusion window closed. Complete neutral atoms formed much later, about 380,000 years after the Big Bang, when nuclei could capture electrons.
 
-That means something remarkable about you. Most of the atoms in your body are hydrogen (you are mostly water, and each water molecule has two hydrogen atoms). Nearly every one of those hydrogen atoms was made in the first minutes of the universe. The hydrogen in a glass of water from your kitchen tap is about 13.8 billion years old.
+That means something remarkable about you. Most of the atoms in your body are hydrogen (you are mostly water, and each water molecule has two hydrogen atoms). Most of those hydrogen nuclei trace back to the early universe. The nuclei in a glass of water carry that ancient history; a complete atom, with its electrons, is a different level of description.
 
 #### Chapter two: the kitchens inside stars
 

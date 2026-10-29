@@ -1,28 +1,46 @@
 // The periodic table as a 3D landscape. Every element is a column standing on its own tile; the height is the property
 // you choose. Turned sideways, the landscape shows the pattern that gives the table its name: each row climbs or falls
-// the same way, again and again. Heights are to scale within each property (zero at the floor). Unknown values (elements
-// made only a few atoms at a time) are left as flat ghost tiles, never guessed.
+// with recurring broad patterns and exceptions. Heights are to scale within each property (zero at the floor).
+// Missing reference values are left as flat ghost tiles; the reason depends on the property and element.
 import {
   BoxGeometry, InstancedMesh, MeshStandardMaterial, Object3D, Color, Sprite, SpriteMaterial, CanvasTexture,
   SRGBColorSpace, Raycaster, Vector2, Quaternion, Euler, Mesh, PlaneGeometry, MeshBasicMaterial, Group, Vector3,
 } from 'three';
 import { Live } from './core.js';
 import { makeStage, webglOK } from './three_kit.js';
-import { SKY } from './skyline_data.js';
+import { SKY, IE_META } from './skyline_data.js';
+import { PROPERTY_NOTES } from '../app/atlas_data.js';
 
 const PROPS = [
-  { key: 5, name: 'Atom size', unit: 'pm', max: 250, fmt: (v) => `atom size ${v} pm (its bonding radius: half the distance between two bonded atoms)`,
-    say: 'Atom size. <b>Every row starts with a skyscraper</b>, an alkali metal, and slopes down to the right, because each step adds a proton that pulls the same shells in tighter. Go down a column and the towers grow: each row adds a new shell.' },
+  { key: 5, name: 'Atom size', unit: 'pm', max: 250, fmt: (v) => `reference single-bond covalent radius ${v} pm (a bonding parameter, not a sharp atom edge)`,
+    say: 'Reference covalent radii generally decrease across a period and increase down a group, with exceptions. Alkali metals near the left of each period after the first often form peaks. These published radius parameters include inferred or estimated values; they are not all direct measurements of atomic edges.' },
   { key: 6, name: 'Grip on its electron', unit: 'kJ/mol', max: 2400, fmt: (v) => `${v} kJ to pull one electron from each atom in a mole`,
-    say: 'First ionisation energy: how much energy it takes to pull one electron away. <b>The mirror image of atom size:</b> the noble gases are the peaks and the alkali metals are the valleys. Small atoms hold on tight; big atoms let go easily.' },
+    say: 'First gas-phase ionisation energy: how much energy it takes to remove an electron from a ground-state atom. NIST ASD reference values are rounded to the nearest 1 kJ/mol; some are theoretical or semiempirical estimates, identified when selected. Values generally rise across a period and fall down a group, with exceptions. Noble gases form peaks and alkali metals form valleys; this broadly contrasts with radius but is not an exact mirror image.' },
   { key: 7, name: 'Pull on shared electrons', unit: '', max: 4.2, fmt: (v) => `electronegativity ${v} on Pauling’s scale`,
-    say: 'Electronegativity: how strongly an atom pulls on electrons it shares in a bond. It rises across each row and falls down each column, so the summit is fluorine, top right. The noble gases have no value, because they hardly ever share.' },
+    say: 'Electronegativity: how strongly an atom attracts shared electron density in a bond. Pauling values generally rise across a period and fall down a group; fluorine is highest in this set. Some noble gases have no assigned value here, while krypton and xenon do have values. A missing entry is not zero.' },
   { key: 8, name: 'Melting point', unit: 'K', max: 3800, fmt: (v) => `melts at ${v} K (${Math.round(v - 273.15)} °C)`,
     say: 'Melting point, in kelvin. A mountain range in the middle (tungsten is the summit), and low ground at both edges. Carbon has no tower because it turns straight to gas at ordinary pressure.' },
   { key: 9, name: 'Density', unit: 'g/cm³', max: 23, fmt: (v) => `${v} g in every cubic centimetre`,
     say: 'Density. The heaviest metals cluster around osmium and iridium in the middle of row 6, more than twenty times as dense as water. Gases are so light their towers barely show.' },
 ];
 const BLOCKS = { s: 'proton', p: 'electron', d: 'neutron', f: 'green' };
+
+export function ionisationReferenceNote(atomicNumber) {
+  const meta = IE_META[atomicNumber - 1];
+  if (!meta) return '';
+  const [type, uncertainty] = meta;
+  const description = type === 'theoretical' ? 'theoretical reference' : type === 'semiempirical' ? 'semiempirical estimate' : 'evaluated experimental reference';
+  const error = uncertainty >= 0.5 ? `; source uncertainty about ±${Number(uncertainty.toPrecision(2))} kJ/mol` : '';
+  return ` (NIST ASD ${description}; rounded to 1 kJ/mol${error})`;
+}
+
+// Reasons are reference metadata, not deductions from the absence of a tower.
+export function missingValueExplanation(symbol, key) {
+  if (key === 8 && symbol === 'He') return 'no normal melting point at 1 atm: helium requires elevated pressure to solidify';
+  if (key === 8 && (symbol === 'C' || symbol === 'As')) return 'no normal melting point in this view: the element sublimes at ordinary pressure';
+  if (key === 7) return 'no Pauling electronegativity value assigned in this reference set; this does not mean zero';
+  return 'value unavailable in this reference set; no value or experimental reason is inferred';
+}
 
 function textSprite(text, fg, bg) {
   const c = document.createElement('canvas'); c.width = 256; c.height = 96;
@@ -120,7 +138,7 @@ Live.register('skyline', (stage, params, api) => {
   // views: the root turns (drag still works); the camera stays put
   const VIEWS = [
     { name: 'Overview', e: [0.98, -0.3, 0] },
-    { name: 'Look along the rows', e: [0.1, 0, 0], say: 'You are looking at the rows side on, all seven lined up behind each other. Watch the left-to-right profile: the same slope repeats in every row.' },
+    { name: 'Look along the rows', e: [0.1, 0, 0], say: 'You are looking at the rows side on, all seven lined up behind each other. Compare the recurring broad profiles and their exceptions; the rows do not all have an identical slope.' },
     { name: 'Look down the columns', e: [0.3, -Math.PI / 2, 0], say: 'Now you are looking along the columns: each family runs across your view, with the top of the table on the right and the bottom on the left, and the noble gases nearest you. Follow any family from right to left and watch it climb or fall: that is the pattern going down a column.' },
   ];
   let view = 0, viewFrom = new Quaternion(), viewTo = new Quaternion(), vt = 1;
@@ -161,7 +179,8 @@ Live.register('skyline', (stage, params, api) => {
     pick.material.map.needsUpdate = true;
     const hNow = to[ei];
     pick.position.set(X(e[2]), hNow + 0.8, Z(e[3])); pick.visible = true;
-    describe(`<b>${e[1]}</b> (${e[0]}): ${v == null ? 'not known: too few atoms have ever been made to measure it' : P.fmt(v)}.`);
+    const note = PROPERTY_NOTES[ei + 1]?.[P.key === 7 ? 'en' : P.key === 8 ? 'mp' : P.key === 9 ? 'density' : ''];
+    describe(`<b>${e[1]}</b> (${e[0]}): ${v == null ? missingValueExplanation(e[0], P.key) : P.fmt(v) + (P.key === 6 ? ionisationReferenceNote(ei + 1) : '')}.${note ? ' ' + note : ''}`);
     kit.render();
   }
   kit.wrap.addEventListener('pointermove', (ev) => { if (ev.pointerType === 'mouse' && !ev.buttons) probe(ev); });

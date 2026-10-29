@@ -163,7 +163,14 @@ Live.register('limiting', (stage, params, api) => {
     if (tt < T1) msg = `${nH2} hydrogen molecules and ${nO2} oxygen molecules, mixed. Each complete set needs exactly 2 H₂ and 1 O₂.`;
     else if (tt < T3) msg = `They make ${nSets} complete set${nSets === 1 ? '' : 's'}. ${leftH ? `${leftH} H₂ ` : ''}${leftH && leftO ? 'and ' : ''}${leftO ? `${leftO} O₂ ` : ''}cannot complete another set.`;
     else if (tt < T4) msg = 'Inside each set, the old bonds break and the same atoms join up again as water molecules. No atom is added or lost.';
-    else msg = `${2 * nSets} water molecules made. ${nO2 > nSets ? 'Hydrogen' : 'Oxygen'} ran out first, so it is the limiting reactant. Count the atoms: ${nH} hydrogen and ${nO} oxygen, before and after.`;
+    else {
+      const remainder = leftH > 0 && leftO > 0
+        ? `${leftH} H₂ and ${leftO} O₂ remain: neither token stock is exhausted, but another complete written group cannot fit.`
+        : leftH === 0 && leftO === 0
+          ? 'Both token stocks are exhausted in the written ratio.'
+          : `${leftH === 0 ? 'Hydrogen' : 'Oxygen'} tokens are exhausted; ${leftH || leftO} ${leftH ? 'H₂' : 'O₂'} remain.`;
+      msg = `${2 * nSets} water tokens made in this complete-group puzzle. ${remainder} Count the atoms: ${nH} hydrogen and ${nO} oxygen, before and after. This grouping rule does not predict molecular collisions or round down bulk amounts in moles.`;
+    }
     say(msg);
   }
   api.tabs(MIXES.map(([a, b]) => `${a} H₂ + ${b} O₂`), (i) => { setup(MIXES[i]); render(); });

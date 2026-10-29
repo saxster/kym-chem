@@ -127,7 +127,7 @@ Live.register('spectrum', (stage, params, api) => {
     elecY = yOf(lev(level).E);
   }
   function tell(msg) {
-    if (mode === 'rainbow') { say('A hot solid, like a bulb filament or the Sun, gives out <b>every</b> colour, a smooth rainbow. A hot gas of separate atoms gives out only <b>certain</b> colours, because each atom has only certain gaps between its levels. That difference is how Bunsen and Kirchhoff could tell elements apart by their light.'); return; }
+    if (mode === 'rainbow') { say('A hot solid, such as a bulb filament, gives a broad continuous spectrum. The Sun also has a broad spectrum, but its visible surface is a layer of gas and plasma, with absorption lines superimposed. A dilute excited atomic gas gives bright lines at <b>certain</b> colours, because each atom has only certain gaps between its levels. That difference is how Bunsen and Kirchhoff could tell elements apart by their light.'); return; }
     say(msg || `${atom.note} Press <b>Give it energy</b>. (Simplified: real atoms choose their routes down with fixed odds.)`);
   }
   tell();

@@ -73,8 +73,10 @@ That was not always easy for Davy. As he grew older and more famous (he was made
 
 Davy's health failed in his late forties, perhaps in part because of all the chemicals he had breathed and handled, though nobody can be sure. He died in Geneva in 1829, aged fifty.
 
-:::home Split water with a battery
-**Ask an adult to help.** You need a 9-volt battery, two pencils sharpened at both ends, a glass of warm water and a teaspoon of salt. Stir the salt into the water. Hold one end of each pencil against a battery terminal (the adult can tape them on), and dip the other ends into the water, not touching each other. Watch the pencil tips: tiny bubbles stream off them. Electricity is pulling the water apart, the same trick Davy used on potash. Do not touch the wet ends to your skin, do not use anything bigger than a 9-volt battery, and pour the water away afterwards.
+:::reference Split water with a battery
+Compare two source-backed electrode accounts: water electrolysis producing hydrogen and oxygen under suitable laboratory conditions, and electrolysis of aqueous sodium chloride, where chloride can be oxidised to chlorine while hydrogen and alkaline solution form. The electrolyte and electrodes help determine the products; bubbles alone do not identify a gas.
+
+This is a reference comparison, not a household procedure. The [Royal Society of Chemistry's brine experiment](https://edu.rsc.org/experiments/electrolysis-of-brine/735.article) identifies the products and the laboratory controls they require. Write the two electrode accounts and explain why adding table salt would change the claim that only water is being split. Davy's potassium experiment used a different substance and different conditions again.
 :::
 
 When you read about electrolysis and the reactivity series in Chapter 8, remember the poor boy from Penzance who first used a battery to tear metals out of the rocks that had hidden them for ever.

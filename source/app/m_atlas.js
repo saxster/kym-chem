@@ -6,7 +6,7 @@
 import App from './core.js';
 import { notesBlock } from './element_notes.js';
 import ELEMENTS from './ptable_data.js';
-import { PROPS, ORIGIN, ORIGINS } from './atlas_data.js';
+import { PROPS, ORIGIN, ORIGINS, PROPERTY_NOTES } from './atlas_data.js';
 
 const { el, store } = App;
 const E = ELEMENTS.map((e, i) => {
@@ -26,7 +26,7 @@ const FAMILIES = {
   g2: { name: 'Alkaline earth metals (group 2)', short: 'Alkaline earth metals', note: 'Two outer electrons; calmer than group 1, and found in rocks, bones and shells.' },
   tm: { name: 'Transition metals (groups 3 to 12)', short: 'Transition metals', note: 'The everyday metals: iron, copper, silver, gold. Strong, often colourful in their compounds, and great at helping reactions along.' },
   ln: { name: 'Lanthanides', short: 'Lanthanides', note: 'Fifteen look-alike metals, once called “rare earths”, now inside every phone, magnet and LED.' },
-  an: { name: 'Actinides', short: 'Actinides', note: 'All radioactive. Uranium and thorium are found in rocks; the rest were made by people.' },
+  an: { name: 'Actinides', short: 'Actinides', note: 'All radioactive. Thorium and uranium occur naturally in substantial amounts; several other members occur in traces. Many heavier members are chiefly synthesized in laboratories and reactors.' },
   g13: { name: 'Boron group (group 13)', short: 'Boron group', note: 'Three outer electrons: boron, aluminium, gallium, indium, thallium.' },
   g14: { name: 'Carbon group (group 14)', short: 'Carbon group', note: 'Four outer electrons: carbon, the backbone of life; silicon, the heart of computer chips; then tin and lead.' },
   g15: { name: 'Nitrogen group (group 15)', short: 'Nitrogen group', note: 'Five outer electrons: nitrogen and phosphorus, both vital for living things.' },
@@ -70,18 +70,20 @@ function classWords(e) {
   }[e.cls] + (e.z === 84 ? ' (some books call polonium a metalloid)' : '') + '.';
 }
 function radWords(e) {
-  if (e.rad == null) return 'Unknown: never measured.';
+  if (e.rad == null) return 'No covalent-radius value is supplied in this reference set.';
   const h = e.rad / 32;
-  return `About ${e.rad} picometres across to its bonding edge (a picometre is a millionth of a millionth of a metre)` +
-    (e.z === 1 ? ': the smallest of all.' : `, about ${h >= 1.95 ? h.toFixed(0) : h.toFixed(1)} times hydrogen’s.`) +
+  return `Reference single-bond covalent radius: ${e.rad} picometres (a picometre is a millionth of a millionth of a metre). A radius is a size parameter, not a diameter or a sharp atomic edge` +
+    (e.z === 1 ? '; the smallest radius in this set.' : `; about ${h >= 1.95 ? h.toFixed(0) : h.toFixed(1)} times hydrogen’s radius.`) +
     (e.z === 2 || e.z === 10 ? ' (Helium and neon form no ordinary bonds, so this is a calculated value.)' : '');
 }
 function enWords(e) {
+  if (PROPERTY_NOTES[e.z]?.en) return PROPERTY_NOTES[e.z].en;
   if (e.en == null) return [2, 10, 18, 86].includes(e.z) ? 'No value: it forms no ordinary bonds, so there is nothing to measure.' : 'Unknown: never measured.';
   const how = e.en < 1.2 ? 'gives its electrons away very easily' : e.en < 1.8 ? 'lets electrons go fairly easily' : e.en < 2.4 ? 'holds its electrons moderately' : e.en < 3 ? 'pulls quite hard on electrons' : 'pulls on electrons harder than almost anything';
   return `${e.en.toFixed(2)} on Pauling’s scale (0.7 to 4): it ${how}.`;
 }
 function denWords(e) {
+  if (PROPERTY_NOTES[e.z]?.density) return `${e.den} g/cm³. ${PROPERTY_NOTES[e.z].density}`;
   if (e.den == null) return 'Unknown: never measured.';
   if (e.st === 'g') {
     const gl = e.den * 1000, r = gl / 1.29;
@@ -91,6 +93,7 @@ function denWords(e) {
   return `${e.den.toFixed(e.den < 10 ? 2 : 1)} g per cm³: ${t}${e.z === 6 ? ' (graphite; diamond is 3.5)' : ''}.`;
 }
 function mpWords(e) {
+  if (PROPERTY_NOTES[e.z]?.mp) return PROPERTY_NOTES[e.z].mp;
   if (e.z === 2) return 'Never freezes at ordinary pressure, even near absolute zero.';
   if (e.z === 6) return 'Does not melt at ordinary pressure: above roughly 3,600 °C it turns straight into a gas.';
   if (e.z === 33) return 'Does not melt at ordinary pressure: at 615 °C it turns straight into a gas.';
@@ -130,9 +133,9 @@ const LENSES = [
   { id: 'density', label: 'Density', kind: 'seq', val: e => e.den, log: true, lo: Math.log10(0.00009), hi: Math.log10(23), lowLabel: 'light', highLabel: 'heavy',
     what: 'How heavy a fixed volume of each element is (gases are thousands of times lighter, so the scale is stretched).',
     notice: 'The heaviest elements, osmium and iridium, sit in the middle of row 6. Lithium, sodium and potassium are so light they would float on water.' },
-  { id: 'melt', label: 'Melting point', kind: 'seq', val: e => (e.z === 6 ? 3915 : e.z === 33 ? 887 : e.mp), lo: 0, hi: 3700, lowLabel: 'melts cold', highLabel: 'melts hot',
-    what: 'The temperature at which each element melts.',
-    notice: 'Tungsten, in the middle of the table, holds the record among metals: 3,422 °C, which is why it glowed inside old light bulbs.' },
+  { id: 'melt', label: 'Melting point', kind: 'seq', val: e => e.mp, lo: 0, hi: 3700, lowLabel: 'melts cold', highLabel: 'melts hot',
+    what: 'Reference solid-to-liquid transition temperatures. Carbon and arsenic sublime at ordinary pressure, so no melting value is coloured here; helium also has no normal melting point at 1 atm.',
+    notice: 'Tungsten, in the middle of the table, holds the record among metals: 3,422 °C, which is why it glowed inside old light bulbs. Missing values are not zero.' },
   { id: 'origin', label: 'Where it came from', kind: 'cat', cat: e => e.origin[0], cats: ORIGINS,
     what: 'Where the atoms in our Solar System were mostly made (simplified from astronomer Jennifer Johnson’s 2019 table).',
     notice: 'Hydrogen comes from the Big Bang, so the water in your body is almost 14 billion years old. The gold in a ring was probably made when two dead stars collided.' },

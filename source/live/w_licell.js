@@ -9,7 +9,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
 Live.register('licell', (stage, params, api) => {
   const c = api.colors();
   const W = 640, H = 360;
-  const k = api.canvas(W, H, 'Animated lithium-ion cell. On discharge, lithium ions move from graphite through the electrolyte into the metal oxide while electrons travel through the phone. On charge, both move back.');
+  const k = api.canvas(W, H, 'Schematic lithium-ion host transfer. Selected lithium-ion markers move between graphite and oxide while compensating electrons use the external circuit. The step meter and complete marker transfer are teaching choices, not calibrated state of charge or complete extraction in a real cell.');
   const ctx = k.ctx;
   const say = api.readout();
   const NLI = 8;
@@ -86,7 +86,7 @@ Live.register('licell', (stage, params, api) => {
       else if (q < 0.7) { const u = (q - 0.3) / 0.4; x = lerp(m.dir === 0 ? 270 : 370, m.dir === 0 ? 370 : 270, u); y = midY; }
       else { const u = (q - 0.7) / 0.3; x = lerp(m.dir === 0 ? 370 : 270, m.tx, u); y = lerp(midY, m.ty, u); }
       drawLi(x, y);
-      // its electron takes the outside path at the same time
+      // a compensating electron marker uses the external path; no unique electron identity is inferred
       const path = m.dir === 0 ? [[110, 96], [110, 40], [530, 40], [530, 96]] : [[530, 96], [530, 40], [110, 40], [110, 96]];
       const lens = [56, 420, 56], tot = 532;
       let d = q * tot, i = 0;
@@ -99,21 +99,21 @@ Live.register('licell', (stage, params, api) => {
     const nG = li.filter((l) => l.side === 'g' && !l.moving).length;
     const nO = li.filter((l) => l.side === 'o' && !l.moving).length;
     const nE = li.filter((l) => l.moving).length;
-    api.draw.text(ctx, `graphite: ${nG} Li`, 160, 326, { size: 13, weight: 600, color: c.ink, align: 'center' });
-    api.draw.text(ctx, `metal oxide: ${nO} Li`, 480, 326, { size: 13, weight: 600, color: c.ink, align: 'center' });
+    api.draw.text(ctx, `graphite: ${nG} Li⁺`, 160, 326, { size: 13, weight: 600, color: c.ink, align: 'center' });
+    api.draw.text(ctx, `metal oxide: ${nO} Li⁺`, 480, 326, { size: 13, weight: 600, color: c.ink, align: 'center' });
     api.draw.text(ctx, `crossing: ${nE}`, 320, 326, { size: 12, color: c.proton, align: 'center' });
     api.draw.text(ctx, `total lithium: ${nG + nO + nE}`, 320, 346, { size: 12, color: c.muted, align: 'center' });
     // battery level = share of lithium stored in the graphite
     const level = (nG + nE * 0.5) / NLI;
     ctx.strokeStyle = c.ink; ctx.lineWidth = 1.4; ctx.strokeRect(560, 18, 50, 22); ctx.fillStyle = c.ink; ctx.fillRect(610, 24, 4, 10);
     ctx.fillStyle = level > 0.25 ? c.green : c.proton; ctx.fillRect(563, 21, 44 * level, 16);
-    api.draw.text(ctx, `${Math.round(level * 100)}%`, 552, 34, { size: 12, color: c.ink, align: 'right', weight: 600 });
+    api.draw.text(ctx, `${Math.round(level * 100)}% steps`, 552, 34, { size: 12, color: c.ink, align: 'right', weight: 600 });
     const arrow = mode === 0 ? [[160, 40], [240, 40], [400, 40], [480, 40]] : [[480, 40], [400, 40], [240, 40], [160, 40]];
     api.draw.arrow(ctx, ...arrow[0], ...arrow[1], c.electron, 1.6);
     api.draw.arrow(ctx, ...arrow[2], ...arrow[3], c.electron, 1.6);
-    if (mode === 0) say(nG === 0 && !nE ? 'Flat: all the lithium has moved into the metal oxide. Choose Charge to push it back.' :
-      'Discharging. Each Li⁺ takes the short path through the electrolyte; its electron takes the long way round, through the phone, doing useful work on the way. The total lithium never changes.');
-    else say(nO === 0 && !nE ? 'Fully charged: all the lithium is back between the graphite layers, ready to power the phone again.' :
+    if (mode === 0) say(nG === 0 && !nE ? 'Selected transfer complete: all eight model markers are in the oxide host. This endpoint is not complete lithium extraction or a calibrated empty real cell. Choose Charge to reverse the teaching steps.' :
+      'Discharging. Li⁺ crosses the electrolyte while compensating electrons pass through the phone and reduce the oxide host. Lithium stays ionic; the total model inventory is conserved. The meter tracks selected transfer steps, not measured state of charge.');
+    else say(nO === 0 && !nE ? 'Selected return complete: all eight model markers are back in graphite. The host compensates their ionic charge electronically. Complete marker transfer is a schematic choice, not a real-cell operating limit.' :
       'Charging. The charger pushes electrons back to the graphite side, and Li⁺ ions follow through the electrolyte. This direction is uphill: it needs the charger’s energy.');
   }
 

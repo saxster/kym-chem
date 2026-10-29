@@ -17,7 +17,7 @@ Sørensen was studying enzymes: the proteins that turn grain into sugar and suga
 
 #### Step 1: the numbers are horrible
 
-Acidity depends on how many hydrogen ions, really ==hydronium== ions, ==H₃O⁺==, are floating in each litre. Chemists count them in moles per litre. Here are some real values:
+pH describes hydrogen-ion activity, which accounts for how ions behave in a solution. In nearly ideal dilute aqueous examples near 25 °C, hydronium concentration gives a useful approximation. Chemists express that concentration in moles per litre. Here are illustrative approximate concentrations; real samples vary:
 
 :::work
 Stomach acid: about 0.01 mol/L
@@ -39,7 +39,7 @@ Sørensen's idea was simple. Write the concentration as a power of ten, and use 
 0.000 000 1 mol/L = 10⁻⁷ → pH 7
 :::
 
-That is the whole ==pH scale==. A pH number tells you "the concentration of hydronium is ten to the minus this many moles per litre". For numbers in between, like 0.006, the pH comes out in between too (about 2.2). Mathematicians call this kind of counting-the-power a logarithm, but you do not need the word to use it: pH just counts how many places the decimal point has moved.
+That is the concentration approximation to the ==pH scale==: pH ≈ −log₁₀([H₃O⁺] / (1 mol/L)). The formal definition uses hydrogen-ion activity; a calibrated pH meter reports pH rather than directly counting ions. For numbers in between, like 0.006, the pH comes out in between too (about 2.2). Mathematicians call this kind of counting-the-power a logarithm, but you do not need the word to use it: pH just counts how many places the decimal point has moved.
 
 Nobody is completely sure what the "p" originally stood for. Sørensen wrote it as p<sub>H</sub>, with a small H, and people have guessed it meant *potenz* (German for power), *puissance* (French for power), or simply the letter he used for a quantity in his equations. Whatever its origin, it stuck.
 
@@ -57,7 +57,7 @@ pH 3 has 10 × 10 = 100 times as much as pH 5.
 pH 2 has 10 × 10 × 10 = 1,000 times as much as pH 5.
 :::
 
-That is why a small-looking change in pH can be a big deal. When the surface of the ocean goes from pH 8.2 to 8.1, the hydronium in it has gone up by about 26%.
+That is why a small-looking change in pH can be a big deal. A drop from pH 8.2 to 8.1 means about a 26% rise in hydrogen-ion activity. Concentration follows this comparison approximately when the activity-to-concentration relation is held fixed.
 
 :::careful
 > "pH 6 is twice as acidic as pH 3, because 6 is twice 3."
@@ -67,7 +67,7 @@ It is the other way round, and much more than twice. pH 3 has 1,000 times as muc
 
 #### Step 5: neutral is 7, and why
 
-Even perfectly pure water is never quite without ions. Now and then two water molecules pass a proton between them, making one H₃O⁺ and one OH⁻. At 25 °C this happens just enough to leave 10⁻⁷ mol/L of each. Equal amounts of the two means neutral, so neutral water is pH 7. Below 7, there is more H₃O⁺ than OH⁻: acidic. Above 7, there is less: basic.
+Even perfectly pure water is never quite without ions. Now and then two water molecules pass a proton between them, making one H₃O⁺ and one OH⁻. At 25 °C this happens just enough to leave 10⁻⁷ mol/L of each. Equal amounts of the two means neutral, so neutral water at this temperature is pH about 7. In these examples below 7 there is more H₃O⁺ than OH⁻: acidic. Above 7 there is less: basic. Neutral pH changes with temperature.
 
 #### Measuring it: a glass that feels acid
 
@@ -79,4 +79,4 @@ The pH meter as a handy instrument came from an unexpected place. In the 1930s C
 If you have made red cabbage indicator (see the story *Sour and slippery: what is an acid?*), use it to line up kitchen liquids from most acidic to most basic: lemon juice, vinegar, a fizzy drink, milk, tap water, and a little baking soda in water. Pinker means more acidic; bluer or greener means more basic. You are building your own pH scale, without any numbers.
 :::
 
-So pH is a shortcut invented by a brewer's chemist to save himself from writing zeros. Every time you see a pH number in Chapter 7, read it as "count the zeros": pH 2 means 0.01 mol/L of hydronium, and every step is ten times.
+So pH is a shortcut invented by a brewer's chemist to save himself from writing zeros. Every time you see a pH number in Chapter 7, read it as "count the zeros": pH 2 corresponds approximately to 0.01 mol/L hydronium in the ideal concentration model, and every pH step is tenfold in hydrogen-ion activity.

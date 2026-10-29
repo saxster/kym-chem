@@ -46,13 +46,13 @@ Natural chlorine is about 75.8% chlorine-35 and 24.2% chlorine-37. The precise m
 
 :::work
 Average atomic mass = 0.758 × 34.969 + 0.242 × 36.966
-= 26.51 + 8.95
-= 35.45 u
+≈ 26.5065 + 8.9458
+≈ 35.4523 u ≈ 35.45 u
 :::
 
 :::fig mass_spectrum_cl() | Chlorine sorted by mass. Two peaks, one at 35 and one at 37, and the average, 35.45, falls between them where there are no atoms at all.
 
-That 35.45 is what you see printed on a periodic table. It is the right number to use when you weigh out a spoonful of salt, because a spoonful contains countless chlorine atoms in exactly that mixture. But it describes the crowd, not any single atom.
+That 35.45 is what you see printed on a periodic table. It is the right number to use when you weigh out a spoonful of salt, because a spoonful contains countless chlorine atoms in approximately that mixture. Natural isotope fractions vary slightly between samples. But it describes the crowd, not any single atom.
 
 :::careful
 > "The average of 35 and 37 is 36, so chlorine's atomic mass should be 36."

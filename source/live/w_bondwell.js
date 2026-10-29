@@ -1,5 +1,5 @@
 // Why a bond forms (Section 2.3): two hydrogen atoms and the energy of the pair against the distance between
-// their nuclei. A Morse curve with the measured depth (436 kJ/mol) and bond length (74 pm); the exact shape
+// their nuclei. A Morse curve scaled to a rounded 298 K bond enthalpy (436 kJ/mol), with equilibrium distance 74 pm; the exact shape
 // between those points is a model, as the readout says. Drag the slider, or let the atoms come together
 // (the energy they lose leaves as heat) or pull them apart (436 kJ/mol must be paid).
 import { Live } from './core.js';
@@ -83,7 +83,7 @@ Live.register('bondwell', (stage, params, api) => {
     else s = '<b>Too far apart.</b> The atoms hardly notice each other, so the energy is the same as two separate atoms: zero on this graph.';
     if (anim === 'fall') s += ' They roll down into the well and rock back and forth. To <i>stay</i> bonded, the pair must get rid of the extra energy, as heat passed to other molecules (or as light). Without that, they would fly apart again.';
     if (anim === 'pull' || paid > 400) s += ' Pulling them apart means climbing out of the well: <b>436 kJ for every mole of bonds</b> must be supplied. Breaking a bond always costs energy; making one always gives it out.';
-    return s + ' <span class="muted">(The two marked numbers are measured; the curve between them is a standard model shape.)</span>';
+    return s + ' <span class="muted">(Teaching curve scaled to the rounded 298 K bond dissociation enthalpy, not the measured electronic well depth De. Zero-point and thermal energies differ.)</span>';
   }
 
   api.loop((dt) => {

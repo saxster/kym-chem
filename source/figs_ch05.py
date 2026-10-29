@@ -155,23 +155,23 @@ def c5_equilibrium_rates():
 
 @figure
 def c5_bond_ledger():
-    f = Fig(640, 330, 'Energy ledger for 2 H2 + O2 to 2 H2O: breaking bonds raises energy by 1370 kJ, making bonds lowers it by 1852 kJ, net minus 482 kJ.')
+    f = Fig(640, 330, 'Energy ledger for 2 H2 + O2 to 2 H2O: breaking bonds raises energy by 1370.4 kJ, making bonds lowers it by 1854.0 kJ, net minus 483.6 kJ.')
     x0, w = 70, 520
     Y = lambda v: 60 + (1450 - v) / 2050 * 240   # v from -600 to 1450
     f.line(x0, Y(0), x0 + w, Y(0), 'ln r dash')
-    cols = [(110, 0, '2 H₂ + O₂', 'start'), (300, 1370, '4 H + 2 O', 'separate atoms'), (480, -482, '2 H₂O', 'products')]
+    cols = [(110, 0, '2 H₂ + O₂', 'start'), (300, 1370.4, '4 H + 2 O', 'separate atoms'), (480, -483.6, '2 H₂O', 'products')]
     for x, v, lab, sub in cols:
         f.line(x - 60, Y(v), x + 60, Y(v), 'ln vol')
         f.text(x, Y(v) - 22, lab, 't s', 'middle', 15)
         f.text(x, Y(v) - 6, sub, 't m', 'middle', 11.5)
-    f.arrow(185, Y(0) - 2, 236, Y(1370) + 4, 'proton', 1.8)
-    f.lines(140, Y(760), ['break bonds', '+1,370 kJ in'], 't p b', 'middle', 13)
-    f.arrow(364, Y(1370) + 4, 416, Y(-482) - 2, 'green', 1.8)
-    f.lines(396, Y(720), ['make bonds', '−1,852 kJ out'], 't g b', 'start', 13)
+    f.arrow(185, Y(0) - 2, 236, Y(1370.4) + 4, 'proton', 1.8)
+    f.lines(140, Y(760), ['break bonds', '+1,370.4 kJ in'], 't p b', 'middle', 13)
+    f.arrow(364, Y(1370.4) + 4, 416, Y(-483.6) - 2, 'green', 1.8)
+    f.lines(396, Y(720), ['make bonds', '−1,854.0 kJ out'], 't g b', 'start', 13)
     f.line(545, Y(0), 560, Y(0), 'ln')
-    f.line(545, Y(-482), 560, Y(-482), 'ln')
-    f.arrow(553, Y(0), 553, Y(-482) - 2, 'ink', 1.4)
-    f.lines(566, Y(-241) - 4, ['net', '−482 kJ'], 't b', 'start', 13)
+    f.line(545, Y(-483.6), 560, Y(-483.6), 'ln')
+    f.arrow(553, Y(0), 553, Y(-483.6) - 2, 'ink', 1.4)
+    f.lines(566, Y(-241) - 4, ['net', '−483.6 kJ'], 't b', 'start', 13)
     f.text(320, 318, 'gas-phase bond estimate; gas-water reference near −484 kJ', 't m', 'middle', 12)
     return f.svg()
 

@@ -61,7 +61,7 @@ Burning changes things into new substances, often gases you cannot see. If you c
 :::
 
 :::home The bag that does not get lighter
-You need a zip-lock sandwich bag, a teaspoon of baking soda, a few tablespoons of vinegar and a kitchen scale. Wrap the baking soda in a small piece of tissue and put it in one corner of the bag. Pour the vinegar into the other corner, keeping them apart, squeeze out most of the air and seal the bag firmly. Weigh the bag. Now tip it so the vinegar soaks the tissue: the mixture fizzes and the bag puffs up with carbon dioxide. Weigh it again: the same. Finally open the bag, let the gas escape and weigh once more: now it is lighter, because the gas has left. Lavoisier's whole argument, on your kitchen table. (Use small amounts so the bag does not burst.)
+With an adult, use a zip-lock sandwich bag, small amounts of baking soda and vinegar, and a kitchen scale. Keep the ingredients apart in the bag until it is sealed, then tip them together and compare readings before and after fizzing. Do not inflate it tightly; stop if it strains or leaks. The contents keep the same total chemical mass if nothing escapes. The scale need not read exactly the same: an inflated bag displaces more air, which changes buoyancy, and leaks or motion can affect the reading. Opening it allows gas to leave the weighed system. Identify those measurement limits before using the result as evidence for conservation.
 :::
 
 #### A sad ending

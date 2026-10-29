@@ -3,16 +3,15 @@ import math, random
 from figs_core import Fig, figure, FIGS
 
 
-def _cloud(f, cx, cy, scale, dens, box, n, seed, cls):
+def _cloud(f, cx, cy, scale, dens, maximum, box, n, seed, cls):
     """Scatter dots by rejection sampling a 2D slice (z = 0) of a hydrogen-like |psi|^2."""
     rnd = random.Random(seed)
-    mx = max(dens(rnd.uniform(-box, box), rnd.uniform(-box, box)) for _ in range(4000)) or 1
     k = 0
     tries = 0
     while k < n and tries < n * 400:
         tries += 1
         x, y = rnd.uniform(-box, box), rnd.uniform(-box, box)
-        if rnd.random() * mx * 1.05 < dens(x, y):
+        if rnd.random() * maximum < dens(x, y):
             f.circle(cx + x * scale, cy - y * scale, 1.15, cls)
             k += 1
 
@@ -40,11 +39,11 @@ def i_orbitals():
     def d1s(x, y): r = math.hypot(x, y); return math.exp(-2 * r)
     def d2s(x, y): r = math.hypot(x, y); v = (2 - r) * math.exp(-r / 2); return v * v
     def d2p(x, y): r = math.hypot(x, y); v = x * math.exp(-r / 2); return v * v
-    _cloud(f, 280, 140, 22, d1s, 3.0, 380, 1, 'pt-e')
+    _cloud(f, 280, 140, 22, d1s, 1, 3.0, 380, 1, 'pt-e')
     f.text(280, 254, '1s', 't b', 'middle', 13)
-    _cloud(f, 410, 140, 8.2, d2s, 11, 700, 2, 'pt-e')
+    _cloud(f, 410, 140, 8.2, d2s, 4, 11, 700, 2, 'pt-e')
     f.text(410, 254, '2s: radial node', 't b', 'middle', 13)
-    _cloud(f, 560, 140, 8.2, d2p, 10, 700, 3, 'pt-e')
+    _cloud(f, 560, 140, 8.2, d2p, 4 * math.exp(-2), 10, 700, 3, 'pt-e')
     f.text(560, 254, '2p (one of three)', 't b', 'middle', 13)
     for x in (280, 410, 560):
         f.circle(x, 140, 3.5, 'pt-p')

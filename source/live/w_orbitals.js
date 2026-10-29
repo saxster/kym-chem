@@ -19,17 +19,18 @@ const DENS = {
   '3dz2': (x, y, z) => { const r = Math.hypot(x, y, z); const f = (3 * z * z - r * r) * Math.exp(-r / 3); return f * f; },
 };
 const BOX = { '1s': 3.2, '2s': 11, '2px': 10, '2py': 10, '2pz': 10, '3dz2': 18 };
+// Analytic upper bounds of the unnormalised densities. A maximum estimated
+// from random probes can miss the core and clip the intended distribution.
+const MAX_DENSITY = { '1s': 1, '2s': 4, '2px': 4 * Math.exp(-2), '2py': 4 * Math.exp(-2), '2pz': 4 * Math.exp(-2), '3dz2': 4 * 6 ** 4 * Math.exp(-4) };
 
 function sample(name, n, rnd) {
   const d = DENS[name], L = BOX[name];
-  let max = 0;
-  for (let i = 0; i < 6000; i++) max = Math.max(max, d((rnd() * 2 - 1) * L, (rnd() * 2 - 1) * L, (rnd() * 2 - 1) * L));
-  if (name === '1s') max = 1;
+  const max = MAX_DENSITY[name];
   const pts = [];
   let guard = 0;
   while (pts.length < n * 3 && guard++ < n * 4000) {
     const x = (rnd() * 2 - 1) * L, y = (rnd() * 2 - 1) * L, z = (rnd() * 2 - 1) * L;
-    if (rnd() * max * 1.05 < d(x, y, z)) pts.push(x, y, z);
+    if (rnd() * max < d(x, y, z)) pts.push(x, y, z);
   }
   return pts;
 }

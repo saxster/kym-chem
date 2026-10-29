@@ -81,21 +81,23 @@ Live.register('gasbox', (stage, params, api) => {
     }
     // labels
     const P = 8.314462618 * T / V;                       // kPa for 1 mol, V in L
-    const counted = (smooth ?? 0) * calib;
+    const counted = smooth == null ? null : smooth * calib;
     api.draw.text(ctx, '1 mole of gas', box.x, 28, { size: 13, color: c.muted });
     api.draw.text(ctx, `${T} K, ${V} L`, right, 28, { size: 13, color: c.ink, align: 'right', weight: 600 });
     // pressure gauge: counted (bar) vs rule (tick)
     const gx = 40, gy = 262, gw = 560, max = 900;
     ctx.fillStyle = c.rule_2; ctx.fillRect(gx, gy, gw, 12);
-    ctx.fillStyle = c.proton; ctx.fillRect(gx, gy, Math.min(gw, gw * counted / max), 12);
+    if (counted != null) { ctx.fillStyle = c.proton; ctx.fillRect(gx, gy, Math.min(gw, gw * counted / max), 12); }
     const tx = gx + Math.min(gw, gw * P / max);
     ctx.fillStyle = c.ink; ctx.fillRect(tx - 1.5, gy - 5, 3, 22);
-    api.draw.text(ctx, `push on the ${mode === 'volume' ? 'piston' : 'right-hand wall'}, counted: ${Math.round(counted)} kPa`, gx, gy + 32, { size: 12.5, color: c.proton, weight: 600 });
+    api.draw.text(ctx, counted == null ? 'Collision sampling: no interval yet' : `computed wall pushes: ${Math.round(counted)} kPa`, gx, gy + 32, { size: 12.5, color: c.proton, weight: 600 });
     api.draw.text(ctx, `rule P = nRT/V: ${P.toFixed(0)} kPa`, gx + gw, gy + 32, { size: 12.5, color: c.ink, align: 'right' });
-    say(mode === 'volume'
-      ? `${V} L at 300 K. The red bar counts the molecules\u2019 computed pushes on the piston; the black mark is the rule P = nRT/V (${P.toFixed(0)} kPa). The count wobbles because there are only ${N} molecules here; the displayed gauge is calibrated to the ideal-gas rule, not a measured real-gas pressure.`
-      : `${T} K in 10 L. Hotter molecules move faster, so each hit is harder and hits come more often. The red bar counts their pushes; the black mark is the rule P = nRT/V (${P.toFixed(0)} kPa). It wobbles because there are only ${N} molecules here.`);
+    const sampling = counted == null ? ' No collision-sampling interval has run yet. The gas still has pressure; use the calculated mark or sample a model interval.' : '';
+    say((mode === 'volume'
+      ? `${V} L at 300 K. The red bar samples computed wall pushes; the black mark is the rule P = nRT/V (${P.toFixed(0)} kPa). Only ${N} display markers are used; their gauge is calibrated to the ideal-gas rule, not a measured real-gas pressure.`
+      : `${T} K in 10 L. Hotter molecules move faster, so each hit is harder and hits come more often. The red bar samples computed wall pushes; the black mark is the rule P = nRT/V (${P.toFixed(0)} kPa). Only ${N} display markers are used; their gauge is calibrated to the ideal-gas rule, not a measured real-gas pressure.`) + sampling);
   }
+  api.button('Sample 1 model second', () => { for (let i = 0; i < 60; i++) step(1 / 60); render(); });
   api.loop((dt) => { if (dt) step(dt); render(); });
   api.account(() => ({T,V}));
   return {};

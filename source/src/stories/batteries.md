@@ -31,19 +31,19 @@ Let's see what was really going on inside the pile, step by step.
 
 #### Step 1: two metals, two different grips
 
-Some metals give up their outer electrons more readily than others. Zinc gives them up more readily than copper (Chapter 8 explains how chemists know). So if zinc and copper are connected and both touch a salty liquid, electrons tend to leave the zinc, which dissolves a little as Zn²⁺ ions, and arrive at the copper side.
+The modern explanation pairs two chemical changes. Zinc can be oxidised to Zn²⁺, leaving electrons in the metal. A reduction must consume electrons at the other electrode. In the simplified acidic zinc–copper account, hydrogen ions are reduced to hydrogen at the copper surface. With other electrolytes or dissolved oxygen, competing reactions can matter. The whole electrode-and-electrolyte system determines the direction and voltage; the metals alone are not enough.
 
 #### Step 2: the long way round
 
-If the two metals touch directly, the electrons hop straight across and the energy just warms things up a tiny bit. The trick of a ==battery== is to give the electrons only one route: through a wire, outside the cell. On the way, they can light a bulb, buzz a buzzer or twitch a frog's leg.
+Keep the two electrodes from touching within the electrolyte, and connect them through an external wire. Oxidation supplies electrons at one electrode while reduction consumes them at the other. On the external path, electrical work can light a suitable bulb, buzz a buzzer or twitch a frog's leg. A direct conducting connection bypassing the device would short-circuit it.
 
 #### Step 3: closing the loop
 
-Electrons cannot pile up on one side forever. As they leave the zinc, the liquid around it gains positive ions; as they arrive at the copper, the liquid there would build up negative charge. Something has to keep both sides balanced, or the flow would stop almost instantly. In Volta's pile, the salty cardboard did the job: ions moving through the liquid carried charge one way while electrons travelled the other way through the wire. A battery always has two paths: electrons through the wire, ions through the liquid.
+In the acidic example, zinc oxidation adds Zn²⁺ to the liquid at one side, while hydrogen-ion reduction removes positive ions at the other. Ions must move through the electrolyte to prevent a bulk charge imbalance from halting sustained current. The wet cardboard in Volta's pile provided an ionic path. In this kind of cell, electrons carry current in the metals and external wire; ions carry it through the electrolyte.
 
 #### Step 4: stacking up
 
-One zinc-copper pair gives a push of about one volt. Stack many pairs on top of each other, so the electrons go through one after another, and the pushes add up. Volta's tall piles gave dozens of volts. Today's batteries do the same: a 9-volt battery is six small cells stacked inside one box.
+A zinc–copper cell can give a voltage approaching one volt, depending on the electrolyte and electrode conditions. Connect cells in series and their voltages add. Volta's tall piles gave dozens of volts. A familiar rectangular alkaline 9-volt battery similarly contains six smaller cells in series; other battery chemistries use different arrangements.
 
 #### The battery that didn't fade
 
@@ -58,7 +58,7 @@ A battery stores chemicals that are ready to react. The electricity is made as t
 :::
 
 :::home Make a lemon battery (with an adult)
-You need two or three lemons, the same number of zinc-coated (galvanised) nails or screws, the same number of strips of copper (copper wire, or a copper-coated coin), some wire with crocodile clips, and a small red LED. Push one nail and one piece of copper into each lemon, a few centimetres apart, not touching. Each lemon makes a cell of a little under 1 volt. Join the lemons in a chain: the copper of one to the nail of the next. Connect the free copper and the free nail at the ends to the LED's two legs (if it does not light, swap the legs round). Turn off the lights: the LED should glow faintly. You have rebuilt Volta's pile. Afterwards, throw the lemons away; do not eat them.
+You need two or three lemons, the same number of zinc-coated (galvanised) nails or screws, pieces of copper wire, connecting wires with crocodile clips, and a small red LED or a multimeter. Push one nail and one copper piece into each lemon, a few centimetres apart, not touching. Compare the voltage of one cell with cells joined in a chain: copper of one to the nail of the next. A red LED may glow faintly, but limited current, surface films or poor contacts can leave it dark; swapping its connections checks its direction. In the simplified account, zinc and hydrogen ions are consumed while the juice also carries ions. Afterwards, throw the lemons away; do not eat them. This reuses the idea of cells in series, with different materials and conditions from Volta's original pile.
 :::
 
 From a twitching frog to the telegraph in about fifty years: Galvani and Volta's argument turned out to be one of the most useful arguments in history. Chapter 8 opens Daniell's cell up and follows every electron through it.

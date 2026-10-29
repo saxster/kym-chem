@@ -19,13 +19,13 @@ A Dutch lawyer who did physics as a hobby, Antonius van den Broek, had made a bo
 
 Moseley built a long glass tube with the air pumped out. Inside it sat a little trolley that could carry samples of different metals, one after another, into the path of a beam of fast electrons. When electrons slam into a metal, the metal gives off X-rays, invisible light with very short waves. Each metal gives off its own particular X-rays, like a bell ringing its own note.
 
-He measured those notes, one element at a time: calcium, titanium, vanadium, chromium, manganese, iron, cobalt, nickel, copper, zinc, and on through dozens more. And when he plotted them in the right way (taking the square root of each X-ray's frequency) the points did not scatter. They climbed in a perfectly even staircase: one equal step from each element to the next.
+He measured those notes, one element at a time: calcium, titanium, vanadium, chromium, manganese, iron, cobalt, nickel, copper, zinc, and on through dozens more. And when he plotted them in the right way (taking the square root of each X-ray's frequency) the points followed an approximately straight line within a given spectral series: nearly equal steps from each element to the next.
 
-:::fig s_moseley_staircase() | Moseley's staircase, drawn from the modern values of the strongest X-ray line. Each element's point is one equal step above the one before. The steps are counting something inside the atom: one extra unit of positive charge in the nucleus each time.
+:::fig s_moseley_staircase() | Moseley's staircase, drawn from the modern values of the strongest X-ray line. Within this spectral series, successive points lie nearly equal steps apart; the relationship is approximate. The steps are counting something inside the atom: one extra unit of positive charge in the nucleus each time.
 
 #### What the steps were counting
 
-Atomic weights do not go up in equal steps; they jump about. But Moseley's steps were perfectly regular. Something inside every atom increased by exactly one from each element to the next, and the X-rays came from electrons being pulled on by the nucleus. The only sensible conclusion was that the nucleus's positive charge goes up by one each time. Van den Broek's guess was right.
+Atomic weights do not go up in equal steps; they jump about. But Moseley's square-root-frequency steps were nearly regular within the same spectral series. Something inside every atom increased by exactly one from each element to the next, and the X-rays came from electrons being pulled on by the nucleus. The only sensible conclusion was that the nucleus's positive charge goes up by one each time. Van den Broek's guess was right.
 
 That whole number, the charge on the nucleus, is the **atomic number**. Today we know it is simply the number of protons. It is what makes an element the element it is.
 

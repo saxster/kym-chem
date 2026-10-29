@@ -53,7 +53,7 @@ def c2_coulomb():
 
 @figure
 def c2_bond_energy():
-    f = Fig(640, 320, 'Energy of two hydrogen atoms against the distance between their nuclei: a dip with its lowest point at 74 picometres, 436 kJ per mole below separate atoms.')
+    f = Fig(640, 320, 'Illustrative hydrogen-pair energy curve: minimum at 74 pm; 436 kJ/mol teaching scale is the rounded thermal bond enthalpy, not electronic well depth.')
     x0, y0, w, h = 70, 40, 520, 230
     De, re, a = 436, 74, 0.0194
     def V(r): return De * (1 - math.exp(-a * (r - re))) ** 2 - De

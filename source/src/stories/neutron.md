@@ -31,7 +31,7 @@ His assistant Francis Aston took up the idea after the First World War and built
 
 There was still a gap in the explanation. A helium nucleus has twice the charge of a hydrogen nucleus, but about four times the mass. Carbon has six times the charge but twelve times the mass. Something in the nucleus was adding mass without adding charge.
 
-As early as 1920, Rutherford guessed that the nucleus might contain a neutral particle, about as heavy as a proton. But how do you catch something with no charge? Charged particles leave tracks, bend in magnets, and make flashes on screens. A neutral particle does none of that. It slips through everything without a trace.
+As early as 1920, Rutherford guessed that the nucleus might contain a neutral particle, about as heavy as a proton. But how do you catch something with no charge? Charged particles leave tracks, bend in magnets, and make flashes on screens. A neutron has no electric charge, so it does not leave the same direct ionization track or undergo ordinary electric deflection. But it can scatter from nuclei or be captured. Recoiling charged particles make these interactions detectable, as Chadwick was about to show.
 
 #### Step 4: the race of 1932
 

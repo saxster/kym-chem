@@ -37,7 +37,7 @@ Nitrogen makes up 78 percent of the air you breathe; phosphorus, below it, is on
 
 #### The halogens (column 17)
 
-Fluorine, chlorine, bromine, iodine, astatine. Each is one electron short of a full outer shell, and taking an electron from another atom releases energy, so they are fierce, poisonous and colourful: pale yellow fluorine, yellow-green chlorine, red-brown liquid bromine, nearly black iodine with a purple vapour. Tamed as ions, they are everywhere. Chlorine disinfects city tap water and is the "chlor" in bleach. Fluoride in toothpaste hardens teeth. Most salt sold in India has a little iodine added, because a lack of iodine harms growing children.
+Fluorine, chlorine, bromine, iodine, astatine. Each is one electron short of the familiar closed-shell count. An isolated halogen atom releases energy when it captures a free electron, but removing that electron from another atom costs energy: the whole transfer needs a complete energy account. The familiar halogens are reactive and can be hazardous; they also have striking colours: pale yellow fluorine, yellow-green chlorine, red-brown liquid bromine, nearly black iodine with a purple vapour. Tamed as ions, they are everywhere. Chlorine disinfects city tap water and is the "chlor" in bleach. Fluoride in toothpaste hardens teeth. Most salt sold in India has a little iodine added, because a lack of iodine harms growing children.
 
 #### The noble gases (column 18)
 

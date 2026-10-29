@@ -31,7 +31,7 @@ Moseley found a way. He knew that when you fire fast electrons at a metal, it gi
 
 #### The staircase
 
-When he plotted his results in the right way (using the square root of the X-ray frequency), the elements lined up like the steps of a perfectly even staircase. Every step was the same height. Going from one element to the next always added exactly the same amount.
+When he plotted his results in the right way (using the square root of the X-ray frequency), the elements lined up like a nearly even staircase within each X-ray spectral series. The square-root frequency rose by approximately the same amount from one element to the next; small departures did not erase the pattern.
 
 It meant that each element has exactly *one more* unit of charge on its nucleus than the one before. Hydrogen has 1, helium 2, lithium 3, and so on, all the way up. That number is the **atomic number**, and Moseley had found a way to measure it directly. It is the true order of the periodic table. It explained the tellurium and iodine puzzle at once: tellurium is number 52 and iodine is number 53, whatever their weights say. (The weights are muddled because of neutrons, which add weight but no charge. That was discovered later.)
 

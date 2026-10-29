@@ -344,9 +344,9 @@ export function entries(name, s = {}) {
       return {
         rows: [
           row('Nuclear separation', s.r, 'pm'),
-          row('Potential relative to separate atoms', s.energy, 'kJ/mol'),
+          row('Illustrative energy relative to separate atoms', s.energy, 'kJ/mol'),
         ],
-        equation: `E(r) = 436[1 − exp(−0.0194(r − 74))]² − 436 kJ/mol; r = ${number(s.r)} pm gives ${number(s.energy)} kJ/mol. At 74 pm the level is −436 kJ/mol.`,
+        equation: `E(r) = 436[1 − exp(−0.0194(r − 74))]² − 436 kJ/mol; r = ${number(s.r)} pm gives ${number(s.energy)} kJ/mol. At 74 pm the teaching level is −436 kJ/mol. This scale uses rounded 298 K bond enthalpy, not electronic well depth De or spectroscopic D0.`,
       };
     case 'saltsteps':
       return {

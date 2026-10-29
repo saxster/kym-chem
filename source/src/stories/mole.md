@@ -50,8 +50,10 @@ For a long time, nobody knew. Chemists used moles happily for decades while havi
 The first estimate came in 1865 from an Austrian schoolteacher-turned-physicist, Josef Loschmidt, who worked out roughly how big air molecules must be from how gases behave. His answer was in the right range, astonishingly, but rough. Then, around 1909, Jean Perrin in Paris measured the number several independent ways, including by watching tiny grains jiggle in water, and every method gave nearly the same answer. Perrin proposed naming it after Amedeo Avogadro, whose ideas about gases had made all of this possible. Today it is called ==Avogadro's constant==, and since 2019 it is not measured at all but fixed by definition:
 
 :::eq
-**1 mole = 6.022 140 76 × 10²³ things**
+**N = nNₐ, with Nₐ = 6.022 140 76 × 10²³ mol⁻¹ exactly**
 :::
+
+Here n is an amount in moles and N is the count of specified entities. The mole is the unit of amount of substance; the Avogadro constant converts that amount to a count. One mole therefore contains exactly 6.022 140 76 × 10²³ specified entities. Rounded molar masses still give approximate mass-to-amount conversions. [SI definition: BIPM](https://www.bipm.org/en/si-base-units/mole).
 
 #### Step 5: feeling how big that is
 

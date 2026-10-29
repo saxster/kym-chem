@@ -51,9 +51,9 @@ This is Napier's trick in action: multiplying numbers is the same as *adding* th
 
 #### Step 4: why chemists love logarithms
 
-The amount of hydronium ions in water can be anything from about 1 mole per litre (in strong acid) to about 0.000 000 000 000 01 moles per litre (in strong alkali). Those numbers are horrible to compare. Their logarithms are 0 and −14: easy.
+For an illustrative aqueous range near 25 °C, compare hydronium concentrations from about 1 mole per litre (in concentrated strong acid) to about 0.000 000 000 000 01 moles per litre (in concentrated strong alkali). These concentrations are model inputs, not measurements of every acid or base. Those numbers are horrible to compare. Their logarithms are 0 and −14: easy.
 
-That is exactly why the pH scale was invented. pH is the logarithm of the hydronium concentration, with the minus sign removed so the numbers come out positive:
+That is why a logarithmic scale is useful. pH is the negative base-ten logarithm of hydrogen-ion activity. In the ideal concentration approximation, pH ≈ −log₁₀([H₃O⁺] / (1 mol/L)). The following numbers illustrate that approximation; pH is not restricted to positive values:
 
 :::work
 Hydronium at 0.001 mol/L = 10⁻³ mol/L, so pH = 3.

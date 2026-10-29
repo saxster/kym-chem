@@ -6,18 +6,18 @@ sort: 1908
 people: Lawrence Henderson, Karl Albert Hasselbalch
 group: electrons
 terms: buffer, buffers, buffer solution, blood
-blurb: Your muscles pour acid into your blood every time you run, yet its pH hardly moves. A Harvard doctor worked out why.
+blurb: Metabolism changes the acid–base demands on your blood. A Harvard doctor helped explain how buffers moderate the change.
 ---
 
 :::scene A school sports day, the 100-metre race
 
-The starter's whistle goes and you sprint. For ten seconds your leg muscles burn energy faster than your blood can bring them oxygen, and they switch to a quick, messy back-up: they turn sugar into lactic acid. Acid floods out of the muscles and into your bloodstream. You cross the line, gasping.
+The starter's whistle goes and you sprint. Your muscles use ATP rapidly, and several energy-supplying pathways work together. Proton production, proton consumption and transport all affect the acid–base balance. Lactate can accumulate too, but making lactate from pyruvate consumes a proton; it is not itself the cause of the acidosis. You cross the line, breathing hard.
 
-And here is the strange thing: the pH of your blood has barely changed. Healthy blood stays between about 7.35 and 7.45, almost always. Below about 7.35 or above about 7.45, doctors start to worry, and much further outside that range your cells cannot work properly. A difference of 0.1 in pH is only a 26% change in hydronium, but your body defends that tiny window fiercely. How?
+Your body moderates those changes through buffers, breathing and kidney regulation. Resting arterial blood is normally near pH 7.35–7.45, although intense exercise can move it outside that resting range. A drop of 0.1 pH unit corresponds to about a 26% increase in hydrogen-ion activity. What helps moderate the change?
 
 #### The doctor who did the arithmetic
 
-At the start of the 1900s, Lawrence Henderson, a young doctor and chemist at Harvard University, was puzzled by exactly this. Blood was clearly being flooded with acids all the time, from muscles, from digestion, from carbon dioxide made in every cell, yet its acidity hardly budged. In 1908 he worked out the chemistry of the main reason, and wrote down an equation for it. In 1916 a Danish doctor, Karl Albert Hasselbalch, rewrote Henderson's equation in terms of the new pH scale, and it has carried both their names ever since. What they had described is called a ==buffer==.
+At the start of the 1900s, Lawrence Henderson, a young doctor and chemist at Harvard University, was puzzled by exactly this. Metabolism continually changed the acid–base demands on blood, including through carbon dioxide production, yet the body regulated its pH. In 1908 he worked out the chemistry of the main reason, and wrote down an equation for it. In 1916 a Danish doctor, Karl Albert Hasselbalch, rewrote Henderson's equation in terms of the new pH scale, and it has carried both their names ever since. What they had described is called a ==buffer==.
 
 #### Step 1: a team of two
 
@@ -25,13 +25,13 @@ A buffer is a solution containing two partners: a weak acid, which can give away
 
 #### Step 2: when acid arrives, the base catches it
 
-When lactic acid releases extra protons into your blood, hydrogencarbonate ions grab them:
+When extra acid is added, hydrogencarbonate can accept its protons:
 
 :::eq
 H⁺ + HCO₃⁻ → H₂CO₃
 :::
 
-The protons are not destroyed (nothing in chemistry is), but they are locked up inside weak carbonic acid, which keeps hold of most of them. So the hydronium in the blood rises only a little.
+The proton inventory is conserved. These coupled equilibria convert some hydrogencarbonate into carbonic acid and dissolved CO₂, moderating the increase in hydrogen-ion activity. The actual change depends on the amounts and on gas exchange.
 
 #### Step 3: when base arrives, the acid steps in
 
@@ -39,13 +39,13 @@ If something removes protons or adds a base, the carbonic acid gives up some of 
 
 #### Step 4: why the pH barely moves
 
-The pH of a buffer depends mainly on the *ratio* of the two partners, not on how much of each there is. In blood there is about 20 times as much hydrogencarbonate as carbonic acid, and that ratio is what sets the pH at 7.4. A small splash of acid turns a little hydrogencarbonate into carbonic acid, so the ratio changes a little, and the pH changes only a little.
+For a sufficiently concentrated ideal buffer, the pH depends mainly on the *ratio* of its partners; their amounts set how much added acid or base it can absorb. The usual blood calculation near 37 °C uses an effective pKₐ of about 6.1 and a ratio of about 20:1 between hydrogencarbonate and dissolved CO₂. The denominator is sometimes written CO₂*, pooling dissolved CO₂ and the much smaller amount of hydrated H₂CO₃. It is not the concentration of true H₂CO₃ alone. A small acid addition changes that ratio; lungs and kidneys help regulate the larger system. [Reference: NIOSH carbon-dioxide account, Appendix V](https://stacks.cdc.gov/view/cdc/19367/cdc_19367_DS1.pdf).
 
-Here is the difference a buffer makes, using the made-up example from Chapter 7:
+Here is the difference a buffer makes, using the hypothetical preparation in Chapter 7:
 
 :::work
 Add 1.0 millimole of sodium hydroxide (10 mL of a 0.10 mol/L solution) to 50 mL of pure water: the pH jumps from 7.0 to about 12.2.
-Add the same amount to 50 mL of an acetic acid / acetate buffer (2.5 millimoles of each): the pH moves from 4.74 to about 5.11.
+Add the same amount to 50 mL of an acetic acid / acetate buffer (3.0 millimoles of each): the pH moves from 4.74 to about 5.05.
 Same base, same volume. Without a buffer the pH leaps by five units; with one, it shifts by less than half a unit.
 :::
 
@@ -57,12 +57,12 @@ The carbonic acid in blood has a clever escape route. It breaks down into carbon
 H₂CO₃ → H₂O + CO₂
 :::
 
-That is one reason you breathe so hard after a sprint: getting rid of carbon dioxide gets rid of acid. Over hours and days, your kidneys help too, removing extra acid in urine and making new hydrogencarbonate. Lungs and kidneys keep refilling the buffer so it never runs out.
+That is one reason you breathe so hard after a sprint: getting rid of carbon dioxide gets rid of acid. Over hours and days, your kidneys help too, removing extra acid in urine and making new hydrogencarbonate. Lungs and kidneys help maintain the buffer; regulation has limits and does not hold pH perfectly fixed.
 
 :::careful
 > "A buffer stops the pH from changing at all."
 
-It only slows the change down. Every bit of acid added uses up some of the base partner. Add enough and the base runs out; then the pH falls as fast as in plain water. How much a buffer can take before it gives way is called its capacity.
+It only slows the change down. Every bit of acid added uses up some of the base partner. As the base partner becomes scarce, the buffer resists further acid less effectively; the resulting pH depends on equilibrium and any excess acid. How much a buffer can take before it gives way is called its capacity.
 :::
 
 #### Buffers everywhere

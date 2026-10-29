@@ -56,7 +56,7 @@ This pattern, Le Châtelier's principle, is not because the mixture "wants" to r
 :::careful
 > "At equilibrium, the reaction has stopped."
 
-It looks stopped, because the amounts stay the same. But both reactions are still going, at equal speeds. Chemists proved it in the twentieth century by adding a few atoms of a slightly heavier isotope to a mixture already at equilibrium: soon the heavy atoms turned up in both the reactants and the products, which could only happen if the reactions were still running both ways.
+At dynamic equilibrium, opposing reactions continue at equal rates while the bulk amounts stay constant. Isotope tracers can reveal molecular transformations hidden by a steady-looking composition. Chapter 5 describes a hydrogen–ammonia exchange experiment: its isotope redistribution establishes exchange under the stated conditions, not a unique mechanism or measurements of every forward and reverse ammonia-synthesis rate.
 :::
 
 :::home A fizzy-drink equilibrium
