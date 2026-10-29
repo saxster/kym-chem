@@ -5,17 +5,20 @@ from figs_core import Fig, figure, jitter_grid
 
 @figure
 def c4_physical_vs_chemical():
-    f = Fig(640, 300, 'Left: ice melting, the same water molecules end up more loosely arranged. Right: hydrogen and oxygen molecules react and their atoms regroup into water molecules.')
+    f = Fig(640, 300, 'Left: ice melting, six intact water molecules in open ice become a changing liquid arrangement in a slightly smaller sample volume; molecular sizes stay fixed. Right: hydrogen and oxygen molecules react and their atoms regroup into water molecules.')
     f.text(160, 24, 'Physical change: melting', 't b', 'middle', 14)
     f.text(480, 24, 'Chemical change: a reaction', 't b', 'middle', 14)
     f.line(320, 14, 320, 290, 'ln r')
-    # ice: ordered grid
+    f.rect(24, 48, 100, 148, 'ln r', rx=4)
+    f.rect(180, 53, 110, 128, 'ln r', rx=4)
+    # Equal inventories; liquid footprint is slightly smaller, not a scale density measurement.
+    # ice: open ordered grid
     for r in range(3):
         for c in range(2):
             f.molecule('H2O', 50 + c * 50, 76 + r * 46, 0.85, rot=(r + c) % 2 * 180)
     f.arrow(132, 122, 168, 122, 'ink')
     # liquid: jumbled
-    for i, (x, y) in enumerate([(200, 70), (262, 84), (222, 124), (288, 136), (196, 176), (258, 186)]):
+    for i, (x, y) in enumerate([(201, 75), (263, 78), (220, 113), (268, 125), (198, 161), (249, 159)]):
         f.molecule('H2O', x, y, 0.85, rot=i * 67 + 20)
     f.text(75, 220, 'ice', 't m', 'middle', 12.5)
     f.text(248, 220, 'liquid water', 't m', 'middle', 12.5)

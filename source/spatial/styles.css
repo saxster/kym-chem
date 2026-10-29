@@ -271,3 +271,22 @@ dialog.spatial-transfer button { min-height: 44px; max-width: 100%; white-space:
 dialog.spatial-transfer :focus-visible { outline: 3px solid #936022; outline-offset: 3px; }
 
 .spatial-investigation > summary h2 { display: inline; margin: 0; font: inherit; }
+
+/* Shared laboratory/native-book comparisons and still export equivalents. */
+.curriculum-bridge { padding: 1rem; margin-block: 1rem; border-block: 2px solid #c9c9b9; background: #fffdf7; color: #203d36; max-width:100%; min-width:0; overflow-wrap:anywhere; box-sizing:border-box; font:17px/1.55 system-ui,sans-serif; }
+.curriculum-bridge h2 {font:600 1.5rem/1.2 Georgia,serif;}
+.curriculum-bridge svg {display:block; width:100%; height:auto; max-width:620px; margin-inline:auto;}
+.curriculum-bridge table {width:100%; border-collapse:collapse; table-layout:fixed; font-size:.9em;}
+.curriculum-bridge th,.curriculum-bridge td {padding:.45rem; border-bottom:1px solid #c9c9b9; text-align:left; overflow-wrap:anywhere;}
+.curriculum-bridge input,.curriculum-bridge select,.curriculum-bridge button {min-height:44px; max-width:100%; box-sizing:border-box; font:inherit; color:inherit; background:#fffdf7; border:1px solid #526760; padding:.5rem;}
+.curriculum-bridge label {display:block; margin-block:.75rem;}
+.curriculum-bridge input:not([type=range]),.curriculum-bridge select {display:block; width:100%;}
+.curriculum-bridge :focus-visible {outline:3px solid #936022;outline-offset:3px;}
+.bridge-controls {display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;}
+.scientific-plot-scroll {max-width:100%;overflow:auto;}
+.spatial-investigation select {appearance:none; min-height:44px; padding-right:1rem;}
+
+.bridge-plot-scroll {max-width:100%;overflow:auto;}
+.bridge-plot-scroll svg {min-width:440px;}
+.scientific-plot-scroll .model-figure {min-width:440px;}
+@media print {.bridge-plot-scroll svg,.scientific-plot-scroll .model-figure {min-width:0;}}

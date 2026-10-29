@@ -53,7 +53,7 @@ def chain_h(n, dx=34, dy=20):
 
 @figure
 def c10_frameworks():
-    f = Fig(640, 290, 'Three carbon frameworks: a straight chain of four carbons, a branched chain of four carbons, and a ring of six carbons. Every carbon makes four bonds.')
+    f = Fig(640, 290, 'Three carbon frameworks: a straight chain of four carbons, a branched chain of four carbons, and a ring of six carbons. Every carbon makes four bonds. These flat connectivity drawings are not reference molecular geometries; cyclohexane is nonplanar.')
     # chain: butane
     a, b = chain_h(4)
     struct(f, a, b, 40, 80, 1.0)
@@ -85,7 +85,7 @@ def c10_frameworks():
     f.text(cx, 214, 'cyclohexane, C₆H₁₂', 't m', 'middle', 12.5)
     f.line(205, 30, 205, 225, 'ln r')
     f.line(425, 30, 425, 225, 'ln r')
-    f.text(320, 272, 'Count the lines at any carbon: there are always four.', 't m', 'middle', 13)
+    f.text(320, 272, 'Connectivity notation: saturated rings are not flat; chains have conformations.', 't m', 'middle', 13)
     return f.svg()
 
 
@@ -207,7 +207,7 @@ def c10_single_double():
 
 @figure
 def c10_condensation():
-    f = Fig(640, 300, 'Ethanoic acid and methanol join to make the ester methyl ethanoate. The O–H from the acid and the H from the alcohol leave together as one water molecule.')
+    f = Fig(640, 300, 'Ethanoic acid and methanol join to make the ester methyl ethanoate. The arrows give one possible net atom mapping, not a measured pathway or unique isotope history; all atoms are retained including water.')
     # ethanoic acid: C(H3)-C(=O)-O-H
     heavy = [('C', 0, 0), ('C', 38, 0), ('O', 56, -32), ('O', 62, 24)]
     a, b = with_h(heavy, [(0, 1, 1), (1, 2, 2), (1, 3, 1)], {0: [180, -110, 110]})

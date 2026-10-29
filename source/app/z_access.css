@@ -1,0 +1,6 @@
+/* Comfortable targets in the native reader, including WebKit form controls. */
+button, summary, select {min-height:44px; box-sizing:border-box;}
+select {appearance:none; padding-block:.5rem;}
+button {min-width:44px;}
+summary {padding-block:.5rem;}
+:focus-visible {outline:3px solid #936022; outline-offset:3px;}

@@ -42,3 +42,28 @@ def i_skyline():
             f.text(X(z), Y(r) - 12, SYM[z - 1], 't b p', 'middle', 14)
     f.text(x0 + 10, Y(rmax) + 4, 'every row starts with a peak, an alkali metal, then slopes down', 't i', 'start', 13)
     return f.svg()
+
+
+# Rounded first ionisation energies, H–Ar, kJ/mol; NIST periodic table (2019).
+# https://www.nist.gov/system/files/documents/2019/12/10/nist_periodictable_july2019.pdf
+IE_FIRST_18 = [1312, 2372, 520, 900, 801, 1087, 1402, 1314, 1681, 2081,
+               496, 738, 578, 787, 1012, 1000, 1251, 1521]
+
+@figure
+def i_ionization():
+    f = Fig(1000, 360, 'First gas-phase ionisation energies of H to Ar, in kJ per mole. Li 520, Ne 2081, Na 496, Mg 738. The broad rise across a period has exceptions: B below Be and O below N. These are ionisation energies, not radii.', wide=True)
+    x0, y0, w, h = 80, 275, 870, 220
+    X = lambda i: x0 + i / 17 * w
+    Y = lambda v: y0 - v / 2500 * h
+    for v in (0, 500, 1000, 1500, 2000, 2500):
+        f.line(x0, Y(v), x0+w, Y(v), 'gridln')
+        f.text(x0-12, Y(v)+4, str(v), 't m', 'end', 12)
+    f.axes(x0, y0, w, h, '', 'first ionisation energy / kJ mol⁻¹')
+    f.add('<polyline points="' + ' '.join(f'{X(i):.1f},{Y(v):.1f}' for i,v in enumerate(IE_FIRST_18)) + '" class="ln e" fill="none"/>')
+    for i,v in enumerate(IE_FIRST_18):
+        f.circle(X(i), Y(v), 4, 'ln p' if i in (4,7,12,15) else 'ln e')
+        f.text(X(i), y0+20, SYM[i], 't b', 'middle', 12)
+    f.text(80, 26, 'Gas-phase threshold: X(g) → X⁺(g) + e⁻; energy supplied', 't b', 'start', 15)
+    f.text(80, 322, 'Rounded NIST reference values, H–Ar. B/Be and O/N show limits of a monotonic trend.', 't m', 'start', 13)
+    f.text(80, 344, 'Compare with the separate covalent-radius plot; the two axes measure different properties.', 't m', 'start', 13)
+    return f.svg()

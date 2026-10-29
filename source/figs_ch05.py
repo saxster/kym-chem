@@ -172,7 +172,7 @@ def c5_bond_ledger():
     f.line(545, Y(-482), 560, Y(-482), 'ln')
     f.arrow(553, Y(0), 553, Y(-482) - 2, 'ink', 1.4)
     f.lines(566, Y(-241) - 4, ['net', '−482 kJ'], 't b', 'start', 13)
-    f.text(320, 318, 'average bond enthalpies; measured value −484 kJ', 't m', 'middle', 12)
+    f.text(320, 318, 'gas-phase bond estimate; gas-water reference near −484 kJ', 't m', 'middle', 12)
     return f.svg()
 
 
