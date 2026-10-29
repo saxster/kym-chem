@@ -230,7 +230,7 @@ class Builder:
         if kind == 'careful':
             head = md_inline(arg) if arg else 'Careful'
             return f'<div class="box careful"><p class="bh">{ICONS["careful"]}<span>{head}</span></p>{md(inner)}</div>'
-        if kind == 'home':
+        if kind in ('home', 'reference'):
             head = md_inline(arg) if arg else 'Try it at home'
             where = ch.id if hasattr(ch, 'id') else f'ch{ch.n}'
             base = 'home-' + re.sub(r'[^a-z0-9]+', '-', f'{where} {re.sub(r"<[^>]+>", "", arg or "home")}'.lower()).strip('-')[:60]
@@ -238,7 +238,9 @@ class Builder:
             while hid in self.home_ids:
                 hid, k = f'{base}-{k}', k + 1
             self.home_ids.add(hid)
-            return f'<div class="box home" id="{hid}" data-home="{hid}"><p class="bh">{ICONS["home"]}<span>{head}</span></p>{md(inner)}</div>'
+            reference = ' data-reference="true"' if kind == 'reference' else ''
+            prefix = 'Reference comparison · ' if kind == 'reference' else ''
+            return f'<div class="box home" id="{hid}" data-home="{hid}"{reference}><p class="bh">{ICONS["home"]}<span>{prefix}{head}</span></p>{md(inner)}</div>'
         if kind == 'try':
             head = md_inline(arg) if arg else 'Try it'
             return f'<div class="box try"><p class="bh">{ICONS["try"]}<span>{head}</span></p>{md(inner)}</div>'

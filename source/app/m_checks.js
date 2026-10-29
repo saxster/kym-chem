@@ -93,7 +93,7 @@ function setupHome(box) {
   const done = el('input', { type: 'checkbox', id: cid });
   done.checked = !!s.done;
   const when = el('span', { class: 'lj-date' });
-  const resWrap = el('div', { class: 'home-res' }, el('label', { class: 'lj-lab', for: rid }, 'What actually happened?'), res);
+  const resWrap = el('div', { class: 'home-res' }, el('label', { class: 'lj-lab', for: rid }, box.dataset.reference === 'true' ? 'What did this comparison support?' : 'What actually happened?'), res);
 
   function paint() {
     const cur = store.get(key, {});
@@ -111,10 +111,10 @@ function setupHome(box) {
     App.emit('learn:change');
   });
 
-  const ui = el('div', { class: 'home-ui', role: 'group', 'aria-label': 'My experiment journal' },
-    el('p', { class: 'lj-kick' }, 'My experiment journal'),
+  const ui = el('div', { class: 'home-ui', role: 'group', 'aria-label': box.dataset.reference === 'true' ? 'My reference comparison notes' : 'My experiment journal' },
+    el('p', { class: 'lj-kick' }, box.dataset.reference === 'true' ? 'My reference comparison notes' : 'My experiment journal'),
     el('label', { class: 'lj-lab', for: pid }, 'Before you start: what do you think will happen?'), pred,
-    el('div', { class: 'lj-done' }, done, el('label', { for: cid }, 'I did it'), when),
+    el('div', { class: 'lj-done' }, done, el('label', { for: cid }, box.dataset.reference === 'true' ? 'I inspected this comparison' : 'I did it'), when),
     resWrap);
   box.append(ui);
   paint();

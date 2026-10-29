@@ -15,11 +15,11 @@ As you read, you will meet a few kinds of boxes. Each one has one job.
 <dt>How do we know?</dt><dd>The experiment or measurement behind an idea. Science is not a list of facts; it is a list of facts together with the reasons we believe them.</dd>
 <dt>Careful</dt><dd>A tempting idea that is wrong, and why it is wrong. Most of these are ideas that lots of clever people have had, so if you have had them too, you are in good company.</dd>
 <dt>Try it</dt><dd>Something to predict, sketch or do, usually with the matching investigation in the lab app.</dd>
-<dt>Try it at home</dt><dd>A real experiment with things from the kitchen. Everything in these boxes is safe to do, but ask an adult first, and never taste anything unless the box says it is ordinary food.</dd>
+<dt>Try it at home</dt><dd>A suggested observation or activity with specified conditions. Read it with an adult before deciding whether your materials and setup match. Boxes marked Reference comparison are for reading or modelling, not instructions to perform a chemical procedure. Never taste an experimental mixture.</dd>
 <dt>Watch and turn</dt><dd>Many pictures come alive: a button under them starts an animation or a 3D model you can turn with your finger. They only move when you ask.</dd>
 <dt>Check yourself</dt><dd>One question at the end of a section. The answers, with the reasoning, are at the back of the book.</dd>
 <dt>Case file</dt><dd>A mystery at the end of each chapter. You get the clues; you work out what is going on. The solution is hidden until you ask for it.</dd>
 </dl>
 :::
 
-Numbers in this book are real measured values unless the text says they are made up for a model. A few useful habits for reading them: 10⁶ means a million (a 1 followed by six zeros), and 10⁻⁶ means one millionth. The small number written low in H₂O counts atoms: two hydrogen atoms and one oxygen atom in each molecule. A small sign written high, as in Na⁺, shows an electric charge.
+Read a number with its source, units and conditions: it may be a reference approximation, a chosen model input or a calculated output. None is a measurement of your own sample. A few useful habits for reading them: 10⁶ means a million (a 1 followed by six zeros), and 10⁻⁶ means one millionth. The small number written low in H₂O counts atoms: two hydrogen atoms and one oxygen atom in each molecule. A small sign written high, as in Na⁺, shows an electric charge.
