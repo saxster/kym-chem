@@ -89,63 +89,42 @@ def c7_strong_weak():
 
 @figure
 def c7_ph_ladder():
-    f = Fig(1000, 480, 'The pH scale from 0 to 14 with hydronium concentrations, typical everyday solutions, the colours red cabbage juice turns, and dot blocks showing that each step is ten times more hydronium.', wide=True)
-    x0, x1, y = 40, 960, 160
-    step = (x1 - x0) / 14
+    f = Fig(1000, 550, 'A labelled pH scale with concentration approximations at 25 degrees Celsius, a separate approximate red-cabbage indicator band, and equal-volume hydronium counting bundles for pH 4, 5, 6 and 7. Everyday solution examples are listed separately so their labels do not overlap.', wide=True)
+    f.text(35,28,'1. Read pH and its logarithmic concentration approximation','t b',size=18)
+    f.text(35,54,'For dilute ideal solutions at 25 °C: pH ≈ −log₁₀([H₃O⁺] / (1 mol L⁻¹)).','t m',size=15)
+    x0,x1,y=52,948,108;step=(x1-x0)/14
     for k in range(14):
-        t = k / 13
-        # acid (proton colour) to neutral to base (electron colour) via opacity bands
-        cls = 'wash-p' if k < 6 else ('wash-g' if k < 8 else 'wash-e')
-        f.rect(x0 + k * step, y - 18, step, 36, cls, 0)
-    f.rect(x0, y - 18, x1 - x0, 36, 'ln', 4)
+        f.rect(x0+k*step,y-17,step,34,'wash-p' if k<7 else 'wash-e',0)
+    f.rect(x0,y-17,x1-x0,34,'ln',3)
     for k in range(15):
-        x = x0 + k * step
-        f.line(x, y - 18, x, y - 12, 'ln m'); f.line(x, y + 12, x, y + 18, 'ln m')
-        f.text(x, y + 6, str(k), 't b', 'middle', 15) if 0 < k < 14 else None
-        f.text(x, y + 44, '1' if k == 0 else f'10<tspan dy="-6" font-size="9.5">−{k}</tspan>', 't m', 'middle', 11.5)
-    f.text(x0, y + 6, '0', 't b', 'start', 15)
-    f.text(x1, y + 6, '14', 't b', 'end', 15)
-    f.text(x0, y + 66, 'hydronium, mol/L', 't m', 'start', 11.5)
-    f.text(x0, 20, 'more acidic', 't p b', 'start', 13)
-    f.text(x1, 20, 'more basic', 't e b', 'end', 13)
-    f.text((x0 + x1) / 2, 20, 'neutral', 't g b', 'middle', 13)
-    ex = [(1.5, 'stomach acid', 'about 1.5–3', 0), (2.3, 'lemon juice', 'about 2–2.5', 1), (2.4, 'vinegar', 'about 2.4–2.6', 2),
-          (5.0, 'black coffee', 'about 5', 1), (7.0, 'pure water', '7', 0), (7.4, 'blood', '7.35–7.45', 2),
-          (8.3, 'baking soda', 'about 8.3', 1), (11.5, 'household ammonia', 'about 11–12', 1),
-          (13.0, 'oven cleaner', 'about 13', 0)]
-    for v, name, val, row in ex:
-        x = x0 + v * step
-        ty = 50 + row * 30
-        f.line(x, ty + 20, x, y - 20, 'ln r')
-        f.circle(x, y - 20, 2.5, 'fill-ink')
-        f.text(x, ty, name, 't', 'middle', 12.5)
-        f.text(x, ty + 15, val, 't m', 'middle', 11)
-    # red cabbage colour band (approximate colours of the juice at each pH)
-    cab = ['#b5122b', '#c81d4a', '#c42a63', '#a8337f', '#8a3b92', '#713f9a', '#5f46a0', '#4a5aa8',
-           '#3570b0', '#2c8aa6', '#2f9b84', '#5aa64c', '#98b232', '#c2b02a']
-    by = y + 82
-    for k in range(14):
-        f.rect(x0 + k * step, by, step + 0.6, 16, 'none', 0, f'style="fill:{cab[k]}"')
-    f.rect(x0, by, x1 - x0, 16, 'ln', 3)
-    f.text(x0, by + 34, 'red cabbage juice turns this colour (roughly)', 't m', 'start', 11.5)
-    # tenfold dot blocks: hydronium compared with pure water
-    top = 326
-    f.text((x0 + x1) / 2, top - 20, 'each step to the left: ten times more hydronium ions', 't m', 'middle', 12.5)
-    dot = 'style="fill:var(--proton)"'
-    sp = 4.6
-    def block(bx, byy, n):
-        for i in range(n):
-            f.circle(bx + (i % 10) * sp, byy + (i // 10) * sp, 1.5, 'none', dot)
-    for ph, n, bx in ((4, 1000, 150), (5, 100, 430), (6, 10, 520), (7, 1, 610)):
-        if n <= 100:
-            block(bx, top + 96 - ((n + 9) // 10 - 1) * sp, n)
-        else:
-            for j in range(10):
-                block(bx + (j % 5) * 50, top + (j // 5) * 50, 100)
-        f.text(bx, top + 116, f'pH {ph}', 't b', 'start', 12.5)
-        f.text(bx, top + 131, '1 dot' if n == 1 else f'{n:,} dots', 't m', 'start', 11)
-    f.text(690, top + 56, 'hydronium ions in the same volume,', 't m', 'start', 11.5)
-    f.text(690, top + 71, 'counted against pure water\u2019s one dot', 't m', 'start', 11.5)
+        x=x0+k*step
+        f.line(x,y-21,x,y-17,'ax')
+        f.text(x,y+6,str(k),'t b','middle',16)
+        power='1' if k==0 else f'10<tspan dy="-6" font-size="11">−{k}</tspan>'
+        f.text(x,156,power,'t m','middle',13)
+    f.text(52,183,'Approximate hydronium concentration / mol L⁻¹','t m',size=14)
+    f.text(948,183,'Neutral water: pH 7 at 25 °C','t g','end',14)
+    cab=['#b5122b','#c81d4a','#c42a63','#a8337f','#8a3b92','#713f9a','#5f46a0','#4a5aa8','#3570b0','#2c8aa6','#2f9b84','#5aa64c','#98b232','#c2b02a']
+    for k,col in enumerate(cab):f.rect(x0+k*step,202,step+.5,17,'',0,f'fill="{col}"')
+    f.text(52,243,'Red-cabbage colour is approximate; the numbered scale remains the reference.','t m',size=14)
+    f.line(35,266,965,266,'ln r')
+    f.text(35,296,'2. Compare equal volumes: each step left means ten times more H₃O⁺','t b',size=17)
+    # A tile contains 100 symbols; the thousand is visibly ten whole tiles.
+    def tile(x,y,n=100):
+        for i in range(n):f.circle(x+(i%10)*3.2,y+(i//10)*3.2,1.05,'pt-p')
+    for j in range(10):tile(44+(j%5)*39,330+(j//5)*39)
+    tile(298,369)
+    tile(409,398,10)
+    tile(526,398,1)
+    for x,ph,count in ((44,4,1000),(298,5,100),(409,6,10),(526,7,1)):
+        f.text(x,443,f'pH {ph}','t b',size=16)
+        f.text(x,468,'1 symbol' if count==1 else f'{count:,} symbols','t m',size=14)
+    f.lines(40,510,['Counting comparison only: symbols are not literal ions in a drawn cup.', 'One hundred symbols per full tile; all samples represent the same volume.'],'t m',size=14,lh=1.4)
+    f.line(626,316,626,527,'ln r')
+    f.text(654,329,'3. Typical examples (values vary)','t b',size=16)
+    for i,(name,ph) in enumerate((('Lemon juice','≈ 2–2.5'),('Black coffee','≈ 5'),('Pure water at 25 °C','7'),('Baking-soda solution','≈ 8.3'),('Household ammonia','≈ 11–12'))):
+        f.text(654,363+i*34,name,'t',size=14)
+        f.text(957,363+i*34,ph,'t m','end',14)
     return f.svg()
 
 

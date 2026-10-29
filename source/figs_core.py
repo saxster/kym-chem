@@ -110,7 +110,7 @@ class Fig:
         self.circle(x, y, r, cls)
         self.add(f'<path d="M{r_(x - r * .55)},{r_(y - r * .15)} A{r_(r * .6)},{r_(r * .6)} 0 0 1 {r_(x)},{r_(y - r * .62)}" class="atom-hl"/>')
         if sign:
-            s = {'p': '+', 'n': '', 'e': '−'}[kind]
+            s = {'p': '+', 'n': '0', 'e': '−'}[kind]
             if s:
                 self.text(x, y + r * .42, s, 'pt-sign', 'middle', r_(r * 1.25), 700)
         return self

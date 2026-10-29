@@ -47,55 +47,104 @@ def i_waterice():
 
 @figure
 def i_spectrum():
-    f = Fig(640, 300, 'Hydrogen energy levels as a ladder. An electron falling to the second level gives out red, blue-green, blue or violet light, depending on the size of the fall; these are the four visible lines of hydrogen.')
-    x0, x1, yb, yt = 90, 250, 270, 60
-    def Y(E): return yb - (E + 13.6) / 13.6 * (yb - yt)
-    f.text(24, 30, 'Hydrogen: energy levels', 't b', 'start', 14)
-    labelled = {1: 'n = 1', 2: 'n = 2', 3: 'n = 3'}
-    for n in range(1, 7):
-        y = Y(-13.6 / n ** 2)
-        f.line(x0, y, x1, y, 'ln')
-        if n in labelled:
-            f.text(x0 - 8, y + 4, labelled[n], 't m', 'end', 11)
-    f.text(x1, Y(-13.6 / 16) - 8, 'n = 4, 5, 6… crowd together', 't m', 'end', 10)
-    lines = []
-    for k, n in enumerate((3, 4, 5, 6)):
-        nm = 1 / (1.0968e7 * (1 / 4 - 1 / n ** 2)) * 1e9
-        x = x0 + 30 + k * 32
-        f.add(f'<line x1="{x}" y1="{Y(-13.6 / n ** 2):.1f}" x2="{x}" y2="{Y(-3.4) - 6:.1f}" stroke="{wl_color(nm)}" stroke-width="3" marker-end="url(#ah-ink)"/>')
-        lines.append(nm)
-    sx0, sx1, sy = 300, 620, 196
-    def X(nm): return sx0 + (nm - 380) / 370 * (sx1 - sx0)
-    f.text(sx0, sy - 14, 'What reaches your eye', 't m', 'start', 13)
-    f.rect(sx0, sy, sx1 - sx0, 36, 'fill-ink', 3)
-    for nm in lines:
-        f.rect(X(nm) - 2, sy + 2, 4, 32, '', 0, f'fill="{wl_color(nm)}"')
-        f.text(X(nm), sy - 2 - (12 if nm < 450 and nm > 420 else 0), f'{nm:.0f}', 't m', 'middle', 10)
-    for nm in (400, 500, 600, 700):
-        f.text(X(nm), sy + 54, str(nm), 't m', 'middle', 11)
-    f.text(sx1, sy + 54, 'nm', 't m', 'start', 11)
-    f.lines(sx0, 72, ['A bigger fall gives bluer light,', 'a smaller fall redder light.', 'Only certain falls exist,', 'so only certain colours appear.'], 't', 'start', 14)
+    f = Fig(1000, 450, 'Hydrogen energy levels on a linear energy scale, with separate callouts for crowded upper levels. Four downward transitions to n = 2 correspond to Balmer emission lines near 656, 486, 434 and 410 nanometres. Colours supplement wavelength labels; this is an energy-level model, not electron trajectories.', wide=True)
+    Y = lambda energy: 378 - (energy + 13.6) / 13.6 * 310
+    f.text(28, 28, '1. Read the energy levels', 't b', size=18)
+    f.text(532, 28, '2. Match each transition to emitted light', 't b', size=18)
+    f.line(496, 42, 496, 416, 'ln r')
+    f.arrow(62, 386, 62, 55, 'ink')
+    f.text(30, 45, 'E / eV', 't m', size=14)
+    for energy in (-13.6, -3.4, 0):
+        f.line(58,Y(energy),66,Y(energy),'ax')
+        f.text(52,Y(energy)+5,str(energy),'t m','end',14)
+    for n in range(1,7):
+        y=Y(-13.6/n**2)
+        f.line(86,y,260,y,'ln')
+        if n<=2:
+            f.text(100 if n==2 else 274,y+25 if n==2 else y+5,f'n = {n}','t b',size=16)
+    f.line(86,Y(0),260,Y(0),'ln m dash')
+    f.text(274,55,'ionization limit','t m',size=14)
+    # Upper energies remain correctly spaced; leaders move only their labels.
+    for n,ty in ((6,83),(5,113),(4,143),(3,173)):
+        y=Y(-13.6/n**2)
+        f.path(f'M260,{y:.2f} L{275+(6-n)*6},{y:.2f} L316,{ty-5}', 'ln r')
+        f.text(324,ty,f'n = {n}: {-13.6/n**2:.3f} eV','t',size=14)
+    wavelengths=[]
+    for k,n in enumerate((3,4,5,6)):
+        nm=1/(1.0968e7*(1/4-1/n**2))*1e9
+        x=111+k*36;col=wl_color(nm)
+        f.add(f'<line x1="{x}" y1="{Y(-13.6/n**2):.2f}" x2="{x}" y2="{Y(-3.4)-4:.2f}" stroke="{col}" stroke-width="3" marker-end="url(#ah-ink)"/>')
+        wavelengths.append((n,nm,col))
+    f.lines(97,235,['All four arrows end at n = 2.', 'Arrow height represents an energy difference,', 'not the distance travelled by an electron.'],'t',size=15,lh=1.5)
+    f.text(150,417,'Upper levels crowd near 0 eV on this linear scale.','t m','middle',13)
+    # A directly labelled wavelength ruler is separate from the level diagram.
+    x0,x1,yy=545,954,270
+    X=lambda nm:x0+(nm-380)/330*(x1-x0)
+    f.rect(x0,yy,x1-x0,42,'fill-ink',3)
+    for n,nm,col in wavelengths:
+        f.rect(X(nm)-2,yy+2,4,38,'',0,f'fill="{col}"')
+    for nm in (400,500,600,700):
+        f.line(X(nm),yy+43,X(nm),yy+49,'ax')
+        f.text(X(nm),yy+70,str(nm),'t m','middle',14)
+    f.text(750,yy+98,'Wavelength / nm','t m','middle',15)
+    for k,(n,nm,col) in enumerate(wavelengths):
+        y=77+k*38
+        f.circle(551,y-5,5,'',f'fill="{col}" stroke="var(--ink)" stroke-width=".5"')
+        f.text(570,y,f'n = {n} → 2','t b',size=16)
+        f.text(915,y,f'≈ {nm:.0f} nm','t','end',16)
+    f.text(750,415,'Shorter wavelength corresponds to a larger energy drop.','t m','middle',13)
     return f.svg()
 
 
 @figure
 def i_molezoom():
-    f = Fig(640, 280, 'Zooming into a spoonful of water by powers of ten: a spoon, a raindrop, a grain of salt, a hair, a blood cell, a bacterium, a virus, the width of DNA, and finally single water molecules about 0.3 nanometres apart.')
-    f.text(20, 26, '18 g of water: one mole, about a tablespoon and a bit', 't b', 'start', 14)
-    steps = [('spoonful', '≈ 4 cm'), ('raindrop', '2 mm'), ('salt grain', '0.3 mm'), ('hair', '0.08 mm'),
-             ('blood cell', '7 µm'), ('bacterium', '1 µm'), ('virus', '100 nm'), ('DNA', '2 nm'), ('water molecules', '0.3 nm')]
-    x0, step, y = 46, 69, 150
-    for i, (name, size) in enumerate(steps):
-        x = x0 + i * step
-        if i < len(steps) - 1:
-            f.circle(x, y, 22 - i * 1.6, 'fill-vol' if i == 0 else 'plate')
-            f.circle(x, y, 22 - i * 1.6, 'ln')
-            f.arrow(x + 24 - i * 1.6, y, x + step - 26 + (i + 1) * 1.6, y, 'muted', 1.1)
+    f = Fig(1000, 320, 'Nine illustrated size references from a spoonful to a water molecule. Each arrow states its own magnification factor; the steps are not equal. The icons are enlarged separately, not drawn to one scale.', wide=True)
+    f.text(20, 26, 'From a spoonful to a molecule', 't b', 'start', 17)
+    f.text(20, 51, 'About 18 g of water is about 1 mol: 6.02 × 10²³ molecules.', 't', 'start', 14)
+    steps = [('spoonful', '4 cm', .04), ('raindrop', '2 mm', .002), ('salt grain', '0.3 mm', .0003),
+             ('hair width', '0.08 mm', .00008), ('blood cell', '7 µm', 7e-6), ('bacterium', '1 µm', 1e-6),
+             ('virus', '100 nm', 1e-7), ('DNA width', '2 nm', 2e-9), ('water molecule', '0.3 nm', 3e-10)]
+    for i, (name, size, length) in enumerate(steps):
+        x, y = 53 + i * 111, 153
+        f.circle(x, y, 38, 'plate')
+        if i == 0:
+            f.add(f'<ellipse cx="{x-9}" cy="{y-3}" rx="14" ry="21" class="water"/>')
+            f.path(f'M{x+2},{y+12} l18,19', 'ln', 'stroke-width="6"')
+        elif i == 1:
+            f.path(f'M{x},{y-24} C{x-5},{y-9} {x-24},{y+5} {x-18},{y+16} C{x-11},{y+33} {x+19},{y+27} {x+20},{y+10} C{x+20},{y-1} {x+4},{y-16} {x},{y-24} Z', 'water')
+        elif i == 2:
+            f.path(f'M{x-22},{y-12} l28,-10 18,13 -28,11 Z M{x-22},{y-12} v29 l28,13 v-28 M{x+24},{y-9} v28 l-18,11', 'ln')
+        elif i == 3:
+            f.path(f'M{x-31},{y+12} Q{x},{y-2} {x+31},{y-12}', 'ln', 'stroke-width="12"')
+            f.path(f'M{x-31},{y+9} Q{x},{y-5} {x+31},{y-15}', 'ln m')
+        elif i == 4:
+            f.add(f'<ellipse cx="{x}" cy="{y}" rx="28" ry="21" class="wash-p"/>')
+            f.add(f'<ellipse cx="{x}" cy="{y}" rx="28" ry="21" class="ln p"/>')
+            f.add(f'<ellipse cx="{x}" cy="{y}" rx="12" ry="8" class="ln p"/>')
+        elif i == 5:
+            f.rect(x-27,y-13,54,26,'wash-g',13); f.rect(x-27,y-13,54,26,'ln g',13)
+            f.path(f'M{x+27},{y} q12,-20 13,-2 t-1,20', 'ln g')
+        elif i == 6:
+            f.circle(x,y,21,'wash-e'); f.circle(x,y,21,'ln e')
+            for k in range(10):
+                a=k*math.tau/10
+                f.line(x+22*math.cos(a),y+22*math.sin(a),x+29*math.cos(a),y+29*math.sin(a),'ln e')
+                f.circle(x+30*math.cos(a),y+30*math.sin(a),2.5,'fill-vol')
+        elif i == 7:
+            for side in (-1,1):
+                pts=[(x+side*17*math.sin(k*.55),y-29+k*5.8) for k in range(11)]
+                f.path('M'+' L'.join(f'{px:.1f},{py:.1f}' for px,py in pts),'ln e' if side<0 else 'ln p')
+            for k in range(11):
+                dy=-29+k*5.8; dx=17*math.sin(k*.55)
+                f.line(x-dx,y+dy,x+dx,y+dy,'ln r')
         else:
-            f.molecule('H2O', x - 10, y - 8, 0.55)
-            f.molecule('H2O', x + 12, y + 10, 0.55, rot=120)
-        f.text(x, y + 44, name, 't', 'middle', 11.5)
-        f.text(x, y + 60, size, 't m', 'middle', 11)
-    f.text(320, 250, 'each arrow zooms in about ten times or more', 't m i', 'middle', 12)
-    f.lines(20, 56, ['In the whole spoonful: 6.022 × 10²³ molecules,', 'about 84 million along each edge of a 2.6 cm cube.'], 't', 'start', 13)
+            f.molecule('H2O',x,y-5,1.05)
+        f.text(x,218,name,'t b','middle',12.5)
+        f.text(x,240,'≈ '+size,'t m','middle',13)
+        if i < len(steps)-1:
+            factor=length/steps[i+1][2]
+            f.arrow(x+41,y,x+69,y,'muted',1.2)
+            f.text(x+55,112,f'×{factor:.1f}'.replace('.0',''),'t v b','middle',12)
+    f.text(500,282,'Read each arrow as a change of size reference, not a process turning one object into another.', 't m', 'middle', 13)
+    f.text(500,306,'Icons are separately enlarged. Actual reference sizes and successive magnifications are written below and above them.', 't m', 'middle', 12)
     return f.svg()
