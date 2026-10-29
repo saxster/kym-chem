@@ -1,5 +1,5 @@
 // Offline support: the whole book is one page, so cache it and serve it when offline.
-const CACHE = 'iw-2faced6276';
+const CACHE = 'iw-7d3d4b1e74';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('iw-') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
