@@ -456,7 +456,7 @@ def bundle_live(out_path, body):
     entry = os.path.join(ROOT, 'live', f'.entry_{tag}.js')
     bundle = os.path.join(ROOT, 'live', f'.bundle_{tag}.js')
     with open(entry, 'w') as f:
-        f.write("import './core.js';\n" + ''.join(f"import './{os.path.basename(w)}';\n" for w in widgets))
+        f.write("import './core.js';\nimport '../spatial/runtime.js';\n" + ''.join(f"import './{os.path.basename(w)}';\n" for w in widgets))
     esb = os.path.join(ROOT, 'node_modules', '.bin', 'esbuild')
     subprocess.run([esb, entry, '--bundle', '--minify', '--format=iife', '--target=es2019',
                     '--legal-comments=none', f'--outfile={bundle}', '--log-level=warning'], check=True, cwd=ROOT)
@@ -635,7 +635,7 @@ def build(pdf=False, only=None, out=None):
     css = open(os.path.join(ROOT, 'book.css'), encoding='utf-8').read()
     live_js = bundle_live(out, body)
     app_js, app_css = bundle_app(out)
-    css += '\n' + app_css
+    css += '\n' + app_css + '\n' + open(os.path.join(ROOT, 'spatial/styles.css'), encoding='utf-8').read()
     book_data = {
         'title': TITLE,
         'chapters': [{'n': c.n, 'title': plain(c.title), 'vol': c.vol,

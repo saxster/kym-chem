@@ -1,0 +1,8 @@
+{
+  "modelVersion": "spatial-models-1",
+  "canonicalRepository": "saxster/kym_chem",
+  "entry": "src/book-spatial.tsx",
+  "build": "node scripts/build-spatial-book.mjs",
+  "runtimeSHA256": "231d024d3b1fb7d340e0d357f9507b2fa189c36393df20dde9cad44db035508e",
+  "cssSHA256": "f520d851582d4db827d3f706d170497dca554cfde0aadffb2d175b2c0a38eb17"
+}

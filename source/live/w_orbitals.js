@@ -48,7 +48,7 @@ function labelSprite(text, color) {
 Live.register('orbitals', (stage, params, api) => {
   if (!webglOK()) { stage.textContent = 'This device cannot show 3D graphics, so the drawing above is the best view.'; return {}; }
   const kit = makeStage(stage, api, { height: 400, distance: 30,
-    label: 'A turnable 3D view of an atom. One view shows electron shells as rings; another shows the real electron clouds: a round 1s cloud, a larger round 2s cloud with a hollow layer inside it, and three dumbbell-shaped 2p clouds at right angles.' });
+    label: 'A turnable 3D view of an atom. One view shows electron shells as rings; another shows the real electron clouds: hydrogen-like 1s and 2s density models with a radial node in 2s, and three dumbbell-shaped 2p clouds at right angles.' });
   kit.spinSpeed = 0.18;
   const c = kit.c;
   const say = api.readout();
@@ -117,24 +117,24 @@ Live.register('orbitals', (stage, params, api) => {
     kit.dirty = true; kit.render();
     btnNext.hidden = mode !== 1; btnCut.hidden = mode === 0;
     if (mode === 0) {
-      say('This is how atoms are usually drawn: electrons as dots running round circles, like planets. It is a useful way to <b>count</b> electrons (2 in the first shell, 8 in the second), but it is not what electrons do. Switch to <b>What electrons really do</b>.');
+      say('This is how atoms are usually drawn: stationary count tokens grouped on circles. It is a useful way to <b>count</b> electrons (2 in the first shell, 8 in the second), but it is not what electrons do. Switch to <b>Hydrogen-like density model</b>.');
     } else if (mode === 1) {
       const w = ORDER[which];
       const txt = {
-        '1s': '<b>1s</b>: the first and smallest seat. The dots show where the electron is likely to be found if you looked: thickest near the nucleus, fading outwards. There is no edge and no track. <b>Each cloud holds at most 2 electrons.</b>',
+        '1s': '<b>1s</b>: the first and smallest seat. The dots show points sampled from a hydrogen-like probability density, not electrons or acquired positions: thickest near the nucleus, fading outwards. There is no edge and no track. <b>Each cloud holds at most 2 electrons.</b>',
         '2s': '<b>2s</b>: round like 1s but about four times as wide, with a thin hollow layer inside where the electron is never found (try <b>Cut in half</b>). It is the first seat of the second shell. <b>At most 2 electrons.</b>',
         '2p': '<b>2p</b>: three dumbbells at right angles, one along each direction (left–right, up–down, front–back). Three clouds × 2 electrons = 6 seats. With 2s that makes the <b>8</b> of the second shell, and the 8 columns of the short rows of the periodic table.',
         '3d': '<b>3d</b> (one of five): from the third shell on, more complicated shapes appear. Five d clouds × 2 = 10 seats: the 10 columns of the transition metals in the middle of the periodic table.',
       }[w];
       say(txt + (cut ? ' <i>Showing a thin slice through the middle.</i>' : ''));
     } else {
-      say('<b>Neon</b>, element 10: 2 electrons in 1s, 2 in 2s, and 2 in each of the three 2p clouds. 2 + 2 + 6 = 10, every seat in the first two shells taken. A full set like this is very hard to disturb, which is why neon reacts with nothing. (Sizes are hydrogen-like: in real neon, 10 protons pull every cloud in much tighter.)');
+      say('<b>Neon</b>, element 10: 2 electrons in 1s, 2 in 2s, and 2 in each of the three 2p clouds. 2 + 2 + 6 = 10, every seat in the first two shells taken. A full set like this is very hard to disturb, which helps explain neon’s low chemical reactivity under ordinary conditions. (Sizes are hydrogen-like: in real neon, 10 protons pull every cloud in much tighter.)');
     }
   }
-  api.tabs(['Shells as you were taught', 'What electrons really do', 'Neon: every seat taken'], (i) => { mode = i; cut = false; btnCut.setAttribute('aria-pressed', 'false'); show(); }, 1);
+  api.tabs(['Counting groups', 'Hydrogen-like density model', 'Neon occupancy schematic'], (i) => { mode = i; cut = false; btnCut.setAttribute('aria-pressed', 'false'); show(); }, 1);
   const btnNext = api.button('Next cloud', () => { which = (which + 1) % ORDER.length; show(); });
   const btnCut = api.button('Cut in half', (b) => { cut = !cut; b.setAttribute('aria-pressed', String(cut)); show(); }, { pressed: false });
-  kit.onFrame = (dt) => { if (mode === 0 && dt > 0) { for (const d of dots) d.a += d.w * dt; placeDots(); kit.dirty = true; } };
+  // Counting tokens remain stationary: rings never depict electron trajectories.
   kit.root.rotation.set(0.35, -0.5, 0);
   show();
   return {};

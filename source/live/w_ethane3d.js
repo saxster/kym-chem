@@ -32,7 +32,7 @@ Live.register('ethane3d', (stage, params, api) => {
         const g = x === 1 || y === 1 ? right : left;
         addBond(g, P(x), P(y), 1, kit.c); addAtom(g, 'H', P(y));
       });
-      say('<b>Ethane, C₂H₆.</b> A single bond is like an axle: the right-hand CH₃ group turns freely around it. Real molecules spin like this billions of times a second; here it is slowed right down.');
+      say('<b>Ethane, C₂H₆.</b> A single bond is like an axle: the right-hand CH₃ group can rotate around it, crossing a torsional energy barrier. Real molecules spin like this billions of times a second; here it is slowed right down.');
     } else {
       const d = LEN.CdC / 2, s = Math.sin(Math.PI / 3) * LEN.CH, cx = Math.cos(Math.PI / 3) * LEN.CH;
       addBond(left, [-d, 0, 0], [d, 0, 0], 2, kit.c);
@@ -49,18 +49,12 @@ Live.register('ethane3d', (stage, params, api) => {
   api.tabs(['Ethane', 'Ethene'], build, 0);
   twistBtn = api.button('Try to twist', () => {
     if (mode !== 1) return;
-    cancelAnimationFrame(twistAnim);
-    const t0 = performance.now();
-    const step = (now) => {
-      const t = (now - t0) / 1000;
-      // twist out to about 35°, then spring back with a damped wobble
-      const a = t < 0.45 ? 0.61 * Math.sin((t / 0.45) * Math.PI / 2) : 0.61 * Math.exp(-(t - 0.45) * 4) * Math.cos((t - 0.45) * 14);
-      right.rotation.x = a; kit.render();
-      if (t < 1.8) twistAnim = requestAnimationFrame(step); else { right.rotation.x = 0; kit.render(); }
-    };
-    twistAnim = requestAnimationFrame(step);
-    api.onCleanup?.(() => cancelAnimationFrame(twistAnim));
+    // No spring animation or inferred mechanism. A counterfactual distortion costs energy.
+    right.rotation.x = right.rotation.x ? 0 : 0.35;
+    say('Counterfactual distorted ethene: twisting disrupts π overlap and costs energy. This is not free rotation or a predicted trajectory. Reset the molecule to restore its planar reference geometry.');
+    kit.render();
   });
+  api.slider('Single-bond torsion', {min:0,max:360,step:15,value:0,fmt:v=>`${v}°`,onInput:v=>{if(mode===0&&right){right.rotation.x=v*Math.PI/180;kit.render();}}});
   kit.onFrame = (dt) => { if (mode === 0 && right && dt) { right.rotation.x += dt * 1.6; kit.dirty = true; } };
   build(0);
   return { destroy() { cancelAnimationFrame(twistAnim); } };

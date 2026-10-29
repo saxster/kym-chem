@@ -46,6 +46,7 @@ Live.register('carbon3d', (stage, params, api) => {
   function show(i) {
     cancelAnimationFrame(anim);
     kit.clear(); kit.root.quaternion.identity();
+    top = null;
     if (i === 0) {
       kit.root.rotation.set(0.35, 0.4, 0);
       const { pts, bonds } = diamondChunk();
@@ -77,18 +78,8 @@ Live.register('carbon3d', (stage, params, api) => {
     kit.render();
   }
   api.tabs(['Diamond', 'Graphite'], show, 0);
-  slideBtn = api.button('Slide the layers', () => {
-    if (!top) return;
-    cancelAnimationFrame(anim);
-    const t0 = performance.now();
-    const step = (now) => {
-      const t = (now - t0) / 1000, T = 3.2;
-      top.position.x = 2.46 * Math.sin(Math.PI * Math.min(1, t / T));   // slide one hexagon width out and back
-      kit.render();
-      if (t < T) anim = requestAnimationFrame(step); else { top.position.x = 0; kit.render(); }
-    };
-    anim = requestAnimationFrame(step);
-  });
+  const slide = api.slider('Layer displacement', { min: 0, max: 2.46, step: 0.1, value: 0, fmt: v => `${v.toFixed(1)} Å (schematic displacement)`, onInput: v => { if (top) { top.position.x = v; kit.render(); } } });
+  slideBtn = api.button('Slide the layers', () => { if (top) { top.position.x = top.position.x > 0 ? 0 : 2.46; slide.set(top.position.x); kit.render(); } });
   slideBtn.hidden = true;
   show(0);
   return { destroy() { cancelAnimationFrame(anim); } };

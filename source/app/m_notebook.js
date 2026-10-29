@@ -5,7 +5,7 @@ import App from './core.js';
 const { el, store } = App;
 const HL_KEY = 'hl';
 const OWNED = k => k === HL_KEY || k.startsWith('chk:') || k.startsWith('home:');
-const SKIP = 'svg, figure, button, textarea, input, template, script, style, .chk-ui, .home-ui, .hl-pop, .live-controls, .scene, .bh, h2, h3, h4';
+const SKIP = '.spatial-investigation, svg, figure, button, textarea, input, template, script, style, .chk-ui, .home-ui, .hl-pop, .live-controls, .scene, .bh, h2, h3, h4';
 const CONTAINERS = 'section.sec[id], article.story[id]';
 
 // ------------------------------------------------------------------ text model of a container
@@ -285,7 +285,8 @@ function renderNotebook() {
     stat(stats.tried, `of ${stats.checks} checks tried`, stats.got ? `${stats.got} got it` + (stats.partly ? `, ${stats.partly} partly` : '') : ''),
     stat(stats.done, `of ${stats.homes} home experiments done`, ''),
     stat(stats.hls, stats.hls === 1 ? 'highlight' : 'highlights', stats.notes ? `${stats.notes} with notes` : '')));
-  if (!list.length) {
+  if (window.KymaiaSpatial) {try{const spatial=window.KymaiaSpatial.gather();if(spatial.length)nbBody.append(el('section',{class:'nb-group'},el('h3',{},'Spatial investigation notes'),el('p',{},`${spatial.reduce((n,s)=>n+s.notes.length,0)} saved experiment records. First predictions, setups, responses and revisits are included in Save my notebook and Save a backup. Reopen the investigation to continue.`)));}catch(e){nbBody.append(el('p',{class:'nb-warn',role:'alert'},'Spatial notes could not be read: '+e.message));}}
+  if (!list.length && !nbBody.querySelector('.nb-group')) {
     nbBody.append(el('div', { class: 'nb-empty' },
       el('p', {}, 'Your notebook is empty for now.'),
       el('p', {}, 'Select any words in the book to highlight them or add a note. Answer a “Check yourself” question, or keep a journal for a “Try it at home” experiment, and it will all collect here.')));
@@ -341,7 +342,7 @@ function markdown() {
         if (it.pred) L.push(`I predicted: ${it.pred}`, ''); if (it.res) L.push(`What happened: ${it.res}`, ''); }
     });
   });
-  return L.join('\n');
+  return L.join('\n') + (window.KymaiaSpatial?.markdown() || '');
 }
 
 function download(name, text, type) {
@@ -351,9 +352,10 @@ function download(name, text, type) {
 }
 
 function backup() {
+  let spatial;try{spatial=window.KymaiaSpatial?.gather() || [];}catch(e){nb.querySelector('.nb-msg').textContent='Spatial notes could not be read. Export the original notes from the investigation before replacing them. '+e.message;return;}
   const keys = {};
   store.keys().filter(OWNED).forEach(k => { keys[k] = store.get(k); });
-  download(`invisible-world-notebook-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ book: 'The Invisible World', kind: 'notebook', version: 1, saved: Date.now(), keys }, null, 1), 'application/json');
+  download(`invisible-world-notebook-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ book: 'The Invisible World', kind: 'notebook', version: 1, saved: Date.now(), keys, spatial }, null, 1), 'application/json');
 }
 function restore(file) {
   const r = new FileReader();
@@ -363,6 +365,7 @@ function restore(file) {
     if (!d || d.kind !== 'notebook' || !d.keys) { msg.textContent = 'That file does not look like a notebook backup from this book.'; return; }
     const invalidCheck = Object.entries(d.keys).some(([k,v]) => k.startsWith('chk:') && (!v || typeof v !== 'object' || (v.first !== undefined && typeof v.first !== 'string') || (v.a !== undefined && typeof v.a !== 'string')));
     if (invalidCheck) { msg.textContent = 'This backup contains an invalid response. Nothing has been restored; your saved notebook is unchanged.'; return; }
+    try { const apply=window.KymaiaSpatial?.prepareRestore(d.spatial || []); apply?.(); } catch(e) {msg.textContent=e.message+' Nothing else has been restored.';return;}
     Object.entries(d.keys).forEach(([k, v]) => {
       if (!OWNED(k)) return;
       if (k === HL_KEY) { const cur = all(); const ids = new Set(cur.map(h => h.id)); (v || []).forEach(h => ids.has(h.id) || cur.push(h)); store.set(HL_KEY, cur); }
@@ -386,7 +389,7 @@ function buildNotebook() {
       el('button', { type: 'button', class: 'lj-btn', 'aria-label': 'Close the notebook', onclick: () => nb.close() }, 'Close')),
     nbBody,
     el('div', { class: 'nb-foot' },
-      el('button', { type: 'button', class: 'lj-btn primary', onclick: () => download(`my-notebook-${new Date().toISOString().slice(0, 10)}.md`, markdown(), 'text/markdown') }, 'Save my notebook'),
+      el('button', { type: 'button', class: 'lj-btn primary', onclick: () => {try{download(`my-notebook-${new Date().toISOString().slice(0, 10)}.md`, markdown(), 'text/markdown');}catch(e){nb.querySelector('.nb-msg').textContent='Could not export spatial notes: '+e.message;}} }, 'Save my notebook'),
       el('details', { class: 'nb-more' }, el('summary', {}, 'Back up or restore'),
         el('p', {}, 'Moving to another device? Save a backup file here, then open the book on the other device and restore it.'),
         el('div', { class: 'lj-row' },

@@ -1,0 +1,251 @@
+.spatial-investigation {
+  margin: 1.25rem 0;
+  border: 1px solid #c9c9b9;
+  border-radius: 8px;
+  background: #f7f3e8;
+  color: #203d36;
+  padding: 1rem;
+  clear: both;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  font:
+    17px/1.55 system-ui,
+    sans-serif;
+}
+.spatial-investigation summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: list-item;
+  font-weight: 600;
+}
+.spatial-investigation h3 {
+  font:
+    600 1.5rem/1.25 Georgia,
+    serif;
+  margin: 1rem 0;
+}
+.spatial-question {
+  font:
+    1.2rem/1.5 Georgia,
+    serif;
+}
+.spatial-investigation button,
+.spatial-investigation select,
+.spatial-import {
+  min-height: 44px;
+  border: 1px solid #526760;
+  background: #fffdf7;
+  color: #203d36;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.spatial-investigation button {
+  cursor: pointer;
+}
+.spatial-investigation button[aria-pressed="true"] {
+  background: #203d36;
+  color: #fffdf7;
+}
+.spatial-investigation button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.spatial-investigation :focus-visible {
+  outline: 3px solid #936022;
+  outline-offset: 3px;
+}
+.spatial-investigation .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+.spatial-field {
+  display: grid;
+  gap: 0.25rem;
+  font-weight: 600;
+  margin: 0.75rem 0;
+  min-width: 0;
+}
+.spatial-field select {
+  width: 100%;
+}
+.spatial-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 1rem;
+}
+.spatial-investigation input[type="range"] {
+  width: 100%;
+  height: 44px;
+  accent-color: #203d36;
+}
+.spatial-investigation output {
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+.spatial-investigation textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #526760;
+  background: #fffdf7;
+  color: #203d36;
+  border-radius: 6px;
+  font: inherit;
+  padding: 0.65rem;
+  resize: vertical;
+}
+.spatial-investigation textarea[readonly] {
+  background: #eeeade;
+}
+.spatial-investigation figure {
+  margin: 1rem 0;
+  max-width: 100%;
+}
+.spatial-investigation svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.spatial-scroll {
+  max-width: 100%;
+  overflow: auto;
+  border-radius: 6px;
+}
+.spatial-scroll svg {
+  min-width: 520px;
+}
+.spatial-investigation figcaption {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #526760;
+  margin-top: 0.5rem;
+}
+.spatial-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: 0.75rem;
+}
+.spatial-metrics div {
+  border-bottom: 1px solid #c9c9b9;
+  padding: 0.5rem 0;
+}
+.spatial-metrics dt {
+  font-size: 0.9rem;
+}
+.spatial-metrics dd {
+  margin: 0.25rem 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.spatial-boundary {
+  border-left: 3px solid #936022;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+}
+.spatial-investigation a {
+  color: #203d36;
+  text-decoration: underline;
+}
+.spatial-equation {
+  border-block: 1px solid #c9c9b9;
+  padding: 0.75rem 0;
+}
+.spatial-import {
+  display: grid;
+  gap: 0.5rem;
+}
+.spatial-investigation input[type="file"] {
+  max-width: 100%;
+  font: inherit;
+}
+.spatial-transfer {
+  border-top: 1px solid #c9c9b9;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.spatial-investigation [role="alert"] {
+  border: 2px solid #a94730;
+  padding: 0.75rem;
+}
+@media print {
+  .spatial-investigation {
+    break-inside: auto;
+  }
+  .spatial-investigation button,
+  .spatial-controls,
+  .spatial-investigation select,
+  .spatial-investigation input {
+    display: none;
+  }
+  .spatial-scroll {
+    overflow: visible;
+  }
+  .spatial-scroll svg {
+    min-width: 0;
+  }
+  .three-visualizer-card {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spatial-investigation * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.spatial-book-open {
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 1px solid #526760;
+  border-radius: 6px;
+  color: #203d36;
+  background: #fffdf7;
+  font: inherit;
+  margin: 1rem 0;
+  cursor: pointer;
+}
+.spatial-investigation .three-webgl-mount canvas {
+  display: block;
+  max-width: 100%;
+  height: 300px;
+}
+.spatial-investigation .three-canvas-stage {
+  width: 100%;
+  touch-action: pan-y;
+}
+.spatial-investigation .three-camera-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.spatial-investigation .three-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.spatial-investigation .three-legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.spatial-investigation .three-legend span {
+  overflow-wrap: anywhere;
+}
+
+.spatial-plate .spatial-scroll svg {
+  min-width: 0;
+}
+.spatial-key {
+  display: block;
+  margin: 0.35rem 0;
+  color: #203d36;
+}
