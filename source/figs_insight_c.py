@@ -46,7 +46,7 @@ def i_skyline():
 
 # Rounded first ionisation energies, H–Ar, kJ/mol; NIST periodic table (2019).
 # https://www.nist.gov/system/files/documents/2019/12/10/nist_periodictable_july2019.pdf
-IE_FIRST_18 = [1312, 2372, 520, 900, 801, 1087, 1402, 1314, 1681, 2081,
+IE_FIRST_18 = [1312, 2372, 520, 900, 801, 1086, 1402, 1314, 1681, 2081,
                496, 738, 578, 787, 1012, 1000, 1251, 1521]
 
 @figure
