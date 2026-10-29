@@ -15,7 +15,7 @@ def see_vs_infer():
     f.path(f'M{gx + 4.5},{gy + 85} L{gx + 10.2},{gy + 190} Q{gx + 11},{gy + 198} {gx + 22},{gy + 198} L{gx + 98},{gy + 198} Q{gx + 109},{gy + 198} {gx + 109.8},{gy + 190} L{gx + 115.5},{gy + 85} Z', 'water')
     f.path(f'M{gx + 4.5},{gy + 85} Q{gx + 60},{gy + 80} {gx + 115.5},{gy + 85}', 'ln m')
     # observation labels
-    obs = [(['clear and colourless'], 100), (['takes the shape', 'of its glass'], 140), (['freezes at 0 °C,', 'boils at 100 °C'], 192), (['100 mL has a mass', 'of about 100 g'], 244)]
+    obs = [(['clear and colourless'], 100), (['takes the shape', 'of its glass'], 140), (['near 1 atm:', 'freezes ≈ 0 °C,', 'boils ≈ 100 °C'], 192), (['100 mL has a mass', 'of about 100 g'], 244)]
     for rows, y in obs:
         f.circle(204, y - 5, 2.5, 'fill-ink')
         f.lines(213, y, rows, 't', 'start', 13, 1.3)
@@ -73,7 +73,7 @@ def scale_ladder():
 def c0_brownian():
     import random
     f = Fig(640, 280, 'Left: the zig-zag path of one resin grain, its position marked at equal time intervals as Perrin did. Right: the hidden cause, water molecules hitting the grain unevenly from every side.')
-    f.text(20, 26, 'What Perrin saw', 't b', 'start', 14)
+    f.text(20, 26, 'Perrin-type trace (schematic)', 't b', 'start', 14)
     f.text(340, 26, 'The hidden cause (a model)', 't b v', 'start', 14)
     f.line(325, 14, 325, 266, 'ln r')
     f.rect(20, 40, 290, 200, 'plate', 6)

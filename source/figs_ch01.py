@@ -165,7 +165,7 @@ def mass_spectrum_cl():
         f.text(X(m) + 20, Y(v) + 27, f'{v}%', 't m', 'start', 12)
     xa = X(35.45)
     f.line(xa, y0, xa, Y(78), 'ln vol dash')
-    f.text(xa - 6, Y(84), 'average 35.45: no atoms here', 't v b', 'end', 12.5)
+    f.text(590, 24, 'average ≈ 35.45 u: not a separate isotope', 't v b', 'end', 12.5)
     return f.svg()
 
 
