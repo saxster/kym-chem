@@ -342,7 +342,7 @@ function markdown() {
         if (it.pred) L.push(`I predicted: ${it.pred}`, ''); if (it.res) L.push(`What happened: ${it.res}`, ''); }
     });
   });
-  return L.join('\n') + (window.KymaiaSpatial?.markdown() || '');
+  return L.join('\n') + (window.KymaiaSpatial?.markdown() || '') + (window.KymaiaEveryday?.markdown() || '');
 }
 
 function download(name, text, type) {
@@ -353,19 +353,20 @@ function download(name, text, type) {
 
 function backup() {
   let spatial;try{spatial=window.KymaiaSpatial?.gather() || [];}catch(e){nb.querySelector('.nb-msg').textContent='Spatial notes could not be read. Export the original notes from the investigation before replacing them. '+e.message;return;}
+  let everyday;try{everyday=window.KymaiaEveryday?.gather() || null;}catch(e){nb.querySelector('.nb-msg').textContent='Everyday notes could not be read: '+e.message;return;}
   const keys = {};
   store.keys().filter(OWNED).forEach(k => { keys[k] = store.get(k); });
-  download(`invisible-world-notebook-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ book: 'The Invisible World', kind: 'notebook', version: 1, saved: Date.now(), keys, spatial }, null, 1), 'application/json');
+  download(`invisible-world-notebook-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ book: 'The Invisible World', kind: 'notebook', version: 1, saved: Date.now(), keys, spatial, everyday }, null, 1), 'application/json');
 }
 function restore(file) {
   const r = new FileReader();
-  r.onload = () => {
+  r.onload = async () => {
     let d; try { d = JSON.parse(r.result); } catch (e) { d = null; }
     const msg = nb.querySelector('.nb-msg');
     if (!d || d.kind !== 'notebook' || !d.keys) { msg.textContent = 'That file does not look like a notebook backup from this book.'; return; }
     const invalidCheck = Object.entries(d.keys).some(([k,v]) => k.startsWith('chk:') && (!v || typeof v !== 'object' || (v.first !== undefined && typeof v.first !== 'string') || (v.a !== undefined && typeof v.a !== 'string')));
     if (invalidCheck) { msg.textContent = 'This backup contains an invalid response. Nothing has been restored; your saved notebook is unchanged.'; return; }
-    try { const apply=window.KymaiaSpatial?.prepareRestore(d.spatial || []); apply?.(); } catch(e) {msg.textContent=e.message+' Nothing else has been restored.';return;}
+    let everyday;try { const apply=window.KymaiaSpatial?.prepareRestore(d.spatial || []); everyday=window.KymaiaEveryday?.prepareRestore(d.everyday); await everyday?.apply(); apply?.(); } catch(e) {try{await everyday?.rollback();}catch(rollbackError){msg.textContent=rollbackError.message;return;}msg.textContent=e.message+' Nothing else has been restored.';return;}
     Object.entries(d.keys).forEach(([k, v]) => {
       if (!OWNED(k)) return;
       if (k === HL_KEY) { const cur = all(); const ids = new Set(cur.map(h => h.id)); (v || []).forEach(h => ids.has(h.id) || cur.push(h)); store.set(HL_KEY, cur); }
