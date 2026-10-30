@@ -215,7 +215,10 @@ class Builder:
             slug = re.sub(r'[^a-z0-9]+', '-', re.sub(r'<[^>]+>', '', title).lower()).strip('-')
             out = (f'<section class="box five" id="five-{slug}" aria-label="Understand it: {plain_t}">'
                    f'<p class="bh"><span class="five-k">Understand it</span><span class="five-t">{md_inline(title.strip())}</span></p>'
-                   f'<dl class="fqs">{"".join(r for r, _, _ in core)}</dl>')
+                   f'<dl class="fqs">{core[0][0]}</dl>')
+            if len(core) > 1:
+                out += ('<details class="five-context"><summary>Explore the name, story and reasoning</summary>'
+                        f'<dl class="fqs">{"".join(r for r, _, _ in core[1:])}</dl></details>')
             if deep:
                 names = ', '.join(html.unescape(re.sub(r'<[^>]+>', '', md_inline(q))).rstrip('?').lower() for _, q, _ in deep)
                 out += (f'<details class="five-more"><summary>Go deeper <span>{html.escape(names)}</span></summary>'
@@ -605,7 +608,8 @@ def build(pdf=False, only=None, out=None):
     parts = [f'''<header class="cover" id="top"><canvas class="field" aria-hidden="true"></canvas><div class="title"><h1>{TITLE}</h1>
 <p class="sub">{SUBTITLE}. Twelve chapters on what everything is made of, how it changes, and how we know.</p>
 <p class="for">Written for Kym</p>
-<p class="begin"><a href="#letter">Start reading</a></p></div>
+<p class="begin"><a href="#s0-1">Start with one small puzzle</a> <a class="letter-link" href="#letter">Read your letter first</a></p>
+<p class="start-note">One section, one picture, one question. You do not need to finish a chapter.</p></div>
 <figure class="art">{cover}<figcaption class="legend"><i></i>The {n_feat} elements you will meet in this book, out of the 118 known today.</figcaption></figure></header>''']
     if 'letter' in front:
         parts.append(f'<section class="front flow letter" id="letter">{b.render_blocks(front["letter"], dummy, None)}</section>')

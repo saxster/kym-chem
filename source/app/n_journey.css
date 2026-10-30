@@ -1,0 +1,9 @@
+.cover .begin { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.cover .begin .letter-link { background: none; color: inherit; border-radius: 0; padding: .6rem 0; text-decoration: underline; }
+.cover .start-note { font: .9rem/1.6 var(--sans, system-ui); max-width: 36rem; }
+.section-pause { margin: 2rem 0; padding: 1rem 0; border-top: 1px solid var(--rule, #c9c9b9); }
+.section-pause p { font: .9rem/1.6 var(--sans, system-ui); }
+.section-pause .pause-title { font-weight: 700; }
+.section-pause a, .book-lab-link { display: inline-block; min-height: 44px; padding: .5rem 0; font: .9rem/1.6 var(--sans, system-ui); }
+.lj-encouragement { font: .9rem/1.6 var(--sans, system-ui); }
+@media print { .section-pause { display: none; } }

@@ -41,16 +41,21 @@ function setupCheck(box) {
 
   const rateRow = el('div', { class: 'lj-rate', role: 'group', 'aria-label': 'How did you do?' });
   const rateBtns = RATINGS.map(([v, l]) => el('button', { type: 'button', class: 'lj-chip', 'data-r': v, 'aria-pressed': 'false' }, l));
-  rateRow.append(el('span', { class: 'lj-q' }, 'How did you do?'), ...rateBtns);
+  rateRow.append(el('span', { class: 'lj-q' }, 'How does it feel now?'), ...rateBtns);
+  const encouragement = el('p', {class: 'lj-encouragement', role: 'status'});
+  const ratingMessages = {got: 'Try explaining it without the page when you come back.', partly: 'Keep the part that makes sense. Which step would you like to explore again?', not: 'Not yet is a useful place to start. Try one picture or the matching laboratory, then come back with a question.'};
   const again = el('button', { type: 'button', class: 'lj-link' }, 'Try again');
-  answer.append(rateRow, again);
+  answer.append(rateRow, encouragement, again);
 
-  const save = () => { const s = store.get(key, {}); s.a = ta.value; s.t = Date.now(); write(s); App.emit('learn:change'); };
+  const save = () => { const s = store.get(key, {}); if (ta.value === (s.a || '')) return; s.a = ta.value; s.t = Date.now(); write(s); App.emit('learn:change'); };
   ta.addEventListener('input', debounce(save, 400));
+  ta.addEventListener('blur', save);
+  addEventListener('pagehide', save);
 
   function paintRating(r) {
     rateBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.r === r)));
     box.dataset.rated = r || '';
+    encouragement.textContent = ratingMessages[r] || '';
   }
   function open(animate) {
     showBtn.hidden = true; showBtn.setAttribute('aria-expanded', 'true');
@@ -85,6 +90,8 @@ function setupHome(box) {
   if (!n || box.querySelector('.home-ui')) return;
   const key = 'home:' + n;
   const s = store.get(key, {});
+  const saveStatus = el('p', {class: 'lj-save-status', role: 'status'});
+  const write = value => { saveStatus.textContent = store.set(key, value) ? '' : 'Browser saving is unavailable. These notes are kept for this visit; save a notebook backup before closing.'; };
   const pid = `home-${n}-pred`, rid = `home-${n}-res`, cid = `home-${n}-done`;
   const pred = el('textarea', { class: 'lj-ta', rows: 2, id: pid, placeholder: 'Make a guess before you begin' });
   pred.value = s.pred || '';
@@ -101,12 +108,15 @@ function setupHome(box) {
     resWrap.hidden = !cur.done && !cur.res;
     box.dataset.done = cur.done ? '1' : '';
   }
-  const save = () => { const cur = store.get(key, {}); cur.pred = pred.value; cur.res = res.value; cur.t = Date.now(); store.set(key, cur); App.emit('learn:change'); };
+  const save = () => { const cur = store.get(key, {}); if (pred.value === (cur.pred || '') && res.value === (cur.res || '')) return; cur.pred = pred.value; cur.res = res.value; cur.t = Date.now(); write(cur); App.emit('learn:change'); };
   pred.addEventListener('input', debounce(save, 400));
   res.addEventListener('input', debounce(save, 400));
+  pred.addEventListener('blur', save);
+  res.addEventListener('blur', save);
+  addEventListener('pagehide', save);
   done.addEventListener('change', () => {
     const cur = store.get(key, {}); cur.done = done.checked; cur.date = done.checked ? Date.now() : null; cur.pred = pred.value; cur.res = res.value;
-    store.set(key, cur); const wasHidden = resWrap.hidden; paint();
+    write(cur); const wasHidden = resWrap.hidden; paint();
     if (wasHidden && !resWrap.hidden) { reveal(resWrap, true); res.focus({ preventScroll: true }); }
     App.emit('learn:change');
   });
@@ -115,7 +125,7 @@ function setupHome(box) {
     el('p', { class: 'lj-kick' }, box.dataset.reference === 'true' ? 'My reference comparison notes' : 'My experiment journal'),
     el('label', { class: 'lj-lab', for: pid }, 'Before you start: what do you think will happen?'), pred,
     el('div', { class: 'lj-done' }, done, el('label', { for: cid }, box.dataset.reference === 'true' ? 'I inspected this comparison' : 'I did it'), when),
-    resWrap);
+    resWrap, saveStatus);
   box.append(ui);
   paint();
 }

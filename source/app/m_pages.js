@@ -64,6 +64,20 @@ function addNav() {
   });
 }
 
+// Small exits between sections make a chapter an invitation, rather than a sitting's workload.
+function addSectionPauses() {
+  const sections = [...main.querySelectorAll('section.sec[id]')];
+  sections.forEach((section, i) => {
+    const next = sections[i + 1];
+    const heading = next && next.querySelector(':scope > h3');
+    const pause = App.el('nav', {class: 'section-pause', 'aria-label': 'Pause or continue reading'},
+      App.el('p', {class: 'pause-title'}, 'A good place to pause'),
+      App.el('p', {}, 'Can you explain one thing that surprised you? A question is worth keeping too. Your notes save in this browser; use My notebook for a backup.'),
+      next ? App.el('a', {href: '#' + next.id}, 'Next question: ' + txt(heading)) : App.el('a', {href: '#contents'}, 'Choose another question'));
+    section.append(pause);
+  });
+}
+
 function setVisible(u) {
   units.forEach((v) => v.els.forEach((e) => {
     if (v === u) e.removeAttribute('data-page-off'); else e.setAttribute('data-page-off', '');
@@ -144,6 +158,10 @@ function route({ anim = true, initial = false, pop = false, y = null } = {}) {
   const changed = u !== cur;
   if (!changed && pop && fromStory) return;   // closing a story: stay exactly where the reader was
   const scroll = () => {
+    if (!initial) {
+      const heading = t.matches('h2,h3') ? t : t.querySelector('h2,h3');
+      if (heading) { heading.tabIndex = -1; heading.focus({preventScroll: true}); }
+    }
     if (y != null) { scrollTo({ top: y, behavior: 'instant' }); return; }
     const behavior = changed || App.reduceMotion() ? 'instant' : 'smooth';
     if (t === u.els[0] || t.id === u.id) scrollTo({ top: 0, behavior: 'instant' });
@@ -158,6 +176,7 @@ function boot() {
   collect();
   if (!units.length) return;
   addNav();
+  addSectionPauses();
   document.documentElement.classList.add('paged');
   route({ initial: true });
 
@@ -174,7 +193,6 @@ function boot() {
     history.replaceState(Object.assign({}, history.state, { y: Math.round(scrollY) }), '');
     if (location.hash !== href) history.pushState(null, '', href);
     route();
-    if (a.closest('.pg-nav')) a.blur();
   });
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   addEventListener('popstate', (e) => route({ pop: true, y: e.state && typeof e.state.y === 'number' ? e.state.y : null }));

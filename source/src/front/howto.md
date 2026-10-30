@@ -1,5 +1,11 @@
 ## How this book works
 
+You do not have to learn everything on a page today. Pick one picture or question, make a guess, and follow what surprises you. The stories, home activities and deeper explanations are invitations; you can leave them for another day.
+
+For a first visit, try [What we see and what we think](#s0-1). Read the water picture and decide which sentences describe observations and which describe a model. That is enough for one visit. Every section has a small place to pause, a link to its matching laboratory, and a way to continue when you are ready.
+
+Your book notes and laboratory notebook save separately in this browser. Opening a matching laboratory keeps your existing lab draft; it does not copy your book answer. Use each notebook’s backup to keep a separate copy.
+
 This book is one long adventure. It follows people across two and a half thousand years, from Greek thinkers arguing about whether you can cut a pebble forever, to a schoolteacher in Manchester weighing the invisible, to a young scientist firing particles at gold in a darkened room, to the people who built the battery in your pocket. Each of them was trying to answer the same question you are about to ask: what is everything made of, and how do we know?
 
 There are three volumes and twelve chapters, numbered from 0 because Chapter 0 is the warm-up. Each chapter is an episode: it opens with a puzzle, follows the people who cracked it, and then explains the idea plainly, one numbered section at a time. You can read straight through, or jump to anything that makes you curious. The numbers of the sections match the investigations in the lab app.
