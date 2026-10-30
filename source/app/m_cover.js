@@ -16,6 +16,9 @@ App.ready(() => {
 
   svg.setAttribute('role', 'group');
   svg.classList.add('cover-live');
+  const hint = el('p', {class: 'cv-keyboard-hint', id: 'cover-table-help'}, 'Tap an element to follow its story. With a keyboard, use the arrow keys to browse, then Enter to open.');
+  svg.after(hint);
+  svg.setAttribute('aria-describedby', hint.id);
 
   const card = el('div', { class: 'cv-card', role: 'dialog', 'aria-modal': 'false', hidden: true });
   (svg.closest('figure') || svg.parentNode).appendChild(card);
@@ -26,7 +29,7 @@ App.ready(() => {
     const e = byZ.get(z);
     if (!e) return;
     g.dataset.z = z;
-    g.setAttribute('tabindex', '0');
+    g.setAttribute('tabindex', g === tiles[0] ? '0' : '-1');
     g.setAttribute('role', 'button');
     const inBook = g.classList.contains('on');
     g.setAttribute('aria-label', `${e.name}, element ${z}${inBook ? ', you will meet it in this book' : ''}`);
@@ -34,9 +37,25 @@ App.ready(() => {
     t.textContent = `${e.name} (${z})`;
     g.prepend(t);
     g.addEventListener('click', ev => { ev.stopPropagation(); open(g, e, inBook); });
+    g.addEventListener('focus', () => tiles.forEach(tile => tile.setAttribute('tabindex', tile === g ? '0' : '-1')));
     g.addEventListener('keydown', ev => {
       if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); open(g, e, inBook); }
       if (ev.key === 'Escape') close();
+      const i = tiles.indexOf(g);
+      let next = null;
+      if (ev.key === 'ArrowRight') next = tiles[(i + 1) % tiles.length];
+      if (ev.key === 'ArrowLeft') next = tiles[(i + tiles.length - 1) % tiles.length];
+      if (ev.key === 'Home') next = tiles[0];
+      if (ev.key === 'End') next = tiles[tiles.length - 1];
+      if (ev.key === 'ArrowUp' || ev.key === 'ArrowDown') {
+        const box = g.getBBox(), direction = ev.key === 'ArrowDown' ? 1 : -1;
+        next = tiles.filter(tile => (tile.getBBox().y - box.y) * direction > 1)
+          .sort((a, b) => {
+            const score = tile => {const r = tile.getBBox(); return Math.abs(r.x - box.x) * 10 + Math.abs(r.y - box.y);};
+            return score(a) - score(b);
+          })[0];
+      }
+      if (next) {ev.preventDefault(); next.focus();}
     });
   });
 

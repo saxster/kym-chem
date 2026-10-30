@@ -159,7 +159,7 @@ function route({ anim = true, initial = false, pop = false, y = null } = {}) {
   if (!changed && pop && fromStory) return;   // closing a story: stay exactly where the reader was
   const scroll = () => {
     if (!initial) {
-      const heading = t.matches('h2,h3') ? t : t.querySelector('h2,h3');
+      const heading = t.matches('h2,h3') ? t : (t.querySelector('h2,h3') || t);
       if (heading) { heading.tabIndex = -1; heading.focus({preventScroll: true}); }
     }
     if (y != null) { scrollTo({ top: y, behavior: 'instant' }); return; }

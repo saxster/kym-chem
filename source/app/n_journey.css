@@ -6,4 +6,7 @@
 .section-pause .pause-title { font-weight: 700; }
 .section-pause a, .book-lab-link { display: inline-block; min-height: 44px; padding: .5rem 0; font: .9rem/1.6 var(--sans, system-ui); }
 .lj-encouragement { font: .9rem/1.6 var(--sans, system-ui); }
+.sec .section-invitation { float: none; width: auto; max-width: 65ch; margin: 1rem 0 1.5rem; padding: .75rem 1rem; border-left: 3px solid var(--accent, #936022); font: 1rem/1.6 var(--sans, system-ui); }
+.section-invitation a { display: block; width: fit-content; min-height: 44px; padding-top: .5rem; }
+.cv-keyboard-hint { font: .9rem/1.6 var(--sans, system-ui); }
 @media print { .section-pause { display: none; } }
