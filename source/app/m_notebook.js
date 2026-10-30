@@ -393,6 +393,7 @@ function buildNotebook() {
       el('button', { type: 'button', class: 'lj-btn primary', onclick: () => {try{download(`my-notebook-${new Date().toISOString().slice(0, 10)}.md`, markdown(), 'text/markdown');}catch(e){nb.querySelector('.nb-msg').textContent='Could not export spatial notes: '+e.message;}} }, 'Save my notebook'),
       el('details', { class: 'nb-more' }, el('summary', {}, 'Back up or restore'),
         el('p', {}, 'Moving to another device? Save a backup file here, then open the book on the other device and restore it.'),
+        el('p', {}, 'Practice preparation saves separately. In Practise and prepare, open Keep or move my preparation work and export its backup too. This book backup contains reading, spatial and everyday notes.'),
         el('div', { class: 'lj-row' },
           el('button', { type: 'button', class: 'lj-btn', onclick: backup }, 'Save a backup'),
           el('button', { type: 'button', class: 'lj-btn', onclick: () => file.click() }, 'Restore from a backup'), file),
