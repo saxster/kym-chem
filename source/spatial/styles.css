@@ -574,6 +574,9 @@ dialog.spatial-transfer :focus-visible { outline: 3px solid #936022; outline-off
   text-transform: none;
   max-width: 75ch;
 }
+.preparation [tabindex="-1"] {
+  scroll-margin-block: 6rem;
+}
 .preparation h2 {
   font-size: clamp(1.85rem, 4vw, 2.85rem);
   margin: 0.5rem 0 1rem;
@@ -861,7 +864,8 @@ dialog.spatial-transfer :focus-visible { outline: 3px solid #936022; outline-off
   margin: 0.75rem 0 0;
 }
 .prep-timer,
-.prep-finish {
+.prep-finish,
+.prep-correction {
   padding: 1rem;
   border: 1px solid var(--prep-rule);
   margin: 1rem 0;
@@ -887,6 +891,16 @@ dialog.spatial-transfer :focus-visible { outline: 3px solid #936022; outline-off
 }
 .prep-reader-page > .flow {
   max-width: 1200px;
+  padding-right: 0;
+}
+.prep-reader-page > .flow > div {
+  max-width: none;
+  width: 100%;
+}
+.prep-start {
+  border-left: 3px solid var(--prep-focus);
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
 }
 @media (max-width: 600px) {
   .preparation {

@@ -150,6 +150,9 @@ const isStoryHash = (h) => targetFor(h) === 'story';
 function route({ anim = true, initial = false, pop = false, y = null } = {}) {
   const fromStory = isStoryHash(lastHash);
   lastHash = location.hash;
+  // pushState does not fire hashchange. Keep embedded companions in sync with
+  // native links as well as Back/Forward, including routes within this page.
+  dispatchEvent(new Event('book:navigate'));
   const t = targetFor(location.hash);
   if (t === 'story') { if (!cur) { setVisible(units[0]); afterShow(); } return; }  // the story panel opens over the current page
   if (!t) { if (!cur || !initial) { if (cur !== units[0]) { setVisible(units[0]); afterShow(); } scrollTo({ top: y || 0, behavior: 'instant' }); } return; }
