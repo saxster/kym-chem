@@ -1,7 +1,7 @@
 
-const CACHE = "kymaia-lessons-ea212fe50ec3-fe56f3d1107e4491";
+const CACHE = "kymaia-lessons-ea212fe50ec3-55cd99a3c7054338";
 const PREFIX = "kymaia-lessons-ea212fe50ec3-";
-const FILES = ["/kym-chem/lab/","/kym-chem/lab/index.html","/kym-chem/lab/manifest.webmanifest","/kym-chem/lab/icon.svg","/kym-chem/lab/assets/chapters-DA3SWNai.css","/kym-chem/lab/assets/chapters-k7Guyu4-.js","/kym-chem/lab/assets/index-D-4jQoJO.css","/kym-chem/lab/assets/index-D5rSeVwc.js","/kym-chem/lab/assets/rolldown-runtime-XKyaHtl9.js","/kym-chem/lab/assets/three--DnbfA6K.js","/kym-chem/lab/assets/vendor-iP14ikpa.js"];
+const FILES = ["/kym-chem/lab/","/kym-chem/lab/index.html","/kym-chem/lab/manifest.webmanifest","/kym-chem/lab/icon.svg","/kym-chem/lab/assets/chapters-DA3SWNai.css","/kym-chem/lab/assets/chapters-DSuaJ02f.js","/kym-chem/lab/assets/index-MY5GLcDa.js","/kym-chem/lab/assets/index-sSza_Jt-.css","/kym-chem/lab/assets/rolldown-runtime-XKyaHtl9.js","/kym-chem/lab/assets/three--DnbfA6K.js","/kym-chem/lab/assets/vendor-vbS3WErF.js"];
 self.addEventListener('install', event => {
  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
 });
