@@ -262,3 +262,17 @@ def c2_dipoles():
     f.line(320, 20, 320, 280, 'ln r')
     f.text(20, 306, 'Thin arrows point to the atom that pulls shared electrons harder.', 't m', 'start', 11.5)
     return f.svg()
+
+
+@figure
+def c2_shapes():
+    # the still behind the live 3D figure (:::live atlas_shapes); angles are the NIST measurements the atlas model uses
+    f = Fig(640, 250, 'Methane, ammonia and water drawn flat, with their measured bond angles: 109.5°, 106.7° and 104.5°. Methane is a tetrahedron, ammonia a squat pyramid, water bent.')
+    for x, kind, name, shape, angle in ((110, 'CH4', 'CH₄, methane', 'tetrahedral', '109.5°'),
+                                        (320, 'NH3', 'NH₃, ammonia', 'squat pyramid', '106.7°'),
+                                        (530, 'H2O', 'H₂O, water', 'bent', '104.5°')):
+        f.molecule(kind, x, 100, 2.0)
+        f.text(x, 190, name, 't b', 'middle', 14)
+        f.text(x, 208, f'{shape}, {angle}', 't', 'middle', 13)
+    f.text(20, 240, 'Flat drawings of 3D shapes: open the live figure to turn them.', 't m', 'start', 11.5)
+    return f.svg()
