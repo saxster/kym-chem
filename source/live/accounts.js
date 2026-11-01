@@ -90,6 +90,16 @@ export const ACCOUNTS = {
     0,
     ['tab', 0, 1],
   ),
+  atlas_shapes: spec(
+    'molecules',
+    'Four electron pairs around a central atom arrange toward the four alternate corners of a cube (109.5°). Replacing bonding pairs with lone pairs compresses the H–X–H angle from 109.5° (CH₄) to 107° (NH₃) and 104.5° (H₂O).',
+    'Electron-pair lobes and bond rods are schematic 3D representations of electron domains, not literal solid sticks or measured electron positions.',
+    'Step to stage 3 (Methane, ammonia and water) and compare the bond angles as lone pairs replace bonding pairs.',
+    'Why is the H–O–H bond angle in water (104.5°) smaller than the 109.5° angle in methane?',
+    ['Two non-bonding lone pairs repel the bonding pairs more strongly than bonding pairs repel each other', 'Water has only two electron pairs around oxygen'],
+    0,
+    ['tab', 0, 2],
+  ),
   states: spec(
     'phase-changes',
     'Keep identity, energy and temperature in separate accounts. During a phase change energy can enter while temperature stays at a plateau.',
@@ -432,6 +442,25 @@ export function entries(name, s = {}) {
         equation:
           'HCl + H₂O → Cl⁻ + H₃O⁺. Charge: 0 + 0 = −1 + 1 = 0. An individual ion can be charged while the whole account balances.',
       };
+    case 'atlas_shapes': {
+      const stages = [
+        { pairs: 4, lonePairs: 0, angle: 109.5 },
+        { pairs: 4, lonePairs: 0, angle: 109.5 },
+        { pairs: 4, lonePairs: 2, angle: 104.5 },
+        { pairs: 4, lonePairs: 2, angle: 92.1 },
+      ];
+      const pg = s.page ?? 0;
+      const st = stages[pg] || stages[0];
+      return {
+        rows: [
+          row('3D stage', pg + 1, 'stage'),
+          row('Total electron domains', st.pairs, 'pairs'),
+          row('Lone pairs in focus', st.lonePairs, 'pairs'),
+          row('Measured H–X–H angle', st.angle, 'degrees'),
+        ],
+        equation: `Stage ${pg + 1}: ${st.pairs} electron domains (${st.pairs - st.lonePairs} bonding + ${st.lonePairs} lone) → reference bond angle ${st.angle}°.`,
+      };
+    }
     default:
       return { rows: [], equation: '' };
   }
