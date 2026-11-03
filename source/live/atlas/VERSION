@@ -1,4 +1,4 @@
-Atlas (github.com/saxster/atlas) at d158d21, vendored by tools/vendor.mjs.
+Atlas (github.com/saxster/atlas) at 16f066a, vendored by tools/vendor.mjs.
 Chapters: chemistry/vsepr chemistry/orbitals chemistry/ch00-unseen-scale chemistry/ch01-inside-atoms chemistry/ch02-bonding-structures chemistry/ch03-states-gases chemistry/ch04-chemical-change chemistry/ch05-energy-equilibrium chemistry/ch06-quantities-stoichiometry chemistry/ch07-acids-bases-buffers chemistry/ch08-redox-electrochemistry chemistry/ch09-periodic-trends chemistry/ch10-organic-chemistry chemistry/ch11-materials-earth
 Do not edit these files here: change the atlas, then run
   node tools/vendor.mjs <this directory> chemistry/vsepr chemistry/orbitals chemistry/ch00-unseen-scale chemistry/ch01-inside-atoms chemistry/ch02-bonding-structures chemistry/ch03-states-gases chemistry/ch04-chemical-change chemistry/ch05-energy-equilibrium chemistry/ch06-quantities-stoichiometry chemistry/ch07-acids-bases-buffers chemistry/ch08-redox-electrochemistry chemistry/ch09-periodic-trends chemistry/ch10-organic-chemistry chemistry/ch11-materials-earth
