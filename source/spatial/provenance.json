@@ -3,6 +3,6 @@
   "canonicalRepository": "saxster/kym_chem",
   "entry": "src/book-spatial.tsx",
   "build": "node scripts/build-spatial-book.mjs",
-  "runtimeSHA256": "1da56df06bb28079e54c29a55e4afbe54f378d6cab82cd6449bc42a319264038",
+  "runtimeSHA256": "2aa0a596881ea26d0d3751d789f25dc5d6dd3b3cfe6117580098fa593d20b72b",
   "cssSHA256": "47d52765b3c6944841832cc846709209f771411f037d9defe419848d834b62e1"
 }

@@ -444,10 +444,14 @@ export function entries(name, s = {}) {
       };
     case 'atlas_shapes': {
       const stages = [
-        { pairs: 4, lonePairs: 0, angle: 109.5 },
-        { pairs: 4, lonePairs: 0, angle: 109.5 },
-        { pairs: 4, lonePairs: 2, angle: 104.5 },
-        { pairs: 4, lonePairs: 2, angle: 92.1 },
+        { pairs: 4, lonePairs: 0, angle: 109.5, label: '2, 3 & 4 domain comparison (180° / 120° / 109.5°)' },
+        { pairs: 4, lonePairs: 0, angle: 109.5, label: 'Tetrahedral cube-diagonal derivation (arccos(−1/3) = 109.5°)' },
+        { pairs: 4, lonePairs: 0, angle: 109.5, label: 'Methane (CH₄): 4 bonding pairs, 0 lone pairs' },
+        { pairs: 4, lonePairs: 1, angle: 106.7, label: 'Ammonia (NH₃): 3 bonding pairs + 1 lone pair' },
+        { pairs: 4, lonePairs: 2, angle: 104.5, label: 'Water (H₂O): 2 bonding pairs + 2 lone pairs' },
+        { pairs: 4, lonePairs: 1, angle: 106.7, label: 'Lone-pair vs bonding-pair angular width (LP–BP > BP–BP)' },
+        { pairs: 4, lonePairs: 1, angle: 106.7, label: 'Isoelectronic series: CH₄ (109.5°) → NH₃ (106.7°) → H₂O (104.5°)' },
+        { pairs: 4, lonePairs: 2, angle: 92.1, label: 'Period comparison: H₂O (104.5°) vs H₂S (92.1°)' },
       ];
       const pg = s.page ?? 0;
       const st = stages[pg] || stages[0];
@@ -458,7 +462,7 @@ export function entries(name, s = {}) {
           row('Lone pairs in focus', st.lonePairs, 'pairs'),
           row('Measured H–X–H angle', st.angle, 'degrees'),
         ],
-        equation: `Stage ${pg + 1}: ${st.pairs} electron domains (${st.pairs - st.lonePairs} bonding + ${st.lonePairs} lone) → reference bond angle ${st.angle}°.`,
+        equation: `Stage ${pg + 1} (${st.label}): ${st.pairs} electron domains (${st.pairs - st.lonePairs} bonding + ${st.lonePairs} lone) → reference bond angle ${st.angle}°.`,
       };
     }
     default:
