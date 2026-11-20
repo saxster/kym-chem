@@ -16,6 +16,35 @@ window.KymaiaBookSound = async (kind) => {
     audio ??= new AC();
     await audio.resume();
     if (!sound) return;
+    if (kind === 'balanced' || kind === 'neutral' || kind === 'probe' || kind === 'snap') {
+      const notes =
+        kind === 'balanced'
+          ? [392, 587.3]
+          : kind === 'neutral'
+            ? [330, 495]
+            : kind === 'snap'
+              ? [660, 880]
+              : [493.88];
+      const now = audio.currentTime;
+      notes.forEach((freq, idx) => {
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const start = now + idx * 0.06;
+        gain.gain.setValueAtTime(0.001, start);
+        gain.gain.exponentialRampToValueAtTime(0.035, start + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.14);
+        osc.connect(gain).connect(audio.destination);
+        osc.start(start);
+        osc.stop(start + 0.15);
+        osc.onended = () => {
+          osc.disconnect();
+          gain.disconnect();
+        };
+      });
+      return;
+    }
     const n = Math.floor(audio.sampleRate * 0.09),
       buffer = audio.createBuffer(1, n, audio.sampleRate),
       data = buffer.getChannelData(0);
@@ -41,6 +70,14 @@ window.KymaiaBookSound = async (kind) => {
 export function initPreferences() {
   function paint() {
     document.documentElement.classList.toggle('book-still', window.KymaiaBookStill());
+    try {
+      const rawPrefs = localStorage.getItem('kymaia.chemistry.prefs.v1');
+      const parsed = rawPrefs ? JSON.parse(rawPrefs) : null;
+      document.documentElement.classList.toggle(
+        'interactive-highlights',
+        Boolean(parsed && parsed.interactiveHighlights),
+      );
+    } catch {}
     window.dispatchEvent(new Event('kymaia-motion-change'));
   }
   paint();
@@ -48,6 +85,9 @@ export function initPreferences() {
   const add = () => {
     const app = window.App;
     if (!app) return;
+    const existingStill = document.getElementById('tb-still');
+    if (existingStill) existingStill.remove();
+    let syncingFromSettings = false;
     const still = app.tool({
       id: 'still',
       label: 'Still',
@@ -61,6 +101,11 @@ export function initPreferences() {
         } catch {}
         paint();
         update();
+        if (!syncingFromSettings && typeof window.__applyKymBioSettings === 'function') {
+          try {
+            window.__applyKymBioSettings({ still: chosen });
+          } catch {}
+        }
       },
     });
     function update() {
@@ -72,7 +117,29 @@ export function initPreferences() {
           : 'Freeze automatic motion; manual steps remain available.';
       }
     }
+    const dedupeStill = () => {
+      document.querySelectorAll('#tb-still').forEach((node) => {
+        if (node !== still) node.remove();
+      });
+    };
+    dedupeStill();
+    queueMicrotask(dedupeStill);
     query.addEventListener('change', update);
+    if (typeof app.on === 'function') {
+      app.on('ready', dedupeStill);
+      app.on('still:change', (nextStill) => {
+        const nextVal = Boolean(nextStill);
+        if (nextVal === chosen) return;
+        syncingFromSettings = true;
+        chosen = nextVal;
+        try {
+          localStorage.setItem('kymaia.chemistry.still', String(chosen));
+        } catch {}
+        paint();
+        update();
+        syncingFromSettings = false;
+      });
+    }
     update();
     const snd = app.tool({
       id: 'sound',

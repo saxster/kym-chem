@@ -509,6 +509,284 @@ dialog.spatial-transfer :focus-visible { outline: 3px solid #936022; outline-off
 .atlas-live-stage-host .atlas-tl { top: 0.4rem; left: 0.4rem; }
 .atlas-live-stage-host .atlas-bl { bottom: 0.4rem; left: 0.4rem; }
 
+/* 5-Medium Art Register selector & responsive controls */
+.atlas-medium-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+.atlas-medium-label {
+  color: #3a524b;
+  font-weight: 600;
+}
+.atlas-medium-btn {
+  min-height: 44px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid #8a958f;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1d332d;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+.atlas-medium-btn[aria-pressed="true"] {
+  background: #203d36;
+  color: #fffdf7;
+  border-color: #203d36;
+}
+
+/* Balance Scales & Shared Badges */
+.balance-visual-plate {
+  margin: 0.5rem 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #c9c9b9;
+  border-radius: 8px;
+  background: #fffdf7;
+  max-width: 100%;
+}
+.balance-visual-plate svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.ledger-badge.not-simplified {
+  background: #fdf3dc;
+  border-color: #936022;
+  color: #5c3a0d;
+}
+
+/* Sandwich Analogy & Reverse Stoichiometry */
+.sandwich-analogy-plate,
+.reverse-limiting-panel {
+  margin: 0.65rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid #c9c9b9;
+  border-radius: 8px;
+  background: #fffdf7;
+}
+.sandwich-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+  margin: 0.65rem 0;
+}
+.sandwich-controls input[type="range"] {
+  width: 100%;
+  min-height: 44px;
+}
+
+/* Hydrogen Model-vs-Experiment Falsification Comparator */
+.model-experiment-comparator {
+  margin: 0.85rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid #c9c9b9;
+  border-left: 4px solid #356d83;
+  border-radius: 8px;
+  background: #fbfaf5;
+  max-width: 100%;
+}
+.comparator-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 0.65rem;
+}
+.comparator-controls {
+  margin: 0.55rem 0;
+}
+.comparator-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin: 0.5rem 0;
+}
+.comparator-slider input[type="range"] {
+  width: 100%;
+  min-height: 44px;
+}
+.model-experiment-comparator svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.snapshot-stack-tray {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed #c9c9b9;
+}
+.snapshot-row {
+  margin: 0.5rem 0;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #d5d2c4;
+  border-radius: 6px;
+  background: #fffdf7;
+}
+.snapshot-row-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.comparator-details,
+.nuclide-details {
+  margin: 0.75rem 0;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #c9c9b9;
+  border-radius: 8px;
+  background: #fffdf7;
+}
+.comparator-details > summary,
+.nuclide-details > summary {
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* Documented Nuclide Neighborhood & Half-Life Scale */
+.nuclide-neighborhood-plate {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid #c9c9b9;
+  border-radius: 8px;
+  background: #fffdf7;
+  max-width: 100%;
+}
+.nuclide-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.nuclide-axis-legend {
+  margin: 0.35rem 0 0;
+  color: #3a524b;
+}
+.nuclide-grid-wrap {
+  position: relative;
+  margin: 0.5rem 0 0.65rem;
+}
+.nuclide-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+.nuclide-row,
+.nuclide-gridcell {
+  display: contents;
+}
+.nuclide-decay-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.nuclide-cell {
+  min-height: 48px;
+  padding: 0.3rem 0.2rem;
+  border: 1px solid #c9c9b9;
+  border-radius: 6px;
+  background: #f7f3e8;
+  color: #203d36;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.nuclide-cell:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.nuclide-cell.mode-stable {
+  background: #e6f1eb;
+  border-color: #2e604a;
+}
+.nuclide-cell.mode-beta-minus {
+  background: #f9efe4;
+  border-color: #936022;
+}
+.nuclide-cell.mode-beta-plus {
+  background: #e7f1f6;
+  border-color: #356d83;
+}
+.nuclide-cell.mode-alpha {
+  background: #fcebe7;
+  border-color: #a94730;
+}
+.nuclide-cell.decay-target {
+  box-shadow: inset 0 0 0 2px #936022;
+}
+.nuclide-cell.current,
+.nuclide-cell[aria-pressed="true"] {
+  color: #203d36;
+  outline: 2.5px solid #a94730;
+  outline-offset: 1px;
+  font-weight: 700;
+}
+.nuclide-cell.mode-stable.current,
+.nuclide-cell.mode-stable[aria-pressed="true"] {
+  background: #d7ebdf;
+  color: #163029;
+}
+.nuclide-cell.mode-beta-minus[aria-pressed="true"] {
+  background: #f3e2ce;
+  color: #203d36;
+}
+.nuclide-cell.mode-beta-plus[aria-pressed="true"] {
+  background: #d8e9f2;
+  color: #203d36;
+}
+.nuclide-cell.mode-alpha[aria-pressed="true"] {
+  background: #f7dad2;
+  color: #203d36;
+}
+.nuclide-cell.current .nuclide-cell-mass,
+.nuclide-cell.current .nuclide-cell-meta {
+  color: #163029;
+}
+.nuclide-cell-mass {
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+.nuclide-cell-meta {
+  font-size: 0.7rem;
+  color: #3a524b;
+  overflow-wrap: anywhere;
+}
+.halflife-scale {
+  margin: 0.65rem 0 0.35rem;
+}
+.halflife-ruler-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .nuclide-grid {
+    gap: 0.22rem;
+  }
+  .nuclide-cell {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.1rem;
+  }
+  .nuclide-cell-meta {
+    font-size: 0.64rem;
+  }
+}
+
 /* Everyday investigations share the laboratory's paper, controls and focus rules. */
 .everyday {
   max-width: 1100px;
